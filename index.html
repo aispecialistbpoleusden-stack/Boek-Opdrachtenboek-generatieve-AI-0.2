@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Interactief</title>
+    <title>AI Opdrachtenboek - Fix Inhoudsopgave</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-grey: #eef2f3; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
@@ -15,30 +15,31 @@
         .login-card { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
-        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; scroll-margin-top: 20px; }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
         .section-title { color: var(--success); border-bottom-color: var(--success); }
 
         .scroll-window { 
-            max-height: 450px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
+            max-height: 400px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
             padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .contents-list { list-style: none; padding: 0; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 0.9em; }
-        .clickable { cursor: pointer; color: var(--accent); font-weight: 600; }
+        .contents-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 0.9em; cursor: pointer; transition: 0.2s; }
+        .contents-list li:hover { background: #f9f9f9; color: var(--accent); }
+        .page-num { font-weight: bold; color: #999; }
 
         .input-group { background: var(--light-grey); padding: 20px; border-radius: 12px; border-left: 6px solid var(--accent); margin-top: 20px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; font-family: inherit; }
+        textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; resize: vertical; box-sizing: border-box; }
+        select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: white; }
         
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.3s; }
+        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; margin-top: 10px; }
         button:hover { background: #2980b9; }
 
         .entry { border-left: 5px solid var(--success); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; font-size: 0.85em; border: 1px solid #eee; }
-        
-        .alert-box { background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; border-radius: 5px; margin: 10px 0; font-size: 0.9em; color: #856404; }
+        .flex-row { display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start; }
+        .side-img { width: 180px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -46,144 +47,83 @@
     <div id="login-screen">
         <div class="login-card">
             <h1>AI Opdrachtenboek</h1>
-            <input type="text" id="username" placeholder="Typ hier je naam...">
+            <input type="text" id="username" placeholder="Typ je naam...">
             <button onclick="startApp()">Inloggen</button>
         </div>
     </div>
 
     <div class="container" id="app-content">
         
-        <div class="card">
+        <div class="card" id="inhoud">
             <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
-                <li class="clickable" onclick="scrollToId('p8')"><span>P8: Toetsen & Producten</span><span>8</span></li>
-                <li class="clickable" onclick="scrollToId('p9')"><span>P9: Prompt Bouwen (Konijnen)</span><span>9</span></li>
-                <li class="clickable" onclick="scrollToId('p10')"><span>P10: Fitness Assistent</span><span>10</span></li>
-                <li class="clickable" onclick="scrollToId('p11')"><span>P11: Experimenteren met Tips</span><span>11</span></li>
+                <li onclick="scrollToId('p8')"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
+                <li onclick="scrollToId('p9')"><span>Pagina 9: Prompt Bouwen (Konijnen)</span><span class="page-num">9</span></li>
+                <li onclick="scrollToId('p10')"><span>Pagina 10: AI als Assistent (Fitness)</span><span class="page-num">10</span></li>
+                <li onclick="scrollToId('p11')"><span>Pagina 11: Experimenteren & Tips</span><span class="page-num">11</span></li>
+                <li onclick="scrollToId('input-sectie')"><span><b>Ga direct naar Invoervelden</b></span><span>👇</span></li>
             </ul>
         </div>
 
-        <div class="card" id="p11">
-            <h3 class="section-title">PAGINA 11: OEFENING 5 - EXPERIMENTEREN</h3>
+        <div class="card" id="p8">
+            <h3 class="section-title">PAGINA 8: TOETSEN & PRODUCTBESCHRIJVING</h3>
             <div class="scroll-window">
-                <h4>DE 'COLLEGA' METHODE</h4>
-                <p><strong>Stap 1 (Fout):</strong> <em>"Schrijf een Facebook artikel wat onze partij nieuwe raadsleden oplevert."</em></p>
-                <p><strong>Stap 2 (Beter):</strong> Geef context: doelgroep (25-45 jaar), B2 niveau, partijnaam "Nieuw Nederland", slogan "Iedereen erbij".</p>
-                
-                <hr>
-                <h4>CONTEXT & INFO</h4>
-                <p>Wijzig deze prompt: <em>"Denk als een leraar en geef tips over online dating risico's."</em> naar een prompt over <strong>desinformatie en fakenieuws</strong>.</p>
-                
-                <hr>
-                <h4>REGENERATE & DISCUSSIE</h4>
-                <p>Ga in discussie over een artikel over liberalisme. Gebruik vervolgprompts:</p>
-                <ul>
-                    <li>"Kun je punt 3 nader toelichten?"</li>
-                    <li>"Maak het compacter / eenvoudiger."</li>
-                </ul>
-                <div class="alert-box">💡 Tip: Gebruik de "Regenerate" knop als de eerste uitkomst niet fijn is!</div>
+                <h4>UNIEKE TOETSEN</h4>
+                <p>Maak 5 sets van 5 meerkeuzevragen op basis van een artikel.</p>
+                <img src="afbeelding8.jpg" alt="Toetsen" style="width:100%; border-radius:8px;">
+            </div>
+        </div>
+
+        <div class="card" id="p9">
+            <h3 class="section-title">PAGINA 9: PROMPT BOUWEN (KONIJNEN)</h3>
+            <div class="scroll-window">
+                <div class="flex-row">
+                    <div style="flex:1">
+                        <p>1A. Mark Rutte (Liberaal)<br>1B. Geert Wilders (Nationalistisch)<br>1C. Caroline v.d. Plas (Boeren)</p>
+                    </div>
+                    <img src="afbeelding9.jpg" class="side-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="p10">
+            <h3 class="section-title">PAGINA 10: AI ALS ASSISTENT</h3>
+            <div class="scroll-window">
+                <div class="flex-row">
+                    <div style="flex:1">
+                        <h4>FITNESS COACH</h4>
+                        <p>Test het verschil tussen een losse vraag en een specifieke rol met doorvragen.</p>
+                    </div>
+                    <img src="afbeelding10.jpg" class="side-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="p11">
+            <h3 class="section-title">PAGINA 11: TIPS & COLLEGA-METHODE</h3>
+            <div class="scroll-window">
+                <p><strong>Collega-methode:</strong> Geef context (Nieuw Nederland, 25-45 jaar) voor betere resultaten.</p>
+                <p><strong>Fakenieuws:</strong> Schrijf prompts om van dating-risico's naar desinformatie.</p>
             </div>
         </div>
 
         <div class="card" id="input-sectie">
-            <h3>JOUW INVOERVELDEN</h3>
-            <p>Deel je ervaringen met de verschillende tips:</p>
+            <h3>JOUW OPDRACHT DEELNEMER</h3>
             <select id="opdracht-selector" onchange="updateOpdracht()">
-                <option value="p11_collega">P11: Collega Methode (Raadsleden)</option>
-                <option value="p11_fake">P11: Fakenieuws Prompt</option>
-                <li><option value="p11_discussie">P11: Discussie & Verfijnen</option></li>
-                <option value="p10_fitness">P10: Fitness Assistent</option>
+                <option value="p8_toets">P8: Unieke Toetsen</option>
+                <option value="p9_konijn">P9: Roze Konijnen (Stijlen)</option>
+                <option value="p10_fitness">P10: Fitness Coach</option>
+                <option value="p11_collega">P11: Collega Methode</option>
             </select>
 
             <div class="input-group">
-                <div id="opdracht-instructie" style="margin-bottom: 10px; color: #666; font-style: italic;">Selecteer een opdracht...</div>
-                
-                <label><strong>De Prompt die ik gebruikte (Stap 2 of 3):</strong></label>
-                <textarea id="input-prompt" rows="3" placeholder="Plak hier je uitgebreide prompt..."></textarea>
-                
-                <label><strong>Wat viel je op aan het resultaat?</strong></label>
-                <textarea id="input-resultaat" rows="4" placeholder="Was het resultaat veel beter? Wat deed de AI?"></textarea>
-                
-                <button id="btn-deel">Versturen naar Groepsfeed</button>
+                <div id="opdracht-instructie" style="margin-bottom:10px; font-style:italic;">Kies een opdracht...</div>
+                <textarea id="input-prompt" rows="3" placeholder="Welke prompt heb je gebruikt?"></textarea>
+                <textarea id="input-resultaat" rows="5" placeholder="Wat was het resultaat?"></textarea>
+                <button id="btn-deel">Deel resultaat</button>
             </div>
         </div>
 
         <div class="card">
-            <h3>Live Groepsfeed (Iedereen)</h3>
-            <div id="feed-container"></div>
-        </div>
-
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
-            authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
-            databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "opdrachtenboek-generatieve-ai",
-            storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
-            messagingSenderId: "183622966071",
-            appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        const opdrachtData = {
-            "p11_collega": { t: "P11: Collega Methode", i: "Vergelijk de korte 'foute' prompt met de uitgebreide versie voor Nieuw Nederland." },
-            "p11_fake": { t: "P11: Fakenieuws", i: "Schrijf de leraar-prompt om naar een les over het herkennen van desinformatie." },
-            "p11_discussie": { t: "P11: Discussie/Verfijnen", i: "Laat zien hoe je de AI hebt bijgestuurd (bijv. compacter maken of uitleg vragen)." },
-            "p10_fitness": { t: "P10: Fitness Assistent", i: "Test de 'Rol-methode' met de fitnesstrainer." }
-        };
-
-        window.startApp = () => {
-            const name = document.getElementById('username').value;
-            if(!name) return alert("Naam verplicht!");
-            localStorage.setItem('ai_user', name);
-            showApp();
-        };
-
-        function showApp() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-            updateOpdracht();
-        }
-
-        window.scrollToId = (id) => { document.getElementById(id).scrollIntoView({behavior: 'smooth'}); };
-
-        window.updateOpdracht = () => {
-            const data = opdrachtData[document.getElementById('opdracht-selector').value];
-            document.getElementById('opdracht-instructie').innerText = data.i;
-            document.getElementById('input-prompt').value = "";
-            document.getElementById('input-resultaat').value = "";
-        };
-
-        document.getElementById('btn-deel').onclick = () => {
-            const p = document.getElementById('input-prompt').value;
-            const r = document.getElementById('input-resultaat').value;
-            const n = localStorage.getItem('ai_user');
-            const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
-            if(!p || !r) return alert("Vul beide velden in!");
-            
-            push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
-            alert("Resultaat gedeeld!");
-        };
-
-        onValue(ref(db, 'inzendingen'), (snapshot) => {
-            const feed = document.getElementById('feed-container');
-            feed.innerHTML = '';
-            const data = snapshot.val();
-            if(data) {
-                Object.values(data).reverse().forEach(item => {
-                    feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening}):<br><small>Prompt: ${item.prompt}</small><details><summary>Bekijk Resultaat/Bevinding</summary><pre>${item.resultaat}</pre></details></div>`;
-                });
-            }
-        });
-
-        if(localStorage.getItem('ai_user')) showApp();
-    </script>
-</body>
-</html>
+            <h3>Live Groepsfeed</h3>
+            <div id="
