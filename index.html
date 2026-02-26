@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Interactief</title>
+    <title>AI Opdrachtenboek - Volledige Versie</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-blue: #ebf5fb; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; scroll-behavior: smooth; }
         
         #login-screen {
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center;
@@ -14,48 +14,33 @@
         }
         .login-card { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
-        .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
+        .container { max-width: 1000px; margin: 20px auto; padding: 20px; display: none; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 30px; scroll-margin-top: 40px; }
         
-        /* De belangrijke fix voor het klikken: scroll-margin zorgt dat de titel niet achter de rand verdwijnt */
-        .card { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 25px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            margin-bottom: 20px; 
-            scroll-margin-top: 30px; 
-        }
-        
-        h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
+        h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; color: var(--primary); }
+        h4 { color: var(--accent); margin-top: 20px; text-transform: uppercase; font-size: 0.9em; }
 
-        /* INHOUDSOPGAVE */
+        /* NAVIGATIE */
         .contents-list { list-style: none; padding: 0; }
-        .contents-list li { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 12px 15px; 
-            border-bottom: 1px solid #ddd; 
-            cursor: pointer; 
-            border-radius: 8px; 
-            margin-bottom: 5px; 
-            transition: background 0.2s;
-        }
-        
-        .status-info { background: #f9f9f9; color: #7f8c8d; }
+        .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
+        .status-info { background: #f9f9f9; }
         .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); }
         .status-done { background: #e8f6ed; border-left: 5px solid var(--success); color: var(--success); font-weight: bold; }
 
-        .page-num { font-weight: bold; }
-
-        .input-group { background: #f0f4f8; padding: 20px; border-radius: 12px; border: 2px solid var(--accent); margin-top: 20px; }
-        textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; resize: vertical; box-sizing: border-box; }
-        select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: white; font-weight: bold; }
+        /* LAYOUT ELEMENTEN */
+        .flex-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 20px; }
+        .flex-text { flex: 2; min-width: 300px; }
+        .side-img { flex: 1; min-width: 150px; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; margin-top: 10px; }
-        button:hover { background: #2980b9; }
-
-        .entry { border-left: 5px solid var(--success); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .scroll-window { max-height: 300px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px; }
+        /* INPUT & FEED */
+        .input-group { background: #f0f4f8; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); }
+        textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
+        select { width: 100%; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: bold; }
+        
+        .feed-section { margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px; }
+        .feed-category { background: var(--primary); color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; }
+        .entry { background: white; border-left: 5px solid var(--success); padding: 15px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        pre { white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 5px; font-size: 0.9em; }
     </style>
 </head>
 <body>
@@ -63,74 +48,104 @@
     <div id="login-screen">
         <div class="login-card">
             <h1>AI Opdrachtenboek</h1>
-            <input type="text" id="username" placeholder="Typ je naam...">
-            <button onclick="startApp()">Inloggen</button>
+            <input type="text" id="username" placeholder="Typ je volledige naam...">
+            <button onclick="startApp()">Start de Training</button>
         </div>
     </div>
 
     <div class="container" id="app-content">
         
         <div class="card" id="inhoud">
-            <h3>VOORTGANG & NAVIGATIE</h3>
+            <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list" id="main-menu">
-                <li onclick="scrollToId('p2')" class="status-info"><span>Pagina 2-3: Inleiding</span><span class="page-num">2</span></li>
-                <li onclick="scrollToId('p4')" id="menu-p4" class="status-todo"><span>Pagina 4: Pizza & Privacy</span><span class="page-num">4</span></li>
-                <li onclick="scrollToId('p6')" id="menu-p6" class="status-todo"><span>Pagina 6: Politieacademie</span><span class="page-num">6</span></li>
-                <li onclick="scrollToId('p7')" id="menu-p7" class="status-todo"><span>Pagina 7: Film in Emoticons</span><span class="page-num">7</span></li>
+                <li onclick="scrollToId('p2')" class="status-info"><span>Pagina 2-3: Inleiding & Principes</span><span class="page-num">2-3</span></li>
                 <li onclick="scrollToId('p8')" id="menu-p8" class="status-todo"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
-                <li onclick="scrollToId('p9')" id="menu-p9" class="status-todo"><span>Pagina 9: Roze Konijnen</span><span class="page-num">9</span></li>
-                <li onclick="scrollToId('p10')" id="menu-p10" class="status-todo"><span>Pagina 10: Fitness Coach</span><span class="page-num">10</span></li>
-                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Collega Methode</span><span class="page-num">11</span></li>
+                <li onclick="scrollToId('p9')" id="menu-p9" class="status-todo"><span>Pagina 9: Prompt Bouwen (Konijnen)</span><span class="page-num">9</span></li>
+                <li onclick="scrollToId('p10')" id="menu-p10" class="status-todo"><span>Pagina 10: AI als Assistent (Fitness)</span><span class="page-num">10</span></li>
+                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Experimenteren met Tips</span><span class="page-num">11</span></li>
             </ul>
         </div>
 
-        <div class="card" id="p2">
-            <h3>Pagina 2-3: Inleiding & Principes</h3>
-            <div class="scroll-window">
-                <p>Generatieve AI is als een zeer belezen stagiair. Je moet specifiek zijn...</p>
-                <ul>
-                    <li>Wees helder over de rol.</li>
-                    <li>Geef context.</li>
-                    <li>Stel kaders (lengte, toon, doelgroep).</li>
-                </ul>
+        <div class="card" id="p8">
+            <h3>PAGINA 8: TOETSEN & PRODUCTBESCHRIJVING</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <h4>OEFENING: UNIEKE TOETSEN</h4>
+                    <p>Een handige toepassing is het genereren van toetsvragen. Upload een artikel of plak een tekst en gebruik de volgende prompt:</p>
+                    <p><em>"Maak op basis van bijgevoegd artikel 5 sets van 5 meerkeuzevragen voor leerlingen van niveau [X]. Zorg dat de vragen variëren in moeilijkheidsgraad."</em></p>
+                    
+                    <h4>OEFENING: PRODUCTBESCHRIJVING</h4>
+                    <p>Stel, je moet een tekst schrijven voor een nieuw product, zoals een duurzame mok. Gebruik een 'few-shot' prompt waarbij je eerst een goed voorbeeld geeft van een bestaande tekst en AI vraagt de stijl te kopiëren voor jouw nieuwe product.</p>
+                </div>
+                <img src="afbeelding8.jpg" alt="Toetsen" class="side-img">
             </div>
         </div>
 
-        <div class="card" id="p4"><h3>Pagina 4: Pizza & Privacy</h3><p>Oefening met rollen.</p></div>
-        <div class="card" id="p6"><h3>Pagina 6: Politieacademie</h3><p>Samenvatten voor studenten.</p></div>
-        <div class="card" id="p8"><h3>Pagina 8: Toetsen maken</h3><p>Genereer vragen.</p></div>
+        <div class="card" id="p9">
+            <h3>PAGINA 9: OEFENING 3 - PROMPT BOUWEN</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <h4>STAP 1: ROLLEN & STIJLEN</h4>
+                    <p><strong>1A.</strong> Doe alsof je Mark Rutte bent, en leg uit vanuit een liberaal standpunt wat het belang is van roze konijntjes.</p>
+                    <p><strong>1B.</strong> Doe alsof je Geert Wilders bent, en leg uit vanuit een nostalgisch nationalistisch perspectief wat het probleem is met roze konijntjes.</p>
+                    <p><strong>1C.</strong> Doe alsof je Caroline van der Plas bent, en leg uit vanuit een boeren perspectief wat de mogelijkheden zijn van roze konijntjes in de landbouwketen.</p>
+                </div>
+                <img src="afbeelding9.jpg" alt="Politiek" class="side-img">
+            </div>
+            <h4>STAP 2: DE MEGA-PROMPT</h4>
+            <p>Schrijf een lange prompt en verwerk hierin: Tone of voice, Onderwerp, Doelgroep, Doel, Stijl en Unieke punten.</p>
+            <p><strong>Test-opdracht:</strong> Schrijf een encyclopedisch artikel voor Wikipedia over roze konijnen. Benoem herkomst, ras, leeftijd en verzet tegen de intensieve veehouderij.</p>
+        </div>
+
+        <div class="card" id="p10">
+            <h3>PAGINA 10: OEFENING 4 - CHATGPT ALS ASSISTENT</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <h4>WERKEN MET EEN ROL</h4>
+                    <p><strong>Stap 1:</strong> Vraag eerst simpel: "Wat is een goed fitness programma als je weer wilt beginnen?"</p>
+                    <p><strong>Stap 2 (De Rol):</strong> Gebruik een nieuwe chat: <em>"Ik ben een fitness trainer en voedingscoach. Help mij bij een holistische aanpak voor een man van 42 van 100 kilo die al drie jaar niet heeft bewogen en diabetes verschijnselen heeft. Stel mij eerst aanvullende vragen wat je moet weten."</em></p>
+                    <p><strong>Stap 3-5:</strong> Geef de info (42 jaar, 1m72, etc.) en laat het definitieve "fit en vitaal" programma maken.</p>
+                </div>
+                <img src="afbeelding10.jpg" alt="Fitness" class="side-img">
+            </div>
+        </div>
+
+        <div class="card" id="p11">
+            <h3>PAGINA 11: OEFENING 5 - EXPERIMENTEREN</h3>
+            <h4>DE COLLEGA-METHODE</h4>
+            <p><strong>Fout:</strong> "schrijf een facebook artikel wat onze partij nieuwe raadsleden oplevert."</p>
+            <p><strong>Beter:</strong> "Schrijf voor de doelgroep van aspirant raadsleden een artikel voor de website van politieke partij 'Nieuw Nederland' (Slogan: Iedereen erbij). Richt je op jongvolwassenen van 25-45 jaar met B2 taalniveau."</p>
+            
+            <h4>CONTEXT & REGENERATE</h4>
+            <p>Pas de prompt over online dating aan naar <strong>fakenieuws herkennen</strong> voor groep 7. Gebruik ook de "Regenerate" knop als het resultaat niet bevalt en stuur bij met vragen als: <em>"Kun je punt 3 nader toelichten?"</em> of <em>"Maak het compacter."</em></p>
+        </div>
 
         <div class="card" id="input-sectie">
-            <h3 style="color:var(--success)">OPDRACHT INDIENEN</h3>
+            <h3>JOUW OPDRACHT DEELNEMER</h3>
             <select id="opdracht-selector" onchange="updateOpdracht()">
-                <option value="p4">P4: Pizza & Privacy</option>
-                <option value="p6">P6: Politieacademie</option>
-                <option value="p7">P7: Film in Emoticons</option>
-                <option value="p8">P8: Unieke Toetsen</option>
-                <option value="p9">P9: Roze Konijnen</option>
-                <option value="p10">P10: Fitness Coach</option>
-                <option value="p11">P11: Collega Methode</option>
+                <option value="p8_toets">Pagina 8: Toetsen & Producten</option>
+                <option value="p9_politiek">Pagina 9: Roze Konijnen (Stijlen)</option>
+                <option value="p9_wiki">Pagina 9: Wikipedia Mega-Prompt</option>
+                <option value="p10_fitness">Pagina 10: Fitness Assistent</option>
+                <option value="p11_collega">Pagina 11: Collega Methode</option>
             </select>
 
             <div class="input-group">
-                <div id="opdracht-instructie" style="margin-bottom:10px; font-weight:bold;">Selecteer een opdracht...</div>
-                <textarea id="input-prompt" rows="3" placeholder="Jouw prompt..."></textarea>
-                <textarea id="input-resultaat" rows="4" placeholder="Het resultaat..."></textarea>
-                <button id="btn-deel">Deel resultaat & Markeer als klaar</button>
+                <textarea id="input-prompt" rows="3" placeholder="Wat was je volledige prompt?"></textarea>
+                <textarea id="input-resultaat" rows="6" placeholder="Wat was het resultaat van de AI?"></textarea>
+                <button id="btn-deel" onclick="verstuurInzending()">Verstuur naar Groepsfeed</button>
             </div>
+
+            <div id="feed-container">
+                </div>
         </div>
 
-        <div class="card">
-            <h3>Live Groepsfeed</h3>
-            <div id="feed-container"></div>
-        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Firebase Config (Zorg dat deze klopt met jouw project)
         const firebaseConfig = {
             apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
             authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
@@ -144,28 +159,72 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Functie voor navigeren (deze MOET op de window staan voor onclick)
-        window.scrollToId = function(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                console.error("Element met id " + id + " niet gevonden.");
-            }
-        };
-
+        // UI Functies
         window.startApp = () => {
             const n = document.getElementById('username').value;
-            if(!n) return alert("Naam invullen!");
+            if(!n) return alert("Voer je naam in!");
             localStorage.setItem('ai_user', n);
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
             checkProgress();
         };
 
-        // ... rest van je Firebase logica ...
-        // (Zorg dat je de checkProgress() en btn-deel functionaliteit behoudt zoals in de vorige stap)
+        window.scrollToId = (id) => document.getElementById(id).scrollIntoView();
 
+        function checkProgress() {
+            const opdrachten = ['p8', 'p9', 'p10', 'p11'];
+            opdrachten.forEach(id => {
+                if(localStorage.getItem('done_' + id)) {
+                    document.getElementById('menu-' + id).className = 'status-done';
+                }
+            });
+        }
+
+        window.verstuurInzending = () => {
+            const sel = document.getElementById('opdracht-selector');
+            const cat = sel.options[sel.selectedIndex].text;
+            const p = document.getElementById('input-prompt').value;
+            const r = document.getElementById('input-resultaat').value;
+            const n = localStorage.getItem('ai_user');
+
+            if(!p || !r) return alert("Vul beide velden in!");
+
+            push(ref(db, 'inzendingen'), { naam: n, categorie: cat, prompt: p, resultaat: r, timestamp: Date.now() });
+            
+            // Markeer pagina als gedaan op basis van selectie
+            const pagId = sel.value.split('_')[0];
+            localStorage.setItem('done_' + pagId, 'true');
+            checkProgress();
+
+            document.getElementById('input-prompt').value = "";
+            document.getElementById('input-resultaat').value = "";
+        };
+
+        // De Feed Ordenen
+        onValue(ref(db, 'inzendingen'), (snapshot) => {
+            const container = document.getElementById('feed-container');
+            container.innerHTML = '<h3>LIVE GROEPSFEED (GEORDEND)</h3>';
+            const data = snapshot.val();
+            if(!data) return;
+
+            // Ordenen per categorie
+            const categories = {};
+            Object.values(data).forEach(item => {
+                if(!categories[item.categorie]) categories[item.categorie] = [];
+                categories[item.categorie].push(item);
+            });
+
+            for(const [catName, items] of Object.entries(categories)) {
+                let section = `<div class="feed-section"><div class="feed-category">${catName}</div>`;
+                items.reverse().forEach(entry => {
+                    section += `<div class="entry"><b>${entry.naam}:</b><br><small>Prompt: ${entry.prompt}</small><details><summary>Bekijk antwoord</summary><pre>${entry.resultaat}</pre></details></div>`;
+                });
+                section += `</div>`;
+                container.innerHTML += section;
+            }
+        });
+
+        if(localStorage.getItem('ai_user')) startApp();
     </script>
 </body>
 </html>
