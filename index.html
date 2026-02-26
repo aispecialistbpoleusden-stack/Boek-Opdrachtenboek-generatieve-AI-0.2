@@ -1,30 +1,131 @@
-// Deze lus maakt de overige pagina's ACTIEF met een preview-systeem
-for (let i = 2; i <= total; i++) {
-    if (!document.getElementById('pg' + i)) {
-        const titel = paginasLijst[i] || `Module Onderwerp ${i}`;
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Doeboek Politieacademie 2026</title>
+    <style>
+        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 10; }
+        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-direction: column; }
+        .active { display: flex; }
+        #pg0 { background: url('afbeelding1.jpg') no-repeat center center; background-size: cover; justify-content: center; align-items: center; }
+        .cover-overlay { background: rgba(0, 48, 130, 0.9); padding: 40px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); max-width: 550px; }
+        .content { padding: 45px; overflow-y: auto; flex: 1; line-height: 1.7; }
+        .theorie-blok { background: #f0f4f8; border-left: 6px solid var(--polblauw); padding: 20px; margin: 20px 0; border-radius: 4px; }
+        .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 25px; margin: 20px 0; border-radius: 10px; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; margin-top: 10px; font-family: 'Consolas', monospace; height: 120px; }
+        .preview-box { border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; background: white; min-height: 100px; padding: 15px; }
+        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .feed-item { background: #f9f9f9; border-left: 5px solid var(--goud); padding: 10px; margin-bottom: 10px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div><strong>POLITIEACADEMIE | GENERATIEVE AI</strong></div>
+    <div class="nav-buttons">
+        <button onclick="changePage(-1)">⬅ VORIGE</button>
+        <span id="pageIndicator" style="margin: 0 15px; font-weight: bold;">VOORBLAD</span>
+        <button onclick="changePage(1)">VOLGENDE ➡</button>
+    </div>
+</nav>
+
+<div class="book-container" id="bookContainer">
+    <div class="page active" id="pg0">
+        <div class="cover-overlay">
+            <h1>AI DOEBOEK 2026</h1>
+            <p>Onderwijs & Toetsing in de Praktijk</p>
+            <div style="margin-top:30px;">
+                <label>Vul uw voornaam in:</label>
+                <input type="text" id="userName" style="width:100%; padding:10px; text-align:center;" placeholder="Voornaam..." oninput="window.uName = this.value">
+            </div>
+        </div>
+    </div>
+    
+    <div class="page" id="pg29">
+        <div class="content">
+            <h1>De Toon-tafel (Live Feed)</h1>
+            <div id="sharedFeed">Verbinding maken met database...</div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
+        authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
+        databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "opdrachtenboek-generatieve-ai",
+        storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
+        messagingSenderId: "183622966071",
+        appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    window.uName = "Collega";
+
+    // --- HIER VUL JE DE INHOUD VAN JE PAGINA'S IN ---
+    const paginasData = {
+        1: { t: "Inleiding AI", info: "AI is een copilot, geen automatische piloot.", opdr: "Genereer een welkomstboodschap." },
+        2: { t: "Prompt Engineering", info: "Context is koning bij prompts.", opdr: "Maak een prompt voor een lesplan." },
+        16: { t: "Toetsconstructie", info: "Focus op sterke afleiders.", opdr: "Ontwerp een MCQ-vraag in HTML." },
+        26: { t: "Web-Casuïstiek", info: "Visualiseer scenario's.", opdr: "Maak een briefing-pagina." }
+        // Voeg hier simpelweg 3, 4, 5 enzovoort toe...
+    };
+
+    const container = document.getElementById('bookContainer');
+    for (let i = 1; i <= 30; i++) {
+        if (i === 29) continue; // Feed pagina overslaan
+        const data = paginasData[i] || { t: `Module ${i}`, info: "Theorie volgt...", opdr: "Opdracht volgt..." };
         const div = document.createElement('div');
         div.id = 'pg' + i; div.className = 'page';
         div.innerHTML = `
             <div class="content">
-                <h1>${i}. ${titel}</h1>
-                <div class="theorie-blok"><strong>Context:</strong> Hoe AI binnen dit thema bijdraagt aan de politiepraktijk...</div>
+                <h1>${i}. ${data.t}</h1>
+                <div class="theorie-blok"><strong>De Theorie:</strong> ${data.info}</div>
                 <div class="opdracht-blok">
-                    <strong>Opdracht:</strong> Genereer een onderdeel voor uw les en plak de code hieronder.
-                    
-                    <label>Maak/Plak hier uw product:</label>
-                    <textarea class="code-area" id="in${i}" 
-                        placeholder="Plak hier de output van AI..." 
-                        oninput="document.getElementById('pre${i}').innerHTML = this.value">
-                    </textarea>
-                    
-                    <label>Live Preview:</label>
-                    <div class="preview-box" id="pre${i}">
-                        <em style="color: #999;">Wacht op input...</em>
-                    </div>
-                    
-                    <button class="share-btn" onclick="shareWithFirebase('${titel}')">Deel Product 🚀</button>
+                    <strong>Opdracht:</strong> ${data.opdr}
+                    <textarea id="in${i}" oninput="document.getElementById('pre${i}').innerHTML = this.value" placeholder="Plak hier je product-code..."></textarea>
+                    <div class="preview-box" id="pre${i}"><em>Preview...</em></div>
+                    <button class="share-btn" onclick="share('${data.t}')">Deel Product 🚀</button>
                 </div>
             </div>`;
-        container.appendChild(div);
+        container.insertBefore(div, document.getElementById('pg29'));
     }
-}
+
+    // Navigatie & Database functies
+    window.current = 0;
+    window.changePage = (n) => {
+        let t = window.current + n;
+        if (t >= 0 && t <= 30) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            window.current = t;
+            document.getElementById('pg' + t).classList.add('active');
+            document.getElementById('pageIndicator').innerText = t === 0 ? "VOORBLAD" : `PAGINA ${t} / 30`;
+        }
+    };
+
+    window.share = (type) => {
+        push(ref(db, 'opdrachten'), { naam: window.uName, type: type, tijd: new Date().toLocaleTimeString() });
+        alert("Gedeeld!");
+    };
+
+    onValue(ref(db, 'opdrachten'), (s) => {
+        const feed = document.getElementById('sharedFeed');
+        feed.innerHTML = "";
+        const data = s.val();
+        if(data) Object.values(data).reverse().forEach(item => {
+            feed.innerHTML += `<div class="feed-item"><strong>${item.type}</strong> door ${item.naam} <span style="float:right">${item.tijd}</span></div>`;
+        });
+    });
+</script>
+</body>
+</html>
