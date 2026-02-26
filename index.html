@@ -3,135 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Interactief</title>
+    <title>Interactief AI Opdrachtenboek</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background: #f4f7f6; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        input, textarea, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        button:hover { background: #0056b3; }
-        .entry { border-left: 5px solid #007bff; padding: 10px; margin-bottom: 10px; background: #e9f5ff; font-size: 0.9em; }
-        .entry b { color: #007bff; }
-        #app { display: none; }
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1 { border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 0; }
+        h2, h3 { color: var(--accent); }
+        
+        select, textarea, input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        button { background: var(--accent); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
+        button:hover { background: #2980b9; }
+
+        .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .opdracht-img { width: 100%; max-height: 400px; object-fit: contain; background: #fff; border-radius: 8px; margin-bottom: 15px; display: none; border: 1px solid #eee; }
+        
+        .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: #fff; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .entry b { color: var(--accent); }
+        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.9em; overflow-x: auto; }
+        
+        #app-content { display: none; }
+        #login-screen { text-align: center; }
+        details { cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="login" class="card">
-        <h2>Welkom bij het AI Opdrachtenboek</h2>
-        <p>Voer je naam in om te beginnen:</p>
-        <input type="text" id="username" placeholder="Je naam...">
-        <button onclick="login()">Starten</button>
+<div class="container">
+    <div id="login-screen" class="card">
+        <h1>AI Opdrachtenboek</h1>
+        <p>Voer je naam in om deel te nemen aan de interactieve sessie:</p>
+        <input type="text" id="username" placeholder="Je volledige naam...">
+        <button onclick="startApp()">Start het Werkboek</button>
     </div>
 
-    <div id="app">
+    <div id="app-content">
         <div class="card">
-            <h2>Hoi <span id="display-name"></span>! Werk aan een opdracht</h2>
-            <label>Selecteer opdracht:</label>
-            <select id="opdracht-nr">
-                <option value="1">Oefening 1: Eenvoudig beginnen</option>
-                <option value="2">Oefening 2: Testen met GPT's</option>
+            <h1>Hoi, <span id="user-display"></span>!</h1>
+            <label>Kies een opdracht uit het boek:</label>
+            <select id="opdracht-selector">
+                <option value="1a">Oefening 1A: Eenvoudig beginnen</option>
+                <option value="1b">Oefening 1B: Verschillende GPT's</option>
+                <option value="2">Oefening 2: Testen met verschillende prompts</option>
                 <option value="3">Oefening 3: Prompt bouwen</option>
-                <option value="14">Oefening 14: Afsluiting</option>
+                <option value="4">Oefening 4: ChatGPT als assistent</option>
+                <option value="5">Oefening 5: Experimenteren met tips</option>
+                <option value="6">Oefening 6: De zeven gouden W-vragen</option>
+                <option value="7">Oefening 7: Werken met tabellen</option>
+                <option value="8">Oefening 8: Laat de AI de prompt schrijven</option>
+                <option value="9">Oefening 9: Taaltoets laten maken</option>
+                <option value="10">Oefening 10: Prompt Engineering</option>
+                <option value="11">Oefening 11: Afbeeldingen genereren</option>
+                <option value="12">Oefening 12: There is an AI for that!</option>
             </select>
 
-            <label>Jouw Prompt:</label>
-            <textarea id="prompt-input" rows="3" placeholder="Wat heb je ingetypt?"></textarea>
+            <div class="instructie-box">
+                <img id="opdracht-beeld" class="opdracht-img" src="" alt="Opdracht afbeelding">
+                <div id="opdracht-tekst">Selecteer een opdracht om de instructies te zien.</div>
+            </div>
 
-            <label>Resultaat / Output van de AI:</label>
-            <textarea id="resultaat-input" rows="5" placeholder="Plak hier het antwoord van de AI..."></textarea>
-
-            <button id="btn-verstuur">Deel met de groep</button>
+            <label>Jouw gebruikte Prompt:</label>
+            <textarea id="input-prompt" rows="3" placeholder="Wat heb je ingetypt bij de AI?"></textarea>
+            
+            <label>Resultaat van de AI:</label>
+            <textarea id="input-resultaat" rows="6" placeholder="Plak hier de output van de AI..."></textarea>
+            
+            <button id="btn-deel">Deel mijn resultaat</button>
         </div>
 
         <div class="card">
-            <h3>Inzendingen van anderen (Real-time)</h3>
-            <div id="feed">Laden van inzendingen...</div>
+            <h2>Live Feed: Leren van elkaar</h2>
+            <div id="feed-container">Laden van inzendingen...</div>
         </div>
     </div>
+</div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
-            authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
-            databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "opdrachtenboek-generatieve-ai",
-            storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
-            messagingSenderId: "183622966071",
-            appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
-        };
+    // JOUW FIREBASE CONFIGURATIE
+    const firebaseConfig = {
+        apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
+        authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
+        databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "opdrachtenboek-generatieve-ai",
+        storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
+        messagingSenderId: "183622966071",
+        appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-        // Login logica
-        window.login = () => {
-            const name = document.getElementById('username').value;
-            if (name) {
-                localStorage.setItem('ai_user', name);
-                showApp(name);
-            }
-        };
+    // DE CONTENT UIT DE PDF (Zonder mapjes voor afbeeldingen)
+    const opdrachtData = {
+        "1a": { t: "Eenvoudig beginnen", i: "Stel de vraag: 'Maak de volgende zin af: De Italiaanse man had een hekel aan pizza met Ham, kaas en ..'. Vraag daarna om uitleg over privacy voor groep 7.", img: "oefening1a.jpg" },
+        "1b": { t: "Verschillende GPT's", i: "Herhaal de vragen uit 1A in Gemini, ChatGPT en Copilot. Vergelijk de verschillen in antwoorden.", img: "oefening1b.jpg" },
+        "2": { t: "Testen met prompts", i: "Laat een docent Politieacademie privacy uitleggen in 8 punten. Of herschrijf een tekst naar B1 niveau.", img: "oefening2.jpg" },
+        "3": { t: "Prompt bouwen", i: "Gebruik rollen: Laat Mark Rutte of Geert Wilders het belang van roze konijntjes uitleggen.", img: "oefening3.jpg" },
+        "4": { t: "ChatGPT als assistent", i: "Maak een fitnessprogramma, maar dwing de AI om eerst vragen aan jóú te stellen over je gezondheid.", img: "oefening4.jpg" },
+        "5": { t: "Tips experiment", i: "Vergelijk een korte prompt met een uitgebreide prompt inclusief context en doelgroep.", img: "oefening5.jpg" },
+        "6": { t: "7 Gouden W-vragen", i: "Pas de W-vragen methode toe (Wie, Wat, Waar, etc.) om een kerstverhaal over een eekhoorn te schrijven.", img: "oefening6.jpg" },
+        "7": { t: "Werken met tabellen", i: "Laat de AI een tabel maken van de 9 werelden uit de Noorse mythologie met hun kenmerken.", img: "oefening7.jpg" },
+        "8": { t: "AI schrijft de prompt", i: "Vraag de AI: 'Ik wil een cursus over stenen gereedschap maken, help mij deze prompt te verbeteren'.", img: "oefening8.jpg" },
+        "9": { t: "Taaltoets maken", i: "Kopieer vragen van hbotaaltoets.nl naar de AI en kijk of hij de juiste antwoorden geeft.", img: "oefening9.jpg" },
+        "10": { t: "Prompt Engineering", i: "Experimenteer met de toon van het gesprek. Laat 'Bob' (een virtuele collega) discussiëren over klimaat.", img: "oefening10.jpg" },
+        "11": { t: "Afbeeldingen", i: "Genereer een afbeelding van een futuristisch klaslokaal in digitale kunst stijl.", img: "oefening11.jpg" },
+        "12": { t: "AI Tools", i: "Zoek een tool op theresanaiforthat.com die nuttig is voor jouw werk en deel deze.", img: "oefening12.jpg" }
+    };
 
-        function showApp(name) {
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('display-name').innerText = name;
-        }
+    // UI LOGICA
+    window.startApp = () => {
+        const name = document.getElementById('username').value;
+        if (!name) return alert("Vul je naam in!");
+        localStorage.setItem('ai_naam', name);
+        initView(name);
+    };
 
-        // Check of we al zijn ingelogd
-        const savedName = localStorage.getItem('ai_user');
-        if (savedName) showApp(savedName);
+    function initView(name) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app-content').style.display = 'block';
+        document.getElementById('user-display').innerText = name;
+        updateOpdracht();
+    }
 
-        // Gegevens versturen
-        document.getElementById('btn-verstuur').onclick = () => {
-            const opdracht = document.getElementById('opdracht-nr').value;
-            const prompt = document.getElementById('prompt-input').value;
-            const resultaat = document.getElementById('resultaat-input').value;
-            const naam = localStorage.getItem('ai_user');
+    const sel = document.getElementById('opdracht-selector');
+    sel.onchange = updateOpdracht;
 
-            if (!prompt || !resultaat) return alert("Vul alles in!");
+    function updateOpdracht() {
+        const data = opdrachtData[sel.value];
+        document.getElementById('opdracht-tekst').innerHTML = `<h3>${data.t}</h3><p>${data.i}</p>`;
+        const imgEl = document.getElementById('opdracht-beeld');
+        imgEl.src = data.img;
+        imgEl.style.display = "block";
+        // Reset image if loading fails (bijv. als bestand niet bestaat op GitHub)
+        imgEl.onerror = () => { imgEl.style.display = "none"; };
+    }
 
-            const newPostRef = push(ref(db, 'inzendingen'));
-            set(newPostRef, {
-                naam, opdracht, prompt, resultaat, timestamp: Date.now()
-            });
+    // DATABASE ACTIES
+    document.getElementById('btn-deel').onclick = () => {
+        const promptText = document.getElementById('input-prompt').value;
+        const resultText = document.getElementById('input-resultaat').value;
+        const naam = localStorage.getItem('ai_naam');
+        const oefeningTitel = opdrachtData[sel.value].t;
 
-            // Reset velden
-            document.getElementById('prompt-input').value = '';
-            document.getElementById('resultaat-input').value = '';
-            alert("Gedeeld met de groep!");
-        };
+        if(!promptText || !resultText) return alert("Vul beide velden in!");
 
-        // Live Feed ophalen
-        const feedRef = ref(db, 'inzendingen');
-        onValue(feedRef, (snapshot) => {
-            const data = snapshot.val();
-            const feedDiv = document.getElementById('feed');
-            feedDiv.innerHTML = '';
-            
-            if (data) {
-                // Sorteer op tijd (nieuwste boven)
-                Object.values(data).reverse().forEach(item => {
-                    const entry = document.createElement('div');
-                    entry.className = 'entry';
-                    entry.innerHTML = `
-                        <b>${item.naam}</b> werkt aan <b>Opdracht ${item.opdracht}</b>:<br>
-                        <i>Prompt:</i> ${item.prompt}<br>
-                        <details>
-                            <summary>Bekijk AI Resultaat</summary>
-                            <pre style="white-space: pre-wrap; background: #fff; padding: 5px;">${item.resultaat}</pre>
-                        </details>
-                    `;
-                    feedDiv.appendChild(entry);
-                });
-            } else {
-                feedDiv.innerText = 'Nog geen inzendingen. Wees de eerste!';
-            }
+        const inzendingenRef = ref(db, 'inzendingen');
+        const nieuweInzending = push(inzendingenRef);
+        set(nieuweInzending, {
+            naam: naam,
+            oefening: oefeningTitel,
+            prompt: promptText,
+            result: resultText,
+            tijd: Date.now()
         });
-    </script>
+
+        document.getElementById('input-prompt').value = '';
+        document.getElementById('input-resultaat').value = '';
+        alert("Succesvol gedeeld met de groep!");
+    };
+
+    // REAL-TIME FEED
+    const feedRef = ref(db, 'inzendingen');
+    onValue(feedRef, (snapshot) => {
+        const container = document.getElementById('feed-container');
+        container.innerHTML = '';
+        const data = snapshot.val();
+        if(data) {
+            // Laatste inzendingen bovenaan
+            const items = Object.values(data).reverse();
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'entry';
+                div.innerHTML = `
+                    <b>${item.naam}</b> werkt aan <i>${item.oefening}</i>:<br>
+                    <strong>De Prompt:</strong> ${item.prompt}<br>
+                    <details>
+                        <summary>Klik om AI Resultaat te zien</summary>
+                        <pre>${item.result}</pre>
+                    </details>
+                `;
+                container.appendChild(div);
+            });
+        } else {
+            container.innerHTML = '<p>Nog geen inzendingen. Wees de eerste!</p>';
+        }
+    });
+
+    // Onthoud login bij verversen
+    const savedName = localStorage.getItem('ai_naam');
+    if(savedName) initView(savedName);
+</script>
+
 </body>
 </html>
