@@ -1,179 +1,30 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Doeboek Politieacademie 2026</title>
-    <style>
-        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; --rood: #d63031; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 10; }
-        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-
-        .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; }
-        .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-direction: column; }
-        .active { display: flex; }
-        
-        /* VOORBLAD */
-        #pg0 { background: url('afbeelding1.jpg') no-repeat center center; background-size: cover; justify-content: center; align-items: center; }
-        .cover-overlay { background: rgba(0, 48, 130, 0.9); padding: 40px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); max-width: 600px; }
-
-        /* INHOUD */
-        .content { padding: 45px; overflow-y: auto; flex: 1; line-height: 1.7; }
-        .theorie-blok { background: #f0f4f8; border-left: 6px solid var(--polblauw); padding: 20px; margin: 20px 0; border-radius: 4px; }
-        .instructie-blok { background: #fffde7; border: 1px dashed #fbc02d; padding: 15px; margin: 15px 0; }
-        .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 25px; margin: 20px 0; border-radius: 10px; }
-
-        textarea, input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; margin-top: 10px; box-sizing: border-box; font-size: 1rem; }
-        .code-area { font-family: 'Consolas', monospace; height: 120px; background: #f9f9f9; }
-        
-        .preview-box { border: 2px solid #ddd; border-radius: 8px; margin-top: 15px; background: white; min-height: 100px; padding: 15px; }
-        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .share-btn:hover { background: #001a4d; }
-
-        .feed-item { background: #f9f9f9; border-left: 5px solid var(--goud); padding: 10px; margin-bottom: 10px; font-size: 0.9em; }
-    </style>
-</head>
-<body>
-
-<nav>
-    <div id="nav-title">POLITIEACADEMIE | AI DOEBOEK</div>
-    <div class="nav-buttons">
-        <button onclick="changePage(-1)">⬅ VORIGE</button>
-        <span id="pageIndicator" style="margin: 0 15px; font-weight: bold;">VOORBLAD</span>
-        <button onclick="changePage(1)">VOLGENDE ➡</button>
-    </div>
-</nav>
-
-<div class="book-container" id="bookContainer">
-    
-    <div class="page active" id="pg0">
-        <div class="cover-overlay">
-            <h1>AI IN HET ONDERWIJS</h1>
-            <p>Interactief Doeboek voor Docenten</p>
-            <div style="margin-top:30px;">
-                <label>Vul uw voornaam in om te identificeren:</label>
-                <input type="text" id="userName" placeholder="Voornaam..." oninput="updateName(this.value)">
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="pg1">
-        <div class="content">
-            <h1>1. Wat is Generatieve AI?</h1>
-            <div class="theorie-blok">
-                <strong>Theorie:</strong> Generatieve AI voorspelt data op basis van waarschijnlijkheid. Het begrijpt geen wetten, maar herkent patronen in wetteksten. Binnen de Politieacademie gebruiken we dit als 'copilot' voor tekst en ontwerp.
-            </div>
-            <div class="instructie-blok">
-                <strong>Gevaren:</strong> Hallucinaties (fictieve feiten) en Bias. Gebruik AI nooit als bron van waarheid, maar als vormgever van uw eigen expertise.
-            </div>
-            <div class="opdracht-blok">
-                <strong>Opdracht:</strong> <span class="user-greeting">Collega</span>, omschrijf in één zin hoe AI uw administratieve last zou kunnen verlagen.
-                <textarea id="ans1" placeholder="Typ uw reflectie hier..."></textarea>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="pg16">
-        <div class="content">
-            <h1>16. Toetsconstructie & Validatie</h1>
-            <div class="theorie-blok">
-                <strong>Context:</strong> Een goede toetsvraag vereist sterke 'distractors' (afleiders). AI kan helpen deze te genereren op basis van veelvoorkomende fouten van studenten.
-            </div>
-            <div class="opdracht-blok">
-                <strong>Productie:</strong> Genereer een MCQ-vraag over 'Bevoegdheden' en plak de HTML-code hieronder.
-                <textarea class="code-area" id="in16" placeholder="Plak HTML hier..." oninput="document.getElementById('pre16').innerHTML = this.value"></textarea>
-                <div class="preview-box" id="pre16">Preview van de toetsvraag...</div>
-                <button class="share-btn" onclick="shareWithFirebase('Toetsontwerp')">Deel Product 🚀</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="pg26">
-        <div class="content">
-            <h1>26. Digitale Leeromgeving Bouwen</h1>
-            <div class="theorie-blok">
-                <strong>Concept:</strong> Door AI een webpagina te laten genereren, kunt u studenten onderdompelen in een realistische digitale casus (bijv. een gesimuleerd politiesysteem).
-            </div>
-            <div class="opdracht-blok">
-                <strong>Productie:</strong> Plak de HTML/CSS voor een briefing-pagina hieronder.
-                <textarea class="code-area" id="in26" placeholder="Plak volledige code hier..." oninput="updateIframe(this.value)"></textarea>
-                <div class="preview-box">
-                    <iframe id="ifr26" style="width:100%; height:200px; border:none;"></iframe>
+// Deze lus maakt de overige pagina's ACTIEF met een preview-systeem
+for (let i = 2; i <= total; i++) {
+    if (!document.getElementById('pg' + i)) {
+        const titel = paginasLijst[i] || `Module Onderwerp ${i}`;
+        const div = document.createElement('div');
+        div.id = 'pg' + i; div.className = 'page';
+        div.innerHTML = `
+            <div class="content">
+                <h1>${i}. ${titel}</h1>
+                <div class="theorie-blok"><strong>Context:</strong> Hoe AI binnen dit thema bijdraagt aan de politiepraktijk...</div>
+                <div class="opdracht-blok">
+                    <strong>Opdracht:</strong> Genereer een onderdeel voor uw les en plak de code hieronder.
+                    
+                    <label>Maak/Plak hier uw product:</label>
+                    <textarea class="code-area" id="in${i}" 
+                        placeholder="Plak hier de output van AI..." 
+                        oninput="document.getElementById('pre${i}').innerHTML = this.value">
+                    </textarea>
+                    
+                    <label>Live Preview:</label>
+                    <div class="preview-box" id="pre${i}">
+                        <em style="color: #999;">Wacht op input...</em>
+                    </div>
+                    
+                    <button class="share-btn" onclick="shareWithFirebase('${titel}')">Deel Product 🚀</button>
                 </div>
-                <button class="share-btn" onclick="shareWithFirebase('Web-module')">Deel Webpagina 🚀</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="pg29">
-        <div class="content">
-            <h1>29. De Toon-tafel (Live)</h1>
-            <div class="theorie-blok">Hieronder verschijnen de bijdragen van uw collega's in real-time.</div>
-            <div id="sharedFeed">Laden van bijdragen...</div>
-        </div>
-    </div>
-
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
-        authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
-        databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "opdrachtenboek-generatieve-ai",
-        storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
-        messagingSenderId: "183622966071",
-        appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    window.userName = "Collega";
-    window.updateName = (v) => { 
-        window.userName = v || "Collega"; 
-        document.querySelectorAll('.user-greeting').forEach(e => e.innerText = window.userName);
-    };
-
-    window.current = 0;
-    const total = 30;
-
-    window.changePage = (n) => {
-        let t = window.current + n;
-        if (t >= 0 && t <= total) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            window.current = t;
-            const targetPg = document.getElementById('pg' + t);
-            if(targetPg) targetPg.classList.add('active');
-            document.getElementById('pageIndicator').innerText = t === 0 ? "VOORBLAD" : `PAGINA ${t} / ${total}`;
-        }
-    };
-
-    window.shareWithFirebase = (type) => {
-        push(ref(db, 'opdrachten'), { naam: window.userName, type: type, tijd: new Date().toLocaleTimeString() });
-        alert("Gedeeld op de toon-tafel!");
-    };
-
-    onValue(ref(db, 'opdrachten'), (s) => {
-        const feed = document.getElementById('sharedFeed');
-        feed.innerHTML = "";
-        const data = s.val();
-        if(data) Object.values(data).reverse().forEach(i => {
-            feed.innerHTML += `<div class="feed-item"><strong>${i.type}</strong> door ${i.naam} <span style="float:right">${i.tijd}</span></div>`;
-        });
-    });
-
-    window.updateIframe = (v) => {
-        const d = document.getElementById('ifr26').contentDocument;
-        d.open(); d.write(v); d.close();
-    };
-
-    // GENEREREN VAN TUSSENLIGGENDE PAGINA'S
-    const container = document.getElementById('bookContainer');
-    const paginasLijst = {
-        2: "Prompt Engineering:
+            </div>`;
+        container.appendChild(div);
+    }
+}
