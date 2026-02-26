@@ -3,218 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generatieve AI Doeboek</title>
+    <title>AI Doeboek Politieonderwijs 2026</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        nav { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .nav-buttons button { background: var(--accent); border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        
-        .book-container { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 20px; overflow: hidden; }
-        .page { background: var(--white); width: 100%; max-width: 900px; height: 85vh; display: none; flex-direction: column; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .active { display: flex; }
-        
-        .content { padding: 40px; overflow-y: auto; flex: 1; line-height: 1.6; color: #333; }
-        
-        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; font-size: 1.8em; }
-        h2 { color: var(--accent); margin-top: 25px; font-size: 1.4em; }
-        h3 { color: #7f8c8d; font-size: 1em; margin-bottom: 5px; }
-        
-        .warning-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; margin: 20px 0; }
-        .principle-box { background: #e1f5fe; border-left: 5px solid var(--accent); padding: 15px; margin: 15px 0; }
-        .exercise-box { background: #f8f9fa; border: 1px solid #dee2e6; padding: 20px; border-radius: 8px; margin: 20px 0; }
-        
-        img { max-width: 100%; height: auto; border-radius: 5px; }
-        .flex-container { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .flex-column { flex: 1; min-width: 300px; }
-        
-        pre { background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; white-space: pre-wrap; border: 1px solid #eee; }
-        footer { font-size: 0.8em; color: #888; margin-top: 40px; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
-        input[type="text"] { width: 100%; padding: 12px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); }
+        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .active { display: flex; flex-direction: column; }
+        .content { padding: 45px; overflow-y: auto; flex: 1; line-height: 1.7; color: #333; }
+        h1 { color: var(--polblauw); font-size: 2em; border-bottom: 2px solid var(--goud); padding-bottom: 10px; }
+        .info-box { background: #e3f2fd; border-left: 6px solid var(--polblauw); padding: 15px; margin: 15px 0; }
+        .praktijk { background: #f1f8e9; border: 2px solid var(--accent); padding: 20px; margin: 15px 0; border-radius: 10px; }
+        textarea { width: 100%; height: 100px; font-family: monospace; padding: 10px; border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; box-sizing: border-box; }
+        .preview-window { border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; min-height: 150px; background: #fff; }
+        .feed-item { background: #fff; border-left: 5px solid var(--goud); padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div><strong>Generatieve AI Doeboek</strong></div>
+    <div><strong>POLITIEACADEMIE | GENERATIEVE AI</strong></div>
     <div class="nav-buttons">
-        <button onclick="changePage(-1)">⬅ Vorige</button>
-        <span id="pageIndicator" style="margin: 0 15px; font-family: monospace;">Pagina 1</span>
-        <button onclick="changePage(1)">Volgende ➡</button>
+        <button onclick="changePage(-1)">Vorige</button>
+        <span id="pageIndicator" style="margin: 0 15px; font-family: monospace;">Pagina 1 / 30</span>
+        <button onclick="changePage(1)">Volgende</button>
     </div>
 </nav>
 
-<div class="book-container">
-
+<div class="book-container" id="bookContainer">
     <div class="page active" id="pg1">
         <div class="content">
-            <img src="afbeelding1.jpg" alt="Cover afbeelding">
-            <div style="margin-top: 30px;">
-                <label><strong>Invoerveld:</strong></label>
-                <input type="text" placeholder="Typ hier je tekst...">
-            </div>
+            <h1>Module 1: De AI-Assistent</h1>
+            <div class="info-box">Generatieve AI is geen zoekmachine, maar een redeneerhulp. We gebruiken het voor het ontwerpen van onderwijs.</div>
+            <div class="praktijk"><strong>Opdracht 1:</strong> Stel een 'Systeem-prompt' op waarbij AI fungeert als een onderwijskundig expert voor de Politieacademie.</div>
         </div>
     </div>
 
-    <div class="page" id="pg2">
+    <div class="page" id="pg16">
         <div class="content">
-            <h1>INHOUDSOPGAVE</h1>
-            <pre>Inhoudsopgave ........................................................................................................................................ 1
-Inleiding: .................................................................................................................................................. 2
-Waarschuwing ..................................................................................................................................... 2
-Principes bij gebruik Generatieve AI .................................................................................................... 2
-Tips: ...................................................................................................................................................... 3
-Oefening 1A: eenvoudig beginnen .......................................................................................................... 4
-Oefening 1B: Werken met verschillende GPT’s....................................................................................... 5
-Oefening 2: test onderstaande prompts met verschillende GPT’s ......................................................... 6
-Oefening 3: Prompt bouwen ................................................................................................................... 9
-Oefening 4: Gebruik ChatGPT als assistent ........................................................................................... 10
-Oefening 5: experimenteren met de tips .............................................................................................. 11
-Oefening 6: de zeven gouden w-vragen methode ................................................................................ 13
-Oefening 7: Werken met tabellen ......................................................................................................... 15
-Oefening 8: Laat het taalmodel de prompts voor je schrijven .............................................................. 16
-Oefening 9: Taaltoets laten maken ....................................................................................................... 17
-Oefening 10: Prompt engineering. ........................................................................................................ 18
-Oefening 11 Afbeeldingen genereren ................................................................................................... 20
-Oefening 12: There is an AI for that! ..................................................................................................... 25
-Overzicht gebruikte sites ....................................................................................................................... 27</pre>
-            <footer>Generatieve AI opdrachtenboek - 2e editie. © Lilian Haak 2024</footer>
+            <h1>Module 4: Toetsvragen Genereren</h1>
+            <div class="info-box">Focus op MCQ (Multiple Choice Questions) met sterke afleiders.</div>
+            <textarea id="in16" placeholder="Plak HTML-vraag hier..." oninput="document.getElementById('pre16').innerHTML = this.value"></textarea>
+            <div class="preview-window" id="pre16"></div>
+            <button class="share-btn" onclick="shareWithFirebase('MCQ-Vraag')">Deel met collega's 🚀</button>
         </div>
     </div>
 
-    <div class="page" id="pg3">
+    <div class="page" id="pg17">
         <div class="content">
-            <h3>Generative AI doeboek pagina 2</h3>
-            <h1>INLEIDING:</h1>
-            <p>Welkom bij het "Grote Generatieve AI Doe-Boek"! Dit opdrachtenboek hoort bij het generatieve AI theorieboek en geeft je veel ideen om aan de gang te gaan met generatieve AI. We geloven sterk in het principe: 'leren door te doen'. Generatieve AI wordt pas echt begrepen als je ermee aan de slag gaat. Daarom hebben we dit boek praktisch en interactief gemaakt. Je vindt hier oefeningen en voorbeelden die je direct kunt toepassen in je werk of studie.</p>
-            <div class="warning-box">
-                <strong>WAARSCHUWING</strong><br>
-                Voor vele generatieve AI geldt:<br>
-                • We weten niet: o Waar de systemen staan, o Wie erbij kan, o Wie alles leest…<br>
-                • Je vragen en verstrekte worden gebruikt om het systeem te verbeteren<br>
-                • Output van je vragen kan bij andere gebruikers terecht komen<br>
-                • Gebruik nooit politie-account, hergebruik niet je wachtwoord!<br>
-                • Geen persoonsgevoelige informatie, geen politie-informatie, geen AVG/WPG<br>
-                • Algemeen: “Wie is verantwoordelijk voor deze data?”<br>
-                Dus: Weet wat je deelt, met wie je deelt en met de juiste middelen.
-            </div>
-            <h1>PRINCIPES BIJ GEBRUIK GENERATIEVE AI</h1>
-            <div class="principle-box">
-                <strong>PRINCIPE 1: ZORGVULDIGE OMGANG MET GEVOELIGE INFORMATIE</strong>
-                <ul>
-                    <li>Gebruik uw zakelijk e-mailadres uitsluitend voor professionele doeleinden. Voor persoonlijke of informele communicatie, gebruik een privé e-mailadres en zorg ervoor dat u verschillende wachtwoorden gebruikt voor elk account.</li>
-                    <li>Voeg nooit persoonlijke gegevens toe, zoals die van uzelf, collega's of burgers. Dit is niet alleen een kwestie van privacy, maar ook een vereiste volgens de Algemene Verordening Gegevensbescherming (AVG).</li>
-                    <li>Deel en upload enkel teksten die openbaar gemaakt mogen worden. Gebruik geen vertrouwelijke of gevoelige documenten of informatie.</li>
-                </ul>
-            </div>
+            <h1>Module 4: Rationales Valideren</h1>
+            <p>Goede feedback is essentieel voor de student. Laat AI uitleggen waarom een fout antwoord fout is.</p>
+            <div class="praktijk"><strong>Prompt:</strong> "Schrijf een rationale voor elke afleider bij de vraag over Artikel 8 WVW."</div>
         </div>
     </div>
 
-    <div class="page" id="pg4">
+    <div class="page" id="pg26">
         <div class="content">
-            <h3>Generative AI doeboek pagina 3</h3>
-            <div class="principle-box"><strong>PRINCIPE 2: WEES ZELF DE EXPERT</strong><ul><li>Onthoud dat een taalmodel geen vervanging is voor uw professionele kennis.</li><li>Beschouw het taalmodel als een hulpmiddel voor het schrijven.</li><li>Voer uw eigen instructies en feiten in.</li></ul></div>
-            <div class="principle-box"><strong>PRINCIPE 3: DUBBELCHECK DE ANTWOORDEN</strong><ul><li>De nauwkeurigheid en betrouwbaarheid zijn belangrijker dan snelheid.</li><li>Elk taalmodel kan fouten maken.</li><li>Gebruik en vermeld betrouwbare bronnen.</li></ul></div>
-            <div class="principle-box"><strong>PRINCIPE 4: HANTEEER DE BEROEPSCODE</strong><ul><li>Geen geautomatiseerde besluitvorming die personen benadeelt.</li><li>Niet gebruiken voor antwoorden tijdens toetsen en examens.</li><li>Presenteren van AI werk als eigen werk is fraude.</li><li>Tools als bron vermelden bij professionele documenten.</li></ul></div>
-            <div class="principle-box"><strong>PRINCIPE 5: HEB OOG VOOR ETHISCHE ASPECTEN</strong><ul><li>AI systemen gebruiken veel energie, water en andere natuurlijk grondstoffen. Zet het alleen in indien de uitkomsten een toegevoegde waarde hebben.</li><li>AI systemen zijn getraind met de gegevens uit het verleden, inclusief alle vooroordelen uit het verleden. Controleer de uitkomsten en wordt geen naprater van oude vooroordelen en verkeerde aannamen.</li></ul></div>
-            <h1>TIPS:</h1>
-            <p>In het theorieboek staan vanaf pagina 18 een aantal tips. Hieronder nogmaals de 7 belangrijkste tips:</p>
-            <ul>
-                <li>TIP 1: INTERACTIE MET CHATGPT ALSOF HET EEN MENSELIJKE COLLEGA IS</li>
-                <li>TIP 2: GEEF INFO EN CONTEXT MEE IN JE PROMPTS</li>
-                <li>TIP 3: GEBRUIK 'REGENERATE' EN VERFIJN MET VERVOLGPROMPTS</li>
-                <li>TIP 4: DAAG HET SYSTEEM UIT EN MAAK JE PROMPTS CREATIEF EN UNIEK</li>
-                <li>TIP 5: LAAT CHATGPT EEN SPECIFIEKE ROL AANNEMEN</li>
-                <li>TIP 6: GEBRUIK VOORBEELDEN OM CHATGPT TE VERDUIDELIJKEN</li>
-                <li>TIP 7: GEAVANCEERDE TIP: LAAT CHATGPT JE PROMPTS SCHRIJVEN</li>
-            </ul>
+            <h1>Module 6: HTML-Leermiddelen</h1>
+            <div class="info-box">Maak een interactieve briefing-pagina voor studenten.</div>
+            <textarea id="in26" placeholder="Plak HTML/CSS code hier..." oninput="updateIframe(this.value)"></textarea>
+            <div class="preview-window"><iframe id="ifr26" style="width:100%; height:300px; border:none;"></iframe></div>
+            <button class="share-btn" onclick="shareWithFirebase('Web-module')">Deel Web-module 🚀</button>
         </div>
     </div>
 
-    <div class="page" id="pg5">
+    <div class="page" id="pg29">
         <div class="content">
-            <h3>Generative AI doeboek pagina 4</h3>
-            <h1>OEFENING 1A: EENVOUDIG BEGINNEN</h1>
-            <div class="exercise-box">
-                <p><strong>Stap 1:</strong> Maak de volgende zin af: “De Italiaanse man had een hekel aan pizza met Ham, kaas en ..”</p>
-                <p><strong>Stap 2:</strong> vertel in het Nederlands wat privacy is</p>
-                <p><strong>Stap 3:</strong> Neem de rol aan van leraar van een basisschool en geef in eenvoudige bewoordingen voor leerlingen van groep 7-8 aan wat belangrijk is rondom privacy en social media.</p>
-            </div>
-            <h2>Stap 5: gebruik het format [SCHRIJVER/ROL] [DOELGROEP] [ONDERWERP] [SCHRIJFTIJL]</h2>
-            <p>Het is cruciaal om uitgebreide informatie en context te verstrekken in je prompts.</p>
-        </div>
-    </div>
-
-    <div class="page" id="pg6">
-        <div class="content">
-            <h3>Generative AI doeboek pagina 5</h3>
-            <p>Neem de rol aan van schrijver van kinderboeken, en schrijf voor jongvolwassenen van 11-12 jaar een kort verhaal over verliefdheid...</p>
-            <h1>OEFENING 1B: WERKEN MET VERSCHILLENDE GPT’S</h1>
-            <p>Stap 1: Login op Office365, Google Gemini en ChatGPT.</p>
-            <p>Stap 2: Reageer op het verhaal: "Kun je het verhaal ook wijzigen zodat het gaat om Elsje en Gea (meisjes)?"</p>
-        </div>
-    </div>
-
-    <div class="page" id="pg7">
-        <div class="content">
-            <h3>Generative AI doeboek pagina 6</h3>
-            <h1>OEFENING 2: TEST PROMPTS</h1>
-            <div class="exercise-box">
-                <p><strong>LESONTWIKKELING:</strong> Doe alsof je een docent van de Politieacademie bent...</p>
-                <p><strong>LERAAR DUITS:</strong> Ich warte auf den Zug / auf dem Zug. Leg uit met voorbeelden.</p>
-                <p><strong>REGENERATE:</strong> Vraag een samenvatting over ruimtevaart in Luxemburg en gebruik 'regenerate'.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="pg8">
-        <div class="content">
-            <h3>Generative AI doeboek pagina 7 & 8</h3>
-            <h2>GRAPJES UITHALEN:</h2>
-            <p>Vat de film flodder samen in 20 emoticons. Beschrijf Oorlog en Vrede in 40 pictogrammen. Beschrijf Lord of the Rings in 3x 25 pictogrammen.</p>
-            <h2>STUDIEHULP:</h2>
-            <p>Ik upload een document. Dit moet ik morgen leren, overhoor mij in 10 meerkeuze vragen.</p>
-            <h2>META-PROMPT & E-MAIL:</h2>
-            <p>Verbeter de prompt "Schrijf over gezonde voeding". Schrijf een professionele e-mail naar een klant.</p>
-            <h2>STIJLANALYSE & TOETSEN:</h2>
-            <p>Analyseer mijn stijl uit 3 documenten. Maak 5 sets van 5 meerkeuze vragen over een artikel.</p>
-            <img src="afbeelding8.jpg" alt="Pagina 8 afbeelding" style="display:block; margin: 20px auto; max-width: 80%;">
-        </div>
-    </div>
-
-    <div class="page" id="pg9">
-        <div class="content">
-            <h3>Generative AI doeboek pagina 9</h3>
-            <h1>OEFENING 3: PROMPT BOUWEN</h1>
-            <div class="flex-container">
-                <div class="flex-column">
-                    <p><strong>1A. Mark Rutte:</strong> Liberaal standpunt over roze konijntjes.</p>
-                    <p><strong>1B. Geert Wilders:</strong> Nostalgisch nationalistisch probleem met roze konijntjes.</p>
-                    <p><strong>1C. Caroline van der Plas:</strong> Boeren perspectief op roze konijntjes in de landbouw.</p>
-                </div>
-                <div class="flex-column">
-                    <img src="afbeelding9.jpg" alt="Afbeelding 9" style="width:100%;">
-                </div>
-            </div>
-            <h2>Stap 2A & 2B: Goede prompts bouwen</h2>
-            <p>Verwerk rol, doelgroep en stijl. Test de prompt: "Schrijf een encyclopedisch artikel over roze konijnen voor Wikipedia."</p>
+            <h1>De Centrale Toon-tafel</h1>
+            <div id="sharedFeed"><em>Laden van de live feed...</em></div>
         </div>
     </div>
 
 </div>
 
-<script>
-    let current = 1;
-    const total = 9;
-    function update() {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('pg' + current).classList.add('active');
-        document.getElementById('pageIndicator').innerText = 'Pagina ' + current;
-    }
-    function changePage(s) {
-        let n = current + s;
-        if (n >= 1 && n <= total) { current = n; update(); }
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
+        authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
+        databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "opdrachtenboek-generatieve-ai",
+        storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
+        messagingSenderId: "183622966071",
+        appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.shareWithFirebase = function(type) {
+        const docent = prompt("Je naam?");
+        if (docent) {
+            push(ref(db, 'opdrachten'), { naam: docent, type: type, tijd: new Date().toLocaleTimeString() });
+            alert("Gedeeld!");
+        }
+    };
+
+    onValue(ref(db, 'opdrachten'), (snap) => {
+        const feed = document.getElementById('sharedFeed');
+        feed.innerHTML = "";
+        const data = snap.val();
+        if (data) Object.values(data).reverse().forEach(i => {
+            const d = document.createElement('div');
+            d.className = 'feed-item';
+            d.innerHTML = `<strong>${i.type}</strong> door ${i.naam} <span style="float:right">${i.tijd}</span>`;
+            feed.appendChild(d);
+        });
+    });
+
+    window.current = 1;
+    const total = 30;
+
+    window.changePage = function(s) {
+        let n = window.current + s;
+        if (n >= 1 && n <= total) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            window.current = n;
+            const p = document.getElementById('pg' + n);
+            if(p) p.classList.add('active');
+            document.getElementById('pageIndicator').innerText = `Pagina ${window.current} / ${total}`;
+        }
+    };
+
+    window.updateIframe = function(v) {
+        const d = document.getElementById('ifr26').contentDocument;
+        d.open(); d.write(v); d.close();
+    };
+
+    // Auto-fill overige pagina's
+    const container = document.getElementById('bookContainer');
+    for(let i=1; i<=total; i++){
+        if(!document.getElementById('pg'+i)){
+            const p = document.createElement('div');
+            p.id = 'pg'+i; p.className = 'page';
+            p.innerHTML = `<div class="content"><h1>Pagina ${i}</h1><div class="info-box">Inhoud volgt...</div></div>`;
+            container.appendChild(p);
+        }
     }
 </script>
 </body>
