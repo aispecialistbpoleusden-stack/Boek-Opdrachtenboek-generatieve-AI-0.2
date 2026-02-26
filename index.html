@@ -20,13 +20,12 @@
             backdrop-filter: blur(8px);
         }
 
-        /* DASHBOARD STYLING */
+        /* DASHBOARD */
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
         .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
         .section-title { color: var(--success); border-bottom-color: var(--success); }
-        .warning-title { color: var(--warning); border-bottom-color: var(--warning); }
 
         /* SCROLLBARE VENSTERS */
         .scroll-window { 
@@ -34,8 +33,6 @@
             padding: 15px; border-radius: 8px; margin-bottom: 10px; 
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
-        .scroll-window::-webkit-scrollbar { width: 8px; }
-        .scroll-window::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 
         /* INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; margin: 0; }
@@ -43,19 +40,15 @@
         .clickable { cursor: pointer; color: var(--accent); font-weight: 500; }
         .clickable:hover { color: #2980b9; text-decoration: underline; }
 
-        /* LIJSTEN & MEDIA */
-        ul { padding-left: 20px; }
-        li { margin-bottom: 5px; }
         .centered-img { display: block; margin: 15px auto; max-width: 90%; border-radius: 8px; }
-        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
         button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.2s; }
         button:hover { background: #2980b9; }
         
-        .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; }
         .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.85em; border-radius: 4px; }
+        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -77,76 +70,32 @@
                 <li class="clickable" onclick="scrollToId('inleiding')"><span>Inleiding & Waarschuwing (P2)</span><span>2</span></li>
                 <li class="clickable" onclick="scrollToId('principes')"><span>Principes & Tips (P3)</span><span>3</span></li>
                 <li class="clickable" onclick="scrollToId('oefening1a')"><span>Oefening 1A: Eenvoudig beginnen (P4)</span><span>4</span></li>
-                <li><span>Oefening 1B t/m 12 (Onder constructie)</span><span>5+</span></li>
+                <li class="clickable" onclick="scrollToId('oefening1b')"><span>Oefening 1B: Verschillende GPT's (P5)</span><span>5</span></li>
             </ul>
         </div>
 
-        <div class="card" id="inleiding">
-            <h3>INLEIDING</h3>
+        <div class="card" id="oefening1b">
+            <h3 class="section-title">PAGINA 5: OEFENING 1B</h3>
             <div class="scroll-window">
-                <p>Welkom bij het <strong>"Grote Generatieve AI Doe-Boek"</strong>! Dit boek geeft je veel ideeën om aan de gang te gaan. We geloven in: <em>'leren door te doen'</em>.</p>
+                <h4>OEFENING 1B: WERKEN MET VERSCHILLENDE GPT’S</h4>
+                <p><strong>De Opdracht:</strong> Neem de rol aan van een schrijver van kinderboeken en schrijf voor jongvolwassenen van 11-12 jaar een kort verhaal over verliefdheid.</p>
                 
-                <h3 class="warning-title">WAARSCHUWING</h3>
+                <p><strong>Stap 1: Test verschillende systemen</strong></p>
                 <ul>
-                    <li>We weten niet waar de systemen staan of wie alles leest.</li>
-                    <li>Vragen worden gebruikt om het systeem te verbeteren.</li>
-                    <li>Gebruik <strong>nooit</strong> politie-accounts of hergebruik wachtwoorden.</li>
-                    <li>Geen persoonsgevoelige of politie-informatie (AVG/WPG).</li>
+                    <li>Ga naar <strong>Bing.com</strong> (kies chatten) en herhaal de opdracht.</li>
+                    <img src="afbeelding4.jpg" alt="Bing Chat" class="centered-img">
+                    <li>Ga naar <a href="https://gemini.google.com/" target="_blank">Gemini.google.com</a> en herhaal de opdracht.</li>
+                    <img src="afbeelding5.jpg" alt="Google Gemini" class="centered-img">
+                    <li>Ga naar <a href="https://chat.openai.com/" target="_blank">Chat.OpenAi.com</a> en herhaal de opdracht.</li>
                 </ul>
-                <p><em>"Wie is verantwoordelijk voor deze data?"</em> - Weet wat je deelt!</p>
-                <img src="afbeelding2.jpg" alt="Middelen" class="centered-img">
-                
-                <h3>PRINCIPE 1: ZORGVULDIGHEID</h3>
-                <p>Gebruik zakelijke e-mail alleen voor professionele doeleinden. Voeg nooit gegevens toe van burgers of collega's.</p>
-            </div>
-        </div>
 
-        <div class="card" id="principes">
-            <h3 class="section-title">PRINCIPES & TIPS</h3>
-            <div class="scroll-window">
-                <h4>PRINCIPE 2: WEES DE EXPERT</h4>
-                <p>Een taalmodel vervangt uw kennis niet. U bent de expert en verantwoordelijk voor het eindresultaat. Gebruik AI als sparringpartner.</p>
-                
-                <h4>PRINCIPE 3: DUBBELCHECK</h4>
-                <p>Betrouwbaarheid gaat voor snelheid. AI kan feitelijke onjuistheden of vooroordelen bevatten. Controleer bronnen altijd.</p>
-
-                <h4>PRINCIPE 4: BEROEPSCODE</h4>
-                <p>Geen AI voor besluitvorming die personen benadeelt. Gebruik bij toetsen is fraude. Vermeld AI altijd als bron in documenten.</p>
-
-                <h4>PRINCIPE 5: ETHIEK</h4>
-                <p>AI verbruikt veel energie en water. Let ook op bias (vooroordelen) in de uitkomsten.</p>
-
-                <hr>
-                <h4 style="color:var(--accent)">DE 7 BELANGRIJKSTE TIPS:</h4>
-                <ul>
-                    <li><strong>TIP 1:</strong> Interactie als met een collega.</li>
-                    <li><strong>TIP 2:</strong> Geef veel info en context.</li>
-                    <li><strong>TIP 3:</strong> Gebruik 'Regenerate' en verfijn.</li>
-                    <li><strong>TIP 4:</strong> Wees creatief en uniek.</li>
-                    <li><strong>TIP 5:</strong> Laat de AI een rol aannemen.</li>
-                    <li><strong>TIP 6:</strong> Gebruik voorbeelden.</li>
-                    <li><strong>TIP 7:</strong> Laat de AI je prompts schrijven.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="card" id="oefening1a">
-            <h3>OEFENING 1A: EENVOUDIG BEGINNEN</h3>
-            <div class="scroll-window">
-                <p><strong>Start:</strong> Ga naar: <a href="https://talkai.info/nl/chat/" target="_blank">TalkAI - Praat met ChatGPT</a></p>
-                <img src="afbeelding3.jpg" alt="TalkAI" class="centered-img">
-                
-                <p><strong>Stap 1:</strong> Zin afmaken (Pizza-vraag).</p>
-                <p><strong>Stap 2:</strong> Vraag naar de definitie van privacy.</p>
-                <p><strong>Stap 3:</strong> Rol van leraar (Groep 7-8 uitleg).</p>
-                <p><strong>Stap 4:</strong> Wikipedia-omschrijving (4 regels).</p>
-                <p><strong>Stap 5:</strong> Gebruik het format: <br><strong>[SCHRIJVER/ROL] [DOELGROEP] [ONDERWERP] [SCHRIJFSTIJL]</strong></p>
+                <p><strong>Stap 2: Bijstellen en Verfijnen</strong></p>
+                <p>Laat het verhaal bijstellen. Vraag bijvoorbeeld: <em>"Kun je het verhaal ook wijzigen zodat het gaat om de verliefdheid van Elsje en Gea (meisjes)?"</em></p>
             </div>
         </div>
 
         <div class="card" id="opdrachten-sectie">
-            <h2>Aan de slag, <span id="user-display"></span></h2>
-            <p>Selecteer de oefening die je nu uitvoert:</p>
+            <h2>Hoi <span id="user-display"></span>, deel je bevindingen:</h2>
             <select id="opdracht-selector" onchange="updateOpdracht()">
                 <option value="1a">Oefening 1A: Eenvoudig beginnen</option>
                 <option value="1b">Oefening 1B: Werken met verschillende GPT's</option>
@@ -156,19 +105,15 @@
                 <div id="opdracht-tekst">Laden...</div>
             </div>
 
-            <textarea id="input-prompt" rows="2" placeholder="Welke prompt heb je ingevoerd?"></textarea>
-            <textarea id="input-resultaat" rows="5" placeholder="Plak hier het resultaat van de AI..."></textarea>
-            <button id="btn-deel">Deel met de groep</button>
+            <textarea id="input-prompt" rows="2" placeholder="Welke prompt heb je gebruikt?"></textarea>
+            <textarea id="input-resultaat" rows="5" placeholder="Wat was het meest opvallende resultaat of verschil?"></textarea>
+            <button id="btn-deel">Deel resultaat met de groep</button>
         </div>
 
         <div class="card">
-            <h3>Groepsfeed (Live)</h3>
+            <h3>Live Groepsfeed</h3>
             <div id="feed-container"></div>
         </div>
-
-        <p style="text-align: center; font-size: 0.8em; color: #7f8c8d; padding: 20px;">
-            © Lilian Haak 2024 - Generatieve AI opdrachtenboek
-        </p>
     </div>
 
     <script type="module">
@@ -189,13 +134,13 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "1a": { t: "Oefening 1A: Eenvoudig beginnen", i: "Voer de 5 stappen van pagina 4 uit in TalkAI. Begin met de pizza-zin en test daarna de privacy-uitleg met verschillende rollen en het [ROL][DOELGROEP][ONDERWERP][STIJL] format." },
-            "1b": { t: "Oefening 1B: Verschillende GPT's", i: "Herhaal de stappen in andere tools (Gemini, Copilot) en vergelijk de resultaten." }
+            "1a": { t: "Oefening 1A", i: "Stappen 1-5 van pagina 4. Test de pizza-zin en privacy-rollen in TalkAI." },
+            "1b": { t: "Oefening 1B", i: "Vergelijk Bing, Gemini en ChatGPT met het verhaal over verliefdheid (P5). Wat zijn de grootste verschillen?" }
         };
 
         window.startApp = () => {
             const name = document.getElementById('username').value;
-            if(!name) return alert("Naam is verplicht.");
+            if(!name) return alert("Voer je naam in!");
             localStorage.setItem('ai_user', name);
             showApp(name);
         };
@@ -212,7 +157,11 @@
         window.updateOpdracht = () => {
             const val = document.getElementById('opdracht-selector').value;
             const data = opdrachtData[val];
-            if(data) document.getElementById('opdracht-tekst').innerHTML = `<strong>${data.t}</strong><p>${data.i}</p>`;
+            if(data) {
+                document.getElementById('opdracht-tekst').innerHTML = `<strong>${data.t}</strong><p>${data.i}</p>`;
+                document.getElementById('input-prompt').value = "";
+                document.getElementById('input-resultaat').value = "";
+            }
         };
 
         document.getElementById('btn-deel').onclick = () => {
@@ -225,6 +174,7 @@
             push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
             document.getElementById('input-prompt').value = '';
             document.getElementById('input-resultaat').value = '';
+            alert("Bedankt voor het delen!");
         };
 
         onValue(ref(db, 'inzendingen'), (snapshot) => {
