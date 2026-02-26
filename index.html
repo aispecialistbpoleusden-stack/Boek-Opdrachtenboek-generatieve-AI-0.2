@@ -5,79 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Doeboek Politieonderwijs 2026</title>
     <style>
-        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; }
+        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; --rood: #d63031; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        
         nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); }
-        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
         .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
         .active { display: flex; flex-direction: column; }
+        
+        /* VOORBLAD STYLING */
+        #pg0 { 
+            background: url('afbeelding1.jpg') no-repeat center center; 
+            background-size: cover; 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative;
+        }
+        #pg0.active { display: flex; }
+        
+        .cover-overlay {
+            background: rgba(0, 48, 130, 0.85); /* Politieblauw met transparantie */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            border: 3px solid var(--goud);
+            max-width: 500px;
+        }
+
+        .cover-overlay h1 { color: var(--goud); border: none; margin-bottom: 10px; }
+        .cover-overlay p { font-size: 1.1em; margin-bottom: 25px; }
+
+        .name-input-container { margin-top: 20px; }
+        .name-input-container input {
+            padding: 15px;
+            width: 80%;
+            border-radius: 5px;
+            border: none;
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* DIDACTISCHE BLOKKEN */
         .content { padding: 45px; overflow-y: auto; flex: 1; line-height: 1.7; color: #333; }
-        h1 { color: var(--polblauw); font-size: 2em; border-bottom: 2px solid var(--goud); padding-bottom: 10px; }
-        .info-box { background: #e3f2fd; border-left: 6px solid var(--polblauw); padding: 15px; margin: 15px 0; }
-        .praktijk { background: #f1f8e9; border: 2px solid var(--accent); padding: 20px; margin: 15px 0; border-radius: 10px; }
-        textarea { width: 100%; height: 100px; font-family: monospace; padding: 10px; border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; box-sizing: border-box; }
-        .preview-window { border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; min-height: 150px; background: #fff; }
-        .feed-item { background: #fff; border-left: 5px solid var(--goud); padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .theorie-blok { background: #f0f4f8; border-left: 6px solid var(--polblauw); padding: 20px; margin: 20px 0; }
+        .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 25px; margin: 20px 0; border-radius: 10px; }
+        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div><strong>POLITIEACADEMIE | GENERATIEVE AI</strong></div>
+    <div><strong>POLITIEACADEMIE: GENERATIEVE AI</strong></div>
     <div class="nav-buttons">
-        <button onclick="changePage(-1)">Vorige</button>
-        <span id="pageIndicator" style="margin: 0 15px; font-family: monospace;">Pagina 1 / 30</span>
-        <button onclick="changePage(1)">Volgende</button>
+        <button onclick="changePage(-1)">⬅ VORIGE</button>
+        <span id="pageIndicator" style="margin: 0 15px; font-weight: bold;">VOORBLAD</span>
+        <button onclick="changePage(1)">VOLGENDE ➡</button>
     </div>
 </nav>
 
 <div class="book-container" id="bookContainer">
-    <div class="page active" id="pg1">
-        <div class="content">
-            <h1>Module 1: De AI-Assistent</h1>
-            <div class="info-box">Generatieve AI is geen zoekmachine, maar een redeneerhulp. We gebruiken het voor het ontwerpen van onderwijs.</div>
-            <div class="praktijk"><strong>Opdracht 1:</strong> Stel een 'Systeem-prompt' op waarbij AI fungeert als een onderwijskundig expert voor de Politieacademie.</div>
+    
+    <div class="page active" id="pg0">
+        <div class="cover-overlay">
+            <h1>DOEBOEK AI</h1>
+            <p><strong>Editie 2026: Onderwijs & Toetsing</strong></p>
+            <div class="name-input-container">
+                <label for="userName">Vul uw voornaam in om te starten:</label><br><br>
+                <input type="text" id="userName" placeholder="Voornaam..." oninput="updateName(this.value)">
+                <p style="font-size: 0.8em; opacity: 0.8;">In het kader van zorgvuldige informatieverstrekking wordt uw naam gekoppeld aan uw gedeelde opdrachten.</p>
+            </div>
         </div>
     </div>
 
-    <div class="page" id="pg16">
+    <div class="page" id="pg1">
         <div class="content">
-            <h1>Module 4: Toetsvragen Genereren</h1>
-            <div class="info-box">Focus op MCQ (Multiple Choice Questions) met sterke afleiders.</div>
-            <textarea id="in16" placeholder="Plak HTML-vraag hier..." oninput="document.getElementById('pre16').innerHTML = this.value"></textarea>
-            <div class="preview-window" id="pre16"></div>
-            <button class="share-btn" onclick="shareWithFirebase('MCQ-Vraag')">Deel met collega's 🚀</button>
+            <h1>Inleiding: Bewustzijn & AI</h1>
+            <div class="theorie-blok">
+                <strong>De Theorie:</strong> Generatieve AI (zoals ChatGPT) werkt op basis van statistische voorspellingen. Het "begrijpt" de wereld niet zoals wij, maar herkent patronen. Binnen het politieonderwijs biedt dit kansen voor simulaties, maar het vereist een scherpe blik op privacy en de AVG.
+            </div>
+            <div class="opdracht-blok">
+                <strong>Vraag 1:</strong> <span class="user-greeting">Collega</span>, waarom is het essentieel om géén echte namen uit politiedossiers in een openbare AI te voeren?
+                <textarea placeholder="Typ hier uw antwoord..."></textarea>
+            </div>
         </div>
     </div>
 
-    <div class="page" id="pg17">
-        <div class="content">
-            <h1>Module 4: Rationales Valideren</h1>
-            <p>Goede feedback is essentieel voor de student. Laat AI uitleggen waarom een fout antwoord fout is.</p>
-            <div class="praktijk"><strong>Prompt:</strong> "Schrijf een rationale voor elke afleider bij de vraag over Artikel 8 WVW."</div>
-        </div>
     </div>
-
-    <div class="page" id="pg26">
-        <div class="content">
-            <h1>Module 6: HTML-Leermiddelen</h1>
-            <div class="info-box">Maak een interactieve briefing-pagina voor studenten.</div>
-            <textarea id="in26" placeholder="Plak HTML/CSS code hier..." oninput="updateIframe(this.value)"></textarea>
-            <div class="preview-window"><iframe id="ifr26" style="width:100%; height:300px; border:none;"></iframe></div>
-            <button class="share-btn" onclick="shareWithFirebase('Web-module')">Deel Web-module 🚀</button>
-        </div>
-    </div>
-
-    <div class="page" id="pg29">
-        <div class="content">
-            <h1>De Centrale Toon-tafel</h1>
-            <div id="sharedFeed"><em>Laden van de live feed...</em></div>
-        </div>
-    </div>
-
-</div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
@@ -96,54 +114,42 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    window.shareWithFirebase = function(type) {
-        const docent = prompt("Je naam?");
-        if (docent) {
-            push(ref(db, 'opdrachten'), { naam: docent, type: type, tijd: new Date().toLocaleTimeString() });
-            alert("Gedeeld!");
-        }
+    window.currentName = "Collega";
+
+    window.updateName = function(val) {
+        window.currentName = val || "Collega";
+        document.querySelectorAll('.user-greeting').forEach(el => el.innerText = window.currentName);
     };
 
-    onValue(ref(db, 'opdrachten'), (snap) => {
-        const feed = document.getElementById('sharedFeed');
-        feed.innerHTML = "";
-        const data = snap.val();
-        if (data) Object.values(data).reverse().forEach(i => {
-            const d = document.createElement('div');
-            d.className = 'feed-item';
-            d.innerHTML = `<strong>${i.type}</strong> door ${i.naam} <span style="float:right">${i.tijd}</span>`;
-            feed.appendChild(d);
+    window.shareWithFirebase = function(type) {
+        push(ref(db, 'opdrachten'), {
+            naam: window.currentName,
+            type: type,
+            tijd: new Date().toLocaleTimeString()
         });
-    });
+        alert("Product gedeeld als: " + window.currentName);
+    };
 
-    window.current = 1;
+    window.current = 0; // Start bij voorblad
     const total = 30;
 
-    window.changePage = function(s) {
-        let n = window.current + s;
-        if (n >= 1 && n <= total) {
+    window.changePage = function(n) {
+        let target = window.current + n;
+        if (target >= 0 && target <= total) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            window.current = n;
-            const p = document.getElementById('pg' + n);
-            if(p) p.classList.add('active');
-            document.getElementById('pageIndicator').innerText = `Pagina ${window.current} / ${total}`;
+            window.current = target;
+            document.getElementById('pg' + target).classList.add('active');
+            document.getElementById('pageIndicator').innerText = target === 0 ? "VOORBLAD" : `PAGINA ${window.current} / ${total}`;
         }
     };
 
-    window.updateIframe = function(v) {
-        const d = document.getElementById('ifr26').contentDocument;
-        d.open(); d.write(v); d.close();
-    };
-
-    // Auto-fill overige pagina's
+    // Placeholder voor overige pagina's
     const container = document.getElementById('bookContainer');
-    for(let i=1; i<=total; i++){
-        if(!document.getElementById('pg'+i)){
-            const p = document.createElement('div');
-            p.id = 'pg'+i; p.className = 'page';
-            p.innerHTML = `<div class="content"><h1>Pagina ${i}</h1><div class="info-box">Inhoud volgt...</div></div>`;
-            container.appendChild(p);
-        }
+    for (let i = 2; i <= total; i++) {
+        const div = document.createElement('div');
+        div.id = 'pg' + i; div.className = 'page';
+        div.innerHTML = `<div class="content"><h1>Module ${i}</h1><div class="theorie-blok">Uitleg over dit onderwerp...</div><div class="opdracht-blok">Maak hier een product.</div></div>`;
+        container.appendChild(div);
     }
 </script>
 </body>
