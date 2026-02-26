@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Fix Inhoudsopgave</title>
+    <title>AI Opdrachtenboek - Volledige Versie</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-grey: #eef2f3; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
@@ -26,9 +26,9 @@
         }
 
         .contents-list { list-style: none; padding: 0; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 0.9em; cursor: pointer; transition: 0.2s; }
-        .contents-list li:hover { background: #f9f9f9; color: var(--accent); }
-        .page-num { font-weight: bold; color: #999; }
+        .contents-list li { display: flex; justify-content: space-between; padding: 10px 15px; border-bottom: 1px dotted #ccc; cursor: pointer; border-radius: 5px; }
+        .contents-list li:hover { background: #eef2f3; color: var(--accent); }
+        .page-num { font-weight: bold; color: #7f8c8d; }
 
         .input-group { background: var(--light-grey); padding: 20px; border-radius: 12px; border-left: 6px solid var(--accent); margin-top: 20px; }
         textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; resize: vertical; box-sizing: border-box; }
@@ -57,19 +57,55 @@
         <div class="card" id="inhoud">
             <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
+                <li onclick="scrollToId('p2')"><span>Inleiding & Principes</span><span class="page-num">2-3</span></li>
+                <li onclick="scrollToId('p4')"><span>Oefening 1A: Pizza & Privacy</span><span class="page-num">4</span></li>
+                <li onclick="scrollToId('p6')"><span>Oefening 2: Politieacademie Prompt</span><span class="page-num">6</span></li>
+                <li onclick="scrollToId('p7')"><span>Oefening: Creativiteit & Emoticons</span><span class="page-num">7</span></li>
                 <li onclick="scrollToId('p8')"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
                 <li onclick="scrollToId('p9')"><span>Pagina 9: Prompt Bouwen (Konijnen)</span><span class="page-num">9</span></li>
                 <li onclick="scrollToId('p10')"><span>Pagina 10: AI als Assistent (Fitness)</span><span class="page-num">10</span></li>
-                <li onclick="scrollToId('p11')"><span>Pagina 11: Experimenteren & Tips</span><span class="page-num">11</span></li>
-                <li onclick="scrollToId('input-sectie')"><span><b>Ga direct naar Invoervelden</b></span><span>👇</span></li>
+                <li onclick="scrollToId('p11')"><span>Pagina 11: Experimenteren & Collega-methode</span><span class="page-num">11</span></li>
             </ul>
+        </div>
+
+        <div class="card" id="p2">
+            <h3 class="section-title">PAGINA 2-3: INLEIDING</h3>
+            <div class="scroll-window">
+                <h4>Wat is Generatieve AI?</h4>
+                <p>Uitleg over Large Language Models (LLM) en hoe ze voorspellen wat het volgende woord is.</p>
+                <p><strong>De Gouden Regels:</strong><br>
+                1. Wees specifiek.<br>
+                2. Geef context.<br>
+                3. Controleer altijd op hallucinaties.</p>
+            </div>
+        </div>
+
+        <div class="card" id="p4">
+            <h3 class="section-title">PAGINA 4: EENVOUDIG BEGINNEN</h3>
+            <div class="scroll-window">
+                <p>De beroemde pizza-oefening om rollen te begrijpen.</p>
+            </div>
+        </div>
+
+        <div class="card" id="p6">
+            <h3 class="section-title">PAGINA 6: POLITIEACADEMIE</h3>
+            <div class="scroll-window">
+                <p>Maak een samenvatting in 8 punten voor studenten aan de Politieacademie.</p>
+            </div>
+        </div>
+
+        <div class="card" id="p7">
+            <h3 class="section-title">PAGINA 7: CREATIVITEIT</h3>
+            <div class="scroll-window">
+                <p>Vat een bekende film samen in alleen emoticons of pictogrammen.</p>
+            </div>
         </div>
 
         <div class="card" id="p8">
             <h3 class="section-title">PAGINA 8: TOETSEN & PRODUCTBESCHRIJVING</h3>
             <div class="scroll-window">
                 <h4>UNIEKE TOETSEN</h4>
-                <p>Maak 5 sets van 5 meerkeuzevragen op basis van een artikel.</p>
+                <p>Maak 5 sets van 5 meerkeuzevragen op basis van een geüpload artikel.</p>
                 <img src="afbeelding8.jpg" alt="Toetsen" style="width:100%; border-radius:8px;">
             </div>
         </div>
@@ -79,7 +115,8 @@
             <div class="scroll-window">
                 <div class="flex-row">
                     <div style="flex:1">
-                        <p>1A. Mark Rutte (Liberaal)<br>1B. Geert Wilders (Nationalistisch)<br>1C. Caroline v.d. Plas (Boeren)</p>
+                        <p>Stap 1: Rollen van Rutte, Wilders en Caroline van der Plas over de roze konijnen.</p>
+                        <p>Stap 2: De Wikipedia "Mega-prompt".</p>
                     </div>
                     <img src="afbeelding9.jpg" class="side-img">
                 </div>
@@ -92,7 +129,7 @@
                 <div class="flex-row">
                     <div style="flex:1">
                         <h4>FITNESS COACH</h4>
-                        <p>Test het verschil tussen een losse vraag en een specifieke rol met doorvragen.</p>
+                        <p>Start een dialoog. Laat de AI eerst vragen stellen voordat hij het schema maakt.</p>
                     </div>
                     <img src="afbeelding10.jpg" class="side-img">
                 </div>
@@ -102,28 +139,105 @@
         <div class="card" id="p11">
             <h3 class="section-title">PAGINA 11: TIPS & COLLEGA-METHODE</h3>
             <div class="scroll-window">
-                <p><strong>Collega-methode:</strong> Geef context (Nieuw Nederland, 25-45 jaar) voor betere resultaten.</p>
-                <p><strong>Fakenieuws:</strong> Schrijf prompts om van dating-risico's naar desinformatie.</p>
+                <p><strong>Interactie:</strong> Behandel de AI als een menselijke collega. Geef directieve opdrachten en verfijn de output met vervolgvragen.</p>
             </div>
         </div>
 
         <div class="card" id="input-sectie">
-            <h3>JOUW OPDRACHT DEELNEMER</h3>
+            <h3>JOUW OPDRACHT UITVOEREN</h3>
+            <p>Selecteer de pagina waar je mee bezig bent:</p>
             <select id="opdracht-selector" onchange="updateOpdracht()">
-                <option value="p8_toets">P8: Unieke Toetsen</option>
-                <option value="p9_konijn">P9: Roze Konijnen (Stijlen)</option>
-                <option value="p10_fitness">P10: Fitness Coach</option>
-                <option value="p11_collega">P11: Collega Methode</option>
+                <option value="p4">P4: Pizza & Privacy</option>
+                <option value="p6">P6: Politieacademie</option>
+                <option value="p7">P7: Film in Emoticons</option>
+                <option value="p8">P8: Unieke Toetsen</option>
+                <option value="p9">P9: Roze Konijnen (Stijlen)</option>
+                <option value="p10">P10: Fitness Coach</option>
+                <option value="p11">P11: Collega Methode (Nieuw Nederland)</option>
             </select>
 
             <div class="input-group">
-                <div id="opdracht-instructie" style="margin-bottom:10px; font-style:italic;">Kies een opdracht...</div>
+                <div id="opdracht-instructie" style="margin-bottom:10px; font-style:italic; color:#666;">Kies een opdracht...</div>
                 <textarea id="input-prompt" rows="3" placeholder="Welke prompt heb je gebruikt?"></textarea>
-                <textarea id="input-resultaat" rows="5" placeholder="Wat was het resultaat?"></textarea>
-                <button id="btn-deel">Deel resultaat</button>
+                <textarea id="input-resultaat" rows="5" placeholder="Wat was het resultaat of je belangrijkste inzicht?"></textarea>
+                <button id="btn-deel">Verstuur naar Groepsfeed</button>
             </div>
         </div>
 
         <div class="card">
             <h3>Live Groepsfeed</h3>
-            <div id="
+            <div id="feed-container"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
+            authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
+            databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "opdrachtenboek-generatieve-ai",
+            storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
+            messagingSenderId: "183622966071",
+            appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const opdrachtData = {
+            "p4": { t: "P4: Pizza", i: "Leg privacy uit aan een pizzabakker." },
+            "p6": { t: "P6: Politie", i: "8 korte punten over de AVG." },
+            "p7": { t: "P7: Emoticons", i: "Vat een film samen in pictogrammen." },
+            "p8": { t: "P8: Toetsen", i: "Maak vragen over een artikel." },
+            "p9": { t: "P9: Konijnen", i: "Rutte, Wilders of Caroline prompt." },
+            "p10": { t: "P10: Fitness", i: "Laat de AI eerst vragen stellen." },
+            "p11": { t: "P11: Collega", i: "Uitgebreide prompt voor Nieuw Nederland." }
+        };
+
+        window.startApp = () => {
+            const n = document.getElementById('username').value;
+            if(!n) return alert("Naam invullen!");
+            localStorage.setItem('ai_user', n);
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+            updateOpdracht();
+        };
+
+        window.scrollToId = (id) => {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.updateOpdracht = () => {
+            const val = document.getElementById('opdracht-selector').value;
+            document.getElementById('opdracht-instructie').innerText = opdrachtData[val].i;
+        };
+
+        document.getElementById('btn-deel').onclick = () => {
+            const p = document.getElementById('input-prompt').value;
+            const r = document.getElementById('input-resultaat').value;
+            const n = localStorage.getItem('ai_user');
+            const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
+            if(!p || !r) return alert("Vul alles in!");
+            push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
+            document.getElementById('input-prompt').value = "";
+            document.getElementById('input-resultaat').value = "";
+            alert("Gedeeld met de groep!");
+        };
+
+        onValue(ref(db, 'inzendingen'), (s) => {
+            const feed = document.getElementById('feed-container');
+            feed.innerHTML = '';
+            const data = s.val();
+            if(data) Object.values(data).reverse().forEach(item => {
+                feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening})<br><small>${item.prompt}</small><details><summary>Bekijk resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
+            });
+        });
+
+        if(localStorage.getItem('ai_user')) startApp();
+    </script>
+</body>
+</html>
