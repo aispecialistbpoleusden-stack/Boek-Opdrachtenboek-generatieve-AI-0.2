@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Doeboek Politieacademie 2026</title>
+    <title>AI Doeboek Politieacademie 2026 - Master Edition</title>
     <style>
-        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; }
+        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; --rood: #d63031; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 100; }
-        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        
+        /* Navigatie */
+        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 1000; }
+        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.2s; }
+        .nav-buttons button:hover { background: #e6b800; }
+
+        /* Pagina Structuur */
+        .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; }
         .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-direction: column; }
         .active { display: flex; }
         
         /* Voorblad */
         #pg0 { background: url('afbeelding1.jpg') no-repeat center center; background-size: cover; justify-content: center; align-items: center; }
-        .cover-overlay { background: rgba(0, 48, 130, 0.9); padding: 40px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); width: 80%; max-width: 500px; }
+        .cover-overlay { background: rgba(0, 48, 130, 0.92); padding: 45px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); width: 80%; max-width: 550px; }
+        .cover-overlay h1 { font-size: 3em; margin: 0; color: var(--goud); }
+
+        /* Content Styling */
+        .content { padding: 40px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; }
+        h1 { color: var(--polblauw); border-bottom: 2px solid var(--goud); padding-bottom: 10px; margin-top: 0; }
         
-        /* Blokken Styling */
-        .content { padding: 40px; overflow-y: auto; flex: 1; }
-        h1 { color: var(--polblauw); border-bottom: 2px solid var(--goud); padding-bottom: 10px; }
-        .theorie-blok { background: #f0f4f8; border-left: 6px solid var(--polblauw); padding: 20px; margin: 20px 0; border-radius: 4px; }
-        .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 25px; margin: 20px 0; border-radius: 10px; }
+        /* Scrollbaar Info Venster (7G-structuur) */
+        .info-scroll-container { 
+            background: #f0f4f8; border-left: 6px solid var(--polblauw); 
+            padding: 20px; margin: 15px 0; max-height: 180px; 
+            overflow-y: auto; border-radius: 4px; font-size: 0.95em; line-height: 1.6;
+        }
+
+        .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 20px; margin-top: 10px; border-radius: 10px; }
         
-        textarea { width: 100%; height: 120px; margin: 10px 0; font-family: monospace; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .preview-box { border: 2px solid #ddd; background: #fff; min-height: 100px; padding: 15px; border-radius: 4px; margin-top: 10px; }
-        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        /* Inputs */
+        textarea { width: 100%; height: 100px; margin: 10px 0; font-family: 'Consolas', monospace; padding: 12px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 6px; }
+        .preview-box { border: 2px solid #ddd; background: #fff; min-height: 80px; padding: 15px; margin-top: 10px; border-radius: 6px; overflow-x: auto; }
+        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        #sharedFeed { background: #f9f9f9; padding: 15px; border-radius: 8px; }
-        .feed-item { background: white; border-left: 5px solid var(--goud); padding: 10px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        /* Feed */
+        .feed-item { background: #fff; border-left: 5px solid var(--goud); padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
 <nav>
-    <div><strong>POLITIEACADEMIE | AI ONDERWIJS</strong></div>
+    <div><strong>POLITIEACADEMIE | AI ONDERWIJS TRANSFORMATIE</strong></div>
     <div class="nav-buttons">
         <button onclick="changePage(-1)">⬅ VORIGE</button>
-        <span id="pageIndicator" style="margin: 0 15px; font-weight: bold;">VOORBLAD</span>
+        <span id="pageIndicator" style="margin: 0 15px; font-weight: bold; min-width: 120px; text-align: center; display: inline-block;">VOORBLAD</span>
         <button onclick="changePage(1)">VOLGENDE ➡</button>
     </div>
 </nav>
@@ -45,16 +59,20 @@
 <div class="book-container" id="bookContainer">
     <div class="page active" id="pg0">
         <div class="cover-overlay">
-            <h1>AI DOEBOEK</h1>
-            <p>Ontwerp & Toetsing</p>
-            <input type="text" id="userName" placeholder="Vul uw voornaam in..." style="width:100%; padding:10px; text-align:center;" oninput="window.uName = this.value">
+            <h1>DOEBOEK AI</h1>
+            <p>Strategisch Gebruik in Onderwijs & Toetsing</p>
+            <div style="margin-top:25px;">
+                <label>Voer uw voornaam in (voor zorgvuldige registratie):</label>
+                <input type="text" id="userName" placeholder="Voornaam..." style="width:100%; padding:12px; text-align:center; margin-top:10px; border-radius:5px; border:none; font-size:1.1em;" oninput="window.uName = this.value">
+            </div>
         </div>
     </div>
 
     <div class="page" id="pg29">
         <div class="content">
-            <h1>De Toon-tafel (Live Feed)</h1>
-            <div id="sharedFeed">Laden van bijdragen...</div>
+            <h1>De Toon-tafel: Live Resultaten</h1>
+            <p>Hieronder ziet u de gedeelde producten van uw collega-docenten.</p>
+            <div id="sharedFeed">Verbinding maken met de database...</div>
         </div>
     </div>
 </div>
@@ -77,50 +95,49 @@
     const db = getDatabase(app);
     window.uName = "Collega";
 
-    // 1. Data voor de pagina's
+    // --- DIDACTISCHE DATA (7 GOUDEN VOORWAARDEN) ---
     const paginasData = {
-        1: { t: "Wat is Generatieve AI?", info: "AI voorspelt het volgende logische woord op basis van patronen.", opdr: "Leg uit hoe dit uw werk kan vergemakkelijken." },
-        16: { t: "Toetsconstructie", info: "Sterke afleiders maken een toets valide.", opdr: "Plak hier een HTML-toetsvraag van de AI." },
-        26: { t: "Interactieve Briefing", info: "Gebruik HTML voor scenario-training.", opdr: "Plak hier de code voor een briefing-pagina." }
+        1: { t: "De AI-Copilot", info: "Wie: De docent. Wat: Tekstuele ondersteuning. Waar: Onderwijsvoorbereiding. Wanneer: Ontwerpfase. Waarom: Efficiëntie. Hoe: Prompts. Wijze: Veilig/AVG.", opdr: "Stel uzelf voor aan de AI en vraag om een lesopzet voor een juridisch onderwerp." },
+        4: { t: "Privacy & AVG", info: "Wie: De data-eigenaar. Wat: Persoonsgegevens. Waar: Openbare LLM's. Wanneer: Altijd. Waarom: Bescherming burger. Hoe: Anonimiseren. Wijze: Strikt vertrouwelijk.", opdr: "Herschrijf een casus over een fictieve 'Jan D.' naar een volledig anonieme variant voor AI." },
+        10: { t: "Deepfakes & Desinformatie", info: "Wie: De opsporing. Wat: Synthetische media. Waar: Sociale kanalen. Wanneer: Casuïstiek training. Waarom: Herkenning trainen. Hoe: Forensische blik. Wijze: Alert.", opdr: "Maak een lijst van 3 kenmerken waaraan een student een AI-gegenereerde foto kan herkennen." },
+        16: { t: "Toetsing & Validiteit", info: "Wie: Examencommissie. Wat: MCQ-Vragen. Waar: Theoretische toetsing. Wanneer: Afnamefase. Waarom: Validiteit. Hoe: Sterke afleiders. Wijze: Objectief.", opdr: "Plak hier een HTML-toetsvraag met 3 sterke afleiders die AI voor u heeft gemaakt." },
+        20: { t: "Beeldvorming in Scenario's", info: "Wie: Simulatie-instructeur. Wat: AI-Beeld. Waar: Briefings. Wanneer: Voorafgaand aan praktijk. Waarom: Beleving. Hoe: Beeldprompts. Wijze: Realistisch.", opdr: "Beschrijf een visueel scenario (bijv. een instap) dat u door AI zou willen laten tekenen." },
+        26: { t: "Web-Productie: Briefing", info: "Wie: De docent-webbouwer. Wat: HTML/CSS. Waar: Digitale leeromgeving. Wanneer: Zelfstudie. Waarom: Interactiviteit. Hoe: Code-generatie. Wijze: Modern.", opdr: "Plak de HTML-code van een door AI gemaakte briefing-pagina in het veld hieronder." },
+        30: { t: "Evaluatie: De Volgende Stap", info: "Wie: De innovatieve docent. Wat: Reflectie. Waar: Hier. Wanneer: Afronding. Waarom: Kwaliteitsborging. Hoe: Feedback-loop. Wijze: Constructief.", opdr: "Wat is uw belangrijkste actiepunt voor volgende week? Deel uw finale reflectie op de Toon-tafel." }
     };
 
     const container = document.getElementById('bookContainer');
 
-    // 2. De Lus die alle 30 pagina's bouwt
     for (let i = 1; i <= 30; i++) {
-        if (i === 29 || document.getElementById('pg' + i)) continue;
-
-        const d = paginasData[i] || { t: `Module Onderwerp ${i}`, info: "Hier komt de theorie over dit onderwerp.", opdr: "Hier komt de opdracht voor de deelnemer." };
+        if (i === 29) continue;
+        const d = paginasData[i] || { t: `Tactische Module ${i}`, info: "Wie, Wat, Waar, Wanneer, Waarom, Hoe en Op Welke Wijze: Deze 7 gouden voorwaarden vormen de basis voor de inzet van AI bij dit specifieke onderwerp. Scroll door dit venster voor de volledige briefing.", opdr: "Voer de operationele AI-opdracht uit en leg het resultaat vast in het onderstaande veld." };
         
         const div = document.createElement('div');
-        div.id = 'pg' + i;
-        div.className = 'page';
+        div.id = 'pg' + i; div.className = 'page';
         div.innerHTML = `
             <div class="content">
                 <h1>${i}. ${d.t}</h1>
-                <div class="theorie-blok"><strong>Context:</strong> ${d.info}</div>
+                <div class="info-scroll-container">${d.info}</div>
                 <div class="opdracht-blok">
                     <strong>Opdracht:</strong> ${d.opdr}
-                    <textarea id="in${i}" placeholder="Maak of plak hier uw product..."></textarea>
-                    <div class="preview-box" id="pre${i}"><em>Wacht op input...</em></div>
-                    <button class="share-btn" id="btn${i}">Deel Product 🚀</button>
+                    <textarea id="in${i}" placeholder="Typ uw antwoord of plak uw code hier..."></textarea>
+                    <div class="preview-box" id="pre${i}"><em>Wacht op input voor live weergave...</em></div>
+                    <button class="share-btn" id="btn${i}">DEEL DIT PRODUCT 🚀</button>
                 </div>
             </div>`;
-        
         container.insertBefore(div, document.getElementById('pg29'));
 
-        // Maak de preview en share knop actief voor deze specifieke pagina
+        // Interactieve elementen koppelen
         setTimeout(() => {
-            const tx = document.getElementById(`in${i}`);
-            const pr = document.getElementById(`pre${i}`);
+            const area = document.getElementById(`in${i}`);
+            const pre = document.getElementById(`pre${i}`);
             const btn = document.getElementById(`btn${i}`);
-
-            if(tx) tx.addEventListener('input', () => { pr.innerHTML = tx.value; });
+            if(area) area.addEventListener('input', () => { pre.innerHTML = area.value; });
             if(btn) btn.addEventListener('click', () => { share(d.t); });
         }, 0);
     }
 
-    // Navigatie & Database
+    // Navigatie
     window.current = 0;
     window.changePage = (n) => {
         let t = window.current + n;
@@ -132,9 +149,14 @@
         }
     };
 
+    // Database
     function share(type) {
-        push(ref(db, 'opdrachten'), { naam: window.uName, type: type, tijd: new Date().toLocaleTimeString() });
-        alert("Gedeeld op de toon-tafel!");
+        push(ref(db, 'opdrachten'), { 
+            naam: window.uName || "Anonieme Collega", 
+            type: type, 
+            tijd: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) 
+        });
+        alert("Product succesvol gedeeld op de Toon-tafel!");
     }
 
     onValue(ref(db, 'opdrachten'), (s) => {
@@ -142,7 +164,7 @@
         feed.innerHTML = "";
         const data = s.val();
         if(data) Object.values(data).reverse().forEach(item => {
-            feed.innerHTML += `<div class="feed-item"><strong>${item.type}</strong> door ${item.naam} <span style="float:right">${item.tijd}</span></div>`;
+            feed.innerHTML += `<div class="feed-item"><strong>${item.type}</strong><br>Gedeeld door: ${item.naam} <span style="float:right; color:#888;">${item.tijd}</span></div>`;
         });
     });
 </script>
