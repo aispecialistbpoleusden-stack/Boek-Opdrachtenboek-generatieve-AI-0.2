@@ -7,26 +7,34 @@
     <style>
         :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 10; }
+        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 100; }
         .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-direction: column; }
         .active { display: flex; }
+        
+        /* Voorblad */
         #pg0 { background: url('afbeelding1.jpg') no-repeat center center; background-size: cover; justify-content: center; align-items: center; }
-        .cover-overlay { background: rgba(0, 48, 130, 0.9); padding: 40px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); max-width: 550px; }
-        .content { padding: 45px; overflow-y: auto; flex: 1; line-height: 1.7; }
+        .cover-overlay { background: rgba(0, 48, 130, 0.9); padding: 40px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); width: 80%; max-width: 500px; }
+        
+        /* Blokken Styling */
+        .content { padding: 40px; overflow-y: auto; flex: 1; }
+        h1 { color: var(--polblauw); border-bottom: 2px solid var(--goud); padding-bottom: 10px; }
         .theorie-blok { background: #f0f4f8; border-left: 6px solid var(--polblauw); padding: 20px; margin: 20px 0; border-radius: 4px; }
         .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 25px; margin: 20px 0; border-radius: 10px; }
-        textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; margin-top: 10px; font-family: 'Consolas', monospace; height: 120px; }
-        .preview-box { border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; background: white; min-height: 100px; padding: 15px; }
+        
+        textarea { width: 100%; height: 120px; margin: 10px 0; font-family: monospace; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .preview-box { border: 2px solid #ddd; background: #fff; min-height: 100px; padding: 15px; border-radius: 4px; margin-top: 10px; }
         .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .feed-item { background: #f9f9f9; border-left: 5px solid var(--goud); padding: 10px; margin-bottom: 10px; font-size: 0.9em; }
+        
+        #sharedFeed { background: #f9f9f9; padding: 15px; border-radius: 8px; }
+        .feed-item { background: white; border-left: 5px solid var(--goud); padding: 10px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
 <nav>
-    <div><strong>POLITIEACADEMIE | GENERATIEVE AI</strong></div>
+    <div><strong>POLITIEACADEMIE | AI ONDERWIJS</strong></div>
     <div class="nav-buttons">
         <button onclick="changePage(-1)">⬅ VORIGE</button>
         <span id="pageIndicator" style="margin: 0 15px; font-weight: bold;">VOORBLAD</span>
@@ -37,19 +45,16 @@
 <div class="book-container" id="bookContainer">
     <div class="page active" id="pg0">
         <div class="cover-overlay">
-            <h1>AI DOEBOEK 2026</h1>
-            <p>Onderwijs & Toetsing in de Praktijk</p>
-            <div style="margin-top:30px;">
-                <label>Vul uw voornaam in:</label>
-                <input type="text" id="userName" style="width:100%; padding:10px; text-align:center;" placeholder="Voornaam..." oninput="window.uName = this.value">
-            </div>
+            <h1>AI DOEBOEK</h1>
+            <p>Ontwerp & Toetsing</p>
+            <input type="text" id="userName" placeholder="Vul uw voornaam in..." style="width:100%; padding:10px; text-align:center;" oninput="window.uName = this.value">
         </div>
     </div>
-    
+
     <div class="page" id="pg29">
         <div class="content">
             <h1>De Toon-tafel (Live Feed)</h1>
-            <div id="sharedFeed">Verbinding maken met database...</div>
+            <div id="sharedFeed">Laden van bijdragen...</div>
         </div>
     </div>
 </div>
@@ -72,36 +77,50 @@
     const db = getDatabase(app);
     window.uName = "Collega";
 
-    // --- HIER VUL JE DE INHOUD VAN JE PAGINA'S IN ---
+    // 1. Data voor de pagina's
     const paginasData = {
-        1: { t: "Inleiding AI", info: "AI is een copilot, geen automatische piloot.", opdr: "Genereer een welkomstboodschap." },
-        2: { t: "Prompt Engineering", info: "Context is koning bij prompts.", opdr: "Maak een prompt voor een lesplan." },
-        16: { t: "Toetsconstructie", info: "Focus op sterke afleiders.", opdr: "Ontwerp een MCQ-vraag in HTML." },
-        26: { t: "Web-Casuïstiek", info: "Visualiseer scenario's.", opdr: "Maak een briefing-pagina." }
-        // Voeg hier simpelweg 3, 4, 5 enzovoort toe...
+        1: { t: "Wat is Generatieve AI?", info: "AI voorspelt het volgende logische woord op basis van patronen.", opdr: "Leg uit hoe dit uw werk kan vergemakkelijken." },
+        16: { t: "Toetsconstructie", info: "Sterke afleiders maken een toets valide.", opdr: "Plak hier een HTML-toetsvraag van de AI." },
+        26: { t: "Interactieve Briefing", info: "Gebruik HTML voor scenario-training.", opdr: "Plak hier de code voor een briefing-pagina." }
     };
 
     const container = document.getElementById('bookContainer');
+
+    // 2. De Lus die alle 30 pagina's bouwt
     for (let i = 1; i <= 30; i++) {
-        if (i === 29) continue; // Feed pagina overslaan
-        const data = paginasData[i] || { t: `Module ${i}`, info: "Theorie volgt...", opdr: "Opdracht volgt..." };
+        if (i === 29 || document.getElementById('pg' + i)) continue;
+
+        const d = paginasData[i] || { t: `Module Onderwerp ${i}`, info: "Hier komt de theorie over dit onderwerp.", opdr: "Hier komt de opdracht voor de deelnemer." };
+        
         const div = document.createElement('div');
-        div.id = 'pg' + i; div.className = 'page';
+        div.id = 'pg' + i;
+        div.className = 'page';
         div.innerHTML = `
             <div class="content">
-                <h1>${i}. ${data.t}</h1>
-                <div class="theorie-blok"><strong>De Theorie:</strong> ${data.info}</div>
+                <h1>${i}. ${d.t}</h1>
+                <div class="theorie-blok"><strong>Context:</strong> ${d.info}</div>
                 <div class="opdracht-blok">
-                    <strong>Opdracht:</strong> ${data.opdr}
-                    <textarea id="in${i}" oninput="document.getElementById('pre${i}').innerHTML = this.value" placeholder="Plak hier je product-code..."></textarea>
-                    <div class="preview-box" id="pre${i}"><em>Preview...</em></div>
-                    <button class="share-btn" onclick="share('${data.t}')">Deel Product 🚀</button>
+                    <strong>Opdracht:</strong> ${d.opdr}
+                    <textarea id="in${i}" placeholder="Maak of plak hier uw product..."></textarea>
+                    <div class="preview-box" id="pre${i}"><em>Wacht op input...</em></div>
+                    <button class="share-btn" id="btn${i}">Deel Product 🚀</button>
                 </div>
             </div>`;
+        
         container.insertBefore(div, document.getElementById('pg29'));
+
+        // Maak de preview en share knop actief voor deze specifieke pagina
+        setTimeout(() => {
+            const tx = document.getElementById(`in${i}`);
+            const pr = document.getElementById(`pre${i}`);
+            const btn = document.getElementById(`btn${i}`);
+
+            if(tx) tx.addEventListener('input', () => { pr.innerHTML = tx.value; });
+            if(btn) btn.addEventListener('click', () => { share(d.t); });
+        }, 0);
     }
 
-    // Navigatie & Database functies
+    // Navigatie & Database
     window.current = 0;
     window.changePage = (n) => {
         let t = window.current + n;
@@ -113,10 +132,10 @@
         }
     };
 
-    window.share = (type) => {
+    function share(type) {
         push(ref(db, 'opdrachten'), { naam: window.uName, type: type, tijd: new Date().toLocaleTimeString() });
-        alert("Gedeeld!");
-    };
+        alert("Gedeeld op de toon-tafel!");
+    }
 
     onValue(ref(db, 'opdrachten'), (s) => {
         const feed = document.getElementById('sharedFeed');
