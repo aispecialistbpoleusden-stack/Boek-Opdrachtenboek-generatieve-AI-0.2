@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Opdrachtenboek - Interactief</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); }
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --warning: #e74c3c; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
         
         /* LOGIN SCHERM */
         #login-screen {
@@ -24,21 +24,27 @@
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
         .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
+        h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; }
+        .warning-title { color: var(--warning); border-bottom-color: var(--warning); }
+
         /* INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; margin: 0; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 0.9em; }
+        .contents-list li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dotted #ccc; font-size: 0.85em; }
         .clickable { cursor: pointer; color: var(--accent); font-weight: 500; }
-        .clickable:hover { background: #f0f7ff; padding-left: 5px; }
-        .page-num { font-weight: bold; color: var(--accent); }
+        .clickable:hover { background: #f0f7ff; }
+
+        /* INLEIDING & WAARSCHUWING */
+        .info-text { font-size: 0.95em; }
+        .warning-box { background: #fdf2f2; border-left: 5px solid var(--warning); padding: 15px; margin: 15px 0; }
+        .centered-img { display: block; margin: 20px auto; max-width: 80%; border-radius: 8px; }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
+        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.3s; }
         button:hover { background: #2980b9; }
         
         .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; border-radius: 0 8px 8px 0; }
-
         .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.85em; border-radius: 4px; }
+        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -55,69 +61,66 @@
     <div class="container" id="app-content">
         
         <div class="card">
-            <h3 style="margin-top:0; border-bottom: 2px solid var(--accent); display: inline-block;">INHOUDSOPGAVE</h3>
+            <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
-                <li><span>Inleiding & Principes</span><span class="page-num">2</span></li>
-                <li class="clickable" onclick="selectOpdracht('1a')"><span>Oefening 1A: eenvoudig beginnen</span><span class="page-num">4</span></li>
-                <li class="clickable" onclick="selectOpdracht('1b')"><span>Oefening 1B: Verschillende GPT’s</span><span class="page-num">5</span></li>
-                <li class="clickable" onclick="selectOpdracht('2')"><span>Oefening 2: test onderstaande prompts</span><span class="page-num">6</span></li>
-                <li class="clickable" onclick="selectOpdracht('3')"><span>Oefening 3: Prompt bouwen</span><span class="page-num">9</span></li>
-                <li class="clickable" onclick="selectOpdracht('4')"><span>Oefening 4: ChatGPT als assistent</span><span class="page-num">10</span></li>
-                <li class="clickable" onclick="selectOpdracht('5')"><span>Oefening 5: experimenteren met tips</span><span class="page-num">11</span></li>
-                <li class="clickable" onclick="selectOpdracht('6')"><span>Oefening 6: de zeven gouden w-vragen</span><span class="page-num">13</span></li>
-                <li class="clickable" onclick="selectOpdracht('7')"><span>Oefening 7: Werken met tabellen</span><span class="page-num">15</span></li>
-                <li class="clickable" onclick="selectOpdracht('8')"><span>Oefening 8: Laat AI prompts schrijven</span><span class="page-num">16</span></li>
-                <li class="clickable" onclick="selectOpdracht('9')"><span>Oefening 9: Taaltoets laten maken</span><span class="page-num">17</span></li>
-                <li class="clickable" onclick="selectOpdracht('10')"><span>Oefening 10: Prompt engineering</span><span class="page-num">18</span></li>
-                <li class="clickable" onclick="selectOpdracht('11')"><span>Oefening 11: Afbeeldingen genereren</span><span class="page-num">20</span></li>
-                <li class="clickable" onclick="selectOpdracht('12')"><span>Oefening 12: There is an AI for that!</span><span class="page-num">25</span></li>
-            </ul>
+                <li class="clickable" onclick="scrollToId('inleiding')"><span>Inleiding & Principes</span><span>2</span></li>
+                <li class="clickable" onclick="selectOpdracht('1a')"><span>Oefening 1A: eenvoudig beginnen</span><span>4</span></li>
+                <li class="clickable" onclick="selectOpdracht('1b')"><span>Oefening 1B: Werken met verschillende GPT’s</span><span>5</span></li>
+                <li class="clickable" onclick="selectOpdracht('2')"><span>Oefening 2: test onderstaande prompts</span><span>6</span></li>
+                </ul>
         </div>
 
-        <div class="card">
-            <h2>Hoi <span id="user-display"></span>,</h2>
+        <div class="card" id="inleiding">
+            <h3>INLEIDING</h3>
+            <div class="info-text">
+                <p>Welkom bij het <strong>"Grote Generatieve AI Doe-Boek"</strong>! Dit opdrachtenboek hoort bij het generatieve AI theorieboek en geeft je veel ideeën om aan de gang te gaan. We geloven sterk in het principe: <em>'leren door te doen'</em>.</p>
+                
+                <h3 class="warning-title">WAARSCHUWING</h3>
+                <div class="warning-box">
+                    <ul>
+                        <li>We weten niet waar systemen staan of wie alles leest.</li>
+                        <li>Jouw vragen worden gebruikt om het systeem te verbeteren.</li>
+                        <li>Gebruik <strong>nooit</strong> je politie-account of hetzelfde wachtwoord!</li>
+                        <li>Geen persoonsgevoelige info, geen politie-info, geen AVG/WPG.</li>
+                    </ul>
+                    <p>Dus: Weet wat je deelt, met wie je deelt en met de juiste middelen.</p>
+                    <img src="afbeelding2.jpg" alt="Middelen overzicht" class="centered-img">
+                </div>
+
+                <h3>PRINCIPES</h3>
+                <p><strong>1. Zorgvuldige omgang:</strong> Gebruik zakelijke e-mail alleen voor werk. Gebruik privé-accounts voor informeel gebruik met unieke wachtwoorden.</p>
+                <p><strong>2. Geen persoonsgegevens:</strong> Voeg nooit data van jezelf, collega's of burgers toe (AVG vereiste).</p>
+                <p><strong>3. Openbare teksten:</strong> Deel alleen teksten die openbaar mogen zijn. Geen vertrouwelijke documenten.</p>
+            </div>
+        </div>
+
+        <div class="card" id="opdrachten-sectie">
+            <h2>Hoi <span id="user-display"></span>, aan de slag:</h2>
             <select id="opdracht-selector" onchange="updateOpdracht()">
                 <option value="1a">Oefening 1A: eenvoudig beginnen</option>
-                <option value="1b">Oefening 1B: Verschillende GPT’s</option>
+                <option value="1b">Oefening 1B: Werken met verschillende GPT’s</option>
                 <option value="2">Oefening 2: test onderstaande prompts</option>
                 <option value="3">Oefening 3: Prompt bouwen</option>
-                <option value="4">Oefening 4: ChatGPT als assistent</option>
-                <option value="5">Oefening 5: experimenteren met tips</option>
-                <option value="6">Oefening 6: de zeven gouden w-vragen</option>
-                <option value="7">Oefening 7: Werken met tabellen</option>
-                <option value="8">Oefening 8: Laat AI prompts schrijven</option>
-                <option value="9">Oefening 9: Taaltoets laten maken</option>
-                <option value="10">Oefening 10: Prompt engineering</option>
-                <option value="11">Oefening 11: Afbeeldingen genereren</option>
-                <option value="12">Oefening 12: There is an AI for that!</option>
-            </select>
+                </select>
 
             <div class="instructie-box">
                 <div id="opdracht-tekst">Laden...</div>
             </div>
 
-            <label><strong>Jouw Prompt:</strong></label>
-            <textarea id="input-prompt" rows="2" placeholder="Wat heb je gevraagd?"></textarea>
-            
-            <label><strong>AI Resultaat:</strong></label>
+            <textarea id="input-prompt" rows="2" placeholder="Wat heb je gevraagd aan de AI?"></textarea>
             <textarea id="input-resultaat" rows="5" placeholder="Plak hier het antwoord..."></textarea>
-            
-            <button id="btn-deel">Deel resultaat</button>
+            <button id="btn-deel">Deel resultaat met de groep</button>
         </div>
 
         <div class="card">
-            <h3>Feed (Live)</h3>
+            <h3>Groepsfeed</h3>
             <div id="feed-container"></div>
         </div>
-
-        <p style="text-align: center; font-size: 0.8em; color: #7f8c8d; padding: 20px;">
-            © Lilian Haak 2024 - Generatieve AI opdrachtenboek
-        </p>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
@@ -133,19 +136,9 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "1a": { t: "Eenvoudig beginnen", i: "Stel de vraag: 'Maak de volgende zin af: De Italiaanse man had een hekel aan pizza met Ham, kaas en ..'. Vraag daarna om uitleg over privacy voor groep 7." },
-            "1b": { t: "Verschillende GPT's", i: "Herhaal de vragen uit 1A in Gemini, ChatGPT en Copilot. Vergelijk de verschillen in antwoorden." },
-            "2": { t: "Test prompts", i: "Herschrijf een tekst naar B1-niveau of laat een docent Politieacademie privacy uitleggen in 8 punten." },
-            "3": { t: "Prompt bouwen", i: "Gebruik rollen: Laat een politicus het belang van roze konijntjes uitleggen." },
-            "4": { t: "ChatGPT als assistent", i: "Maak een fitnessprogramma, maar dwing de AI om eerst vragen aan jóú te stellen." },
-            "5": { t: "Tips experiment", i: "Pas de tips uit pagina 3 toe. Vergelijk een korte prompt met een uitgebreide prompt." },
-            "6": { t: "7 Gouden W-vragen", i: "Gebruik Wie, Wat, Waar, Wanneer, Waarom, Voor wie en Vorm voor een kerstverhaal." },
-            "7": { t: "Werken met tabellen", i: "Laat de AI een tabel maken van sterrenbeelden of mythologie." },
-            "8": { t: "AI schrijft de prompt", i: "Vraag de AI: 'Ik wil een cursus maken, help mij deze prompt te verbeteren'." },
-            "9": { t: "Taaltoets maken", i: "Kopieer vragen van hbotaaltoets.nl naar de AI en check de antwoorden." },
-            "10": { t: "Prompt Engineering", i: "Simuleer een gesprek tussen collega's of leg Blockchain uit aan een kind." },
-            "11": { t: "Afbeeldingen", i: "Genereer een afbeelding van een futuristisch klaslokaal met Bing Image Creator." },
-            "12": { t: "AI Tools", i: "Verken 'theresanaiforthat.com' en deel een handige tool." }
+            "1a": { t: "Eenvoudig beginnen", i: "Maak de zin af: 'De Italiaanse man had een hekel aan pizza met Ham, kaas en ..'. Leg daarna privacy uit voor groep 7." },
+            "1b": { t: "Verschillende GPT's", i: "Herhaal 1A in Gemini, ChatGPT en Copilot. Zie je verschillen?" },
+            "2": { t: "Test prompts", i: "Herschrijf een tekst naar B1-niveau of laat een docent Politieacademie privacy uitleggen." }
         };
 
         window.startApp = () => {
@@ -162,17 +155,18 @@
             updateOpdracht();
         }
 
+        window.scrollToId = (id) => { document.getElementById(id).scrollIntoView({behavior: 'smooth'}); };
+
         window.selectOpdracht = (val) => {
             document.getElementById('opdracht-selector').value = val;
             updateOpdracht();
+            scrollToId('opdrachten-sectie');
         };
 
         window.updateOpdracht = () => {
             const val = document.getElementById('opdracht-selector').value;
             const data = opdrachtData[val];
-            if(data) {
-                document.getElementById('opdracht-tekst').innerHTML = `<strong>${data.t}</strong><p>${data.i}</p>`;
-            }
+            if(data) document.getElementById('opdracht-tekst').innerHTML = `<strong>${data.t}</strong><p>${data.i}</p>`;
         };
 
         document.getElementById('btn-deel').onclick = () => {
@@ -180,11 +174,12 @@
             const r = document.getElementById('input-resultaat').value;
             const n = localStorage.getItem('ai_user');
             const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
-            if(!p || !r) return alert("Vul beide velden in!");
+            if(!p || !r) return alert("Vul alles in!");
 
             push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
             document.getElementById('input-prompt').value = '';
             document.getElementById('input-resultaat').value = '';
+            alert("Gedeeld!");
         };
 
         onValue(ref(db, 'inzendingen'), (snapshot) => {
@@ -193,12 +188,7 @@
             const data = snapshot.val();
             if(data) {
                 Object.values(data).reverse().forEach(item => {
-                    feed.innerHTML += `
-                        <div class="entry">
-                            <b>${item.naam}</b> (${item.oefening}):<br>
-                            <small>${item.prompt}</small>
-                            <details><summary>Resultaat</summary><pre>${item.resultaat}</pre></details>
-                        </div>`;
+                    feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening}):<br><small>${item.prompt}</small><details><summary>Resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
                 });
             }
         });
