@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Volledige Versie</title>
+    <title>AI Opdrachtenboek - Volledig & Scrollbaar</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-blue: #ebf5fb; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; scroll-behavior: smooth; }
@@ -18,64 +18,119 @@
         .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 30px; scroll-margin-top: 40px; }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; color: var(--primary); }
-        h4 { color: var(--accent); margin-top: 20px; text-transform: uppercase; font-size: 0.9em; }
+        h4 { color: var(--accent); margin-top: 20px; text-transform: uppercase; font-size: 0.9em; border-bottom: 1px solid #eee; padding-bottom: 5px; }
 
-        /* NAVIGATIE */
+        /* PAGINA 2: INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
-        .status-info { background: #f9f9f9; }
+        .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: 0.3s; font-weight: 500; }
+        .status-info { background: #f9f9f9; color: #7f8c8d; border-left: 5px solid #ccc; }
         .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); }
-        .status-done { background: #e8f6ed; border-left: 5px solid var(--success); color: var(--success); font-weight: bold; }
+        .status-done { background: #e8f6ed !important; border-left: 5px solid var(--success) !important; color: var(--success) !important; font-weight: bold; }
 
-        /* LAYOUT ELEMENTEN */
+        /* LAYOUT */
         .flex-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 20px; }
         .flex-text { flex: 2; min-width: 300px; }
         .side-img { flex: 1; min-width: 150px; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         
         /* INPUT & FEED */
-        .input-group { background: #f0f4f8; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); }
+        .input-group { background: #f0f4f8; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); margin-bottom: 30px; }
         textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
-        select { width: 100%; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: bold; }
+        select { width: 100%; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: bold; border: 1px solid var(--accent); }
+        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
+
+        .feed-section { margin-top: 25px; border-top: 2px solid #ddd; padding-top: 20px; }
+        .feed-category { background: var(--primary); color: white; padding: 6px 12px; border-radius: 4px; margin-bottom: 15px; display: inline-block; font-size: 0.85em; }
+        .entry { background: white; border-left: 5px solid var(--success); padding: 15px; margin-bottom: 12px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        pre { white-space: pre-wrap; background: #f8f9fa; padding: 12px; border: 1px solid #eee; border-radius: 6px; font-size: 0.9em; }
         
-        .feed-section { margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px; }
-        .feed-category { background: var(--primary); color: white; padding: 8px 15px; border-radius: 5px; margin-bottom: 15px; display: inline-block; }
-        .entry { background: white; border-left: 5px solid var(--success); padding: 15px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 5px; font-size: 0.9em; }
+        /* SCROLL TO TOP KNOP */
+        #scrollToTopBtn {
+            display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1001;
+            background-color: var(--accent); color: white; border: none; outline: none;
+            cursor: pointer; padding: 15px; border-radius: 50%; width: 50px; height: 50px; font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
 
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Naar boven">↑</button>
+
     <div id="login-screen">
         <div class="login-card">
             <h1>AI Opdrachtenboek</h1>
-            <input type="text" id="username" placeholder="Typ je volledige naam...">
-            <button onclick="startApp()">Start de Training</button>
+            <input type="text" id="username" placeholder="Je volledige naam...">
+            <button onclick="startApp()">Start Training</button>
         </div>
     </div>
 
     <div class="container" id="app-content">
         
-        <div class="card" id="inhoud">
-            <h3>INHOUDSOPGAVE</h3>
+        <div class="card" id="p2">
+            <h3>PAGINA 2: INHOUDSOPGAVE & VOORTGANG</h3>
             <ul class="contents-list" id="main-menu">
-                <li onclick="scrollToId('p2')" class="status-info"><span>Pagina 2-3: Inleiding & Principes</span><span class="page-num">2-3</span></li>
+                <li onclick="scrollToId('p3')" class="status-info"><span>Pagina 3: Hoe werkt Generatieve AI?</span><span class="page-num">3</span></li>
+                <li onclick="scrollToId('p4')" id="menu-p4" class="status-todo"><span>Pagina 4: Oefening 1A - Pizza & Privacy</span><span class="page-num">4</span></li>
+                <li onclick="scrollToId('p6')" id="menu-p6" class="status-todo"><span>Pagina 6: Oefening 2 - Politieacademie</span><span class="page-num">6</span></li>
+                <li onclick="scrollToId('p7')" id="menu-p7" class="status-todo"><span>Pagina 7: Creativiteit & Emoticons</span><span class="page-num">7</span></li>
                 <li onclick="scrollToId('p8')" id="menu-p8" class="status-todo"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
                 <li onclick="scrollToId('p9')" id="menu-p9" class="status-todo"><span>Pagina 9: Prompt Bouwen (Konijnen)</span><span class="page-num">9</span></li>
                 <li onclick="scrollToId('p10')" id="menu-p10" class="status-todo"><span>Pagina 10: AI als Assistent (Fitness)</span><span class="page-num">10</span></li>
-                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Experimenteren met Tips</span><span class="page-num">11</span></li>
+                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Experimenteren & Tips</span><span class="page-num">11</span></li>
             </ul>
         </div>
 
-        <div class="card" id="p8">
-            <h3>PAGINA 8: TOETSEN & PRODUCTBESCHRIJVING</h3>
+        <div class="card" id="p3">
+            <h3>PAGINA 3: HOE WERKT GENERATIEVE AI?</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <h4>OEFENING: UNIEKE TOETSEN</h4>
-                    <p>Een handige toepassing is het genereren van toetsvragen. Upload een artikel of plak een tekst en gebruik de volgende prompt:</p>
-                    <p><em>"Maak op basis van bijgevoegd artikel 5 sets van 5 meerkeuzevragen voor leerlingen van niveau [X]. Zorg dat de vragen variëren in moeilijkheidsgraad."</em></p>
-                    
-                    <h4>OEFENING: PRODUCTBESCHRIJVING</h4>
-                    <p>Stel, je moet een tekst schrijven voor een nieuw product, zoals een duurzame mok. Gebruik een 'few-shot' prompt waarbij je eerst een goed voorbeeld geeft van een bestaande tekst en AI vraagt de stijl te kopiëren voor jouw nieuwe product.</p>
+                    <p>Generatieve AI voorspelt woorden op basis van patronen in miljarden teksten. Het begrijpt de wereld niet zoals wij, maar is een ster in taalstatistiek.</p>
+                    <h4>DE DRIE GOUDEN REGELS:</h4>
+                    <ul>
+                        <li><strong>Wees specifiek:</strong> Geef details over lengte en vorm.</li>
+                        <li><strong>Geef context:</strong> Wie ben jij en wie is de lezer?</li>
+                        <li><strong>Check de feiten:</strong> AI kan hallucineren.</li>
+                    </ul>
+                </div>
+                <img src="afbeelding1.jpg" alt="Basis AI" class="side-img">
+            </div>
+        </div>
+
+        <div class="card" id="p4">
+            <h3>PAGINA 4: OEFENING 1A - PIZZA & PRIVACY</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <p>Leg in maximaal 50 woorden aan een Italiaanse pizzabakker uit wat het belang is van privacy binnen een organisatie. Gebruik beeldspraak die past bij zijn beroep.</p>
+                </div>
+                <img src="afbeelding4.jpg" alt="Pizza" class="side-img">
+            </div>
+        </div>
+
+        <div class="card" id="p6">
+            <h3>PAGINA 6: OEFENING 2 - DE POLITIEACADEMIE</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <p>Schrijf een samenvatting in precies 8 korte, krachtige bulletpoints over de basisprincipes van de AVG voor studenten van de Politieacademie.</p>
+                </div>
+                <img src="afbeelding6.jpg" alt="Politie" class="side-img">
+            </div>
+        </div>
+
+        <div class="card" id="p7">
+            <h3>PAGINA 7: CREATIVITEIT - FILM IN EMOTICONS</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <p>Vat de plot van de film 'Titanic' samen door uitsluitend gebruik te maken van emoticons en pictogrammen. Gebruik geen woorden.</p>
+                </div>
+                <img src="afbeelding7.jpg" alt="Film" class="side-img">
+            </div>
+        </div>
+
+        <div class="card" id="p8">
+            <h3>PAGINA 8: TOETSEN & PRODUCTEN</h3>
+            <div class="flex-row">
+                <div class="flex-text">
+                    <p>Maak op basis van dit artikel 5 sets van 5 meerkeuzevragen. Zorg voor variatie in moeilijkheid.</p>
                 </div>
                 <img src="afbeelding8.jpg" alt="Toetsen" class="side-img">
             </div>
@@ -85,61 +140,45 @@
             <h3>PAGINA 9: OEFENING 3 - PROMPT BOUWEN</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <h4>STAP 1: ROLLEN & STIJLEN</h4>
-                    <p><strong>1A.</strong> Doe alsof je Mark Rutte bent, en leg uit vanuit een liberaal standpunt wat het belang is van roze konijntjes.</p>
-                    <p><strong>1B.</strong> Doe alsof je Geert Wilders bent, en leg uit vanuit een nostalgisch nationalistisch perspectief wat het probleem is met roze konijntjes.</p>
-                    <p><strong>1C.</strong> Doe alsof je Caroline van der Plas bent, en leg uit vanuit een boeren perspectief wat de mogelijkheden zijn van roze konijntjes in de landbouwketen.</p>
+                    <p>Test verschillende stijlen uit (Rutte, Wilders, Caroline v.d. Plas) voor roze konijnen en maak de Wikipedia "Mega-prompt".</p>
                 </div>
-                <img src="afbeelding9.jpg" alt="Politiek" class="side-img">
+                <img src="afbeelding9.jpg" alt="Konijnen" class="side-img">
             </div>
-            <h4>STAP 2: DE MEGA-PROMPT</h4>
-            <p>Schrijf een lange prompt en verwerk hierin: Tone of voice, Onderwerp, Doelgroep, Doel, Stijl en Unieke punten.</p>
-            <p><strong>Test-opdracht:</strong> Schrijf een encyclopedisch artikel voor Wikipedia over roze konijnen. Benoem herkomst, ras, leeftijd en verzet tegen de intensieve veehouderij.</p>
         </div>
 
         <div class="card" id="p10">
-            <h3>PAGINA 10: OEFENING 4 - CHATGPT ALS ASSISTENT</h3>
+            <h3>PAGINA 10: OEFENING 4 - DE FITNESS ASSISTENT</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <h4>WERKEN MET EEN ROL</h4>
-                    <p><strong>Stap 1:</strong> Vraag eerst simpel: "Wat is een goed fitness programma als je weer wilt beginnen?"</p>
-                    <p><strong>Stap 2 (De Rol):</strong> Gebruik een nieuwe chat: <em>"Ik ben een fitness trainer en voedingscoach. Help mij bij een holistische aanpak voor een man van 42 van 100 kilo die al drie jaar niet heeft bewogen en diabetes verschijnselen heeft. Stel mij eerst aanvullende vragen wat je moet weten."</em></p>
-                    <p><strong>Stap 3-5:</strong> Geef de info (42 jaar, 1m72, etc.) en laat het definitieve "fit en vitaal" programma maken.</p>
+                    <p>Gebruik de 'rol-methode'. Laat de AI eerst vragen stellen voor een fitnessplan voor een man van 42 met diabetes verschijnselen.</p>
                 </div>
                 <img src="afbeelding10.jpg" alt="Fitness" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p11">
-            <h3>PAGINA 11: OEFENING 5 - EXPERIMENTEREN</h3>
-            <h4>DE COLLEGA-METHODE</h4>
-            <p><strong>Fout:</strong> "schrijf een facebook artikel wat onze partij nieuwe raadsleden oplevert."</p>
-            <p><strong>Beter:</strong> "Schrijf voor de doelgroep van aspirant raadsleden een artikel voor de website van politieke partij 'Nieuw Nederland' (Slogan: Iedereen erbij). Richt je op jongvolwassenen van 25-45 jaar met B2 taalniveau."</p>
-            
-            <h4>CONTEXT & REGENERATE</h4>
-            <p>Pas de prompt over online dating aan naar <strong>fakenieuws herkennen</strong> voor groep 7. Gebruik ook de "Regenerate" knop als het resultaat niet bevalt en stuur bij met vragen als: <em>"Kun je punt 3 nader toelichten?"</em> of <em>"Maak het compacter."</em></p>
+            <h3>PAGINA 11: COLLEGA-METHODE & TIPS</h3>
+            <p>Gebruik de AI als een collega. Verfijn resultaten voor 'Nieuw Nederland' of pas de dating-prompt aan naar fakenieuws voor groep 7.</p>
         </div>
 
         <div class="card" id="input-sectie">
-            <h3>JOUW OPDRACHT DEELNEMER</h3>
-            <select id="opdracht-selector" onchange="updateOpdracht()">
-                <option value="p8_toets">Pagina 8: Toetsen & Producten</option>
-                <option value="p9_politiek">Pagina 9: Roze Konijnen (Stijlen)</option>
-                <option value="p9_wiki">Pagina 9: Wikipedia Mega-Prompt</option>
-                <option value="p10_fitness">Pagina 10: Fitness Assistent</option>
-                <option value="p11_collega">Pagina 11: Collega Methode</option>
+            <h3>JOUW INVOER & RESULTATEN</h3>
+            <select id="opdracht-selector">
+                <option value="p4">Pagina 4: Pizza & Privacy</option>
+                <option value="p6">Pagina 6: Politieacademie</option>
+                <option value="p7">Pagina 7: Film in Emoticons</option>
+                <option value="p8">Pagina 8: Toetsen & Producten</option>
+                <option value="p9">Pagina 9: Roze Konijnen / Wiki</option>
+                <option value="p10">Pagina 10: Fitness Coach</option>
+                <option value="p11">Pagina 11: Collega Methode</option>
             </select>
-
             <div class="input-group">
-                <textarea id="input-prompt" rows="3" placeholder="Wat was je volledige prompt?"></textarea>
-                <textarea id="input-resultaat" rows="6" placeholder="Wat was het resultaat van de AI?"></textarea>
-                <button id="btn-deel" onclick="verstuurInzending()">Verstuur naar Groepsfeed</button>
+                <textarea id="input-prompt" rows="3" placeholder="Wat was je prompt?"></textarea>
+                <textarea id="input-resultaat" rows="6" placeholder="Wat was de output?"></textarea>
+                <button onclick="verstuurInzending()">Deel met de Groep</button>
             </div>
-
-            <div id="feed-container">
-                </div>
+            <div id="feed-container"></div>
         </div>
-
     </div>
 
     <script type="module">
@@ -159,10 +198,23 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // UI Functies
+        // SCROLL BUTTON LOGICA
+        let mybutton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+        window.topFunction = () => {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+
         window.startApp = () => {
             const n = document.getElementById('username').value;
-            if(!n) return alert("Voer je naam in!");
+            if(!n) return alert("Naam?");
             localStorage.setItem('ai_user', n);
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
@@ -172,55 +224,50 @@
         window.scrollToId = (id) => document.getElementById(id).scrollIntoView();
 
         function checkProgress() {
-            const opdrachten = ['p8', 'p9', 'p10', 'p11'];
-            opdrachten.forEach(id => {
+            ['p4', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11'].forEach(id => {
                 if(localStorage.getItem('done_' + id)) {
-                    document.getElementById('menu-' + id).className = 'status-done';
+                    const el = document.getElementById('menu-' + id);
+                    if(el) {
+                        el.classList.add('status-done');
+                        if(!el.innerHTML.includes('✅')) el.querySelector('span').innerHTML += ' ✅';
+                    }
                 }
             });
         }
 
         window.verstuurInzending = () => {
             const sel = document.getElementById('opdracht-selector');
-            const cat = sel.options[sel.selectedIndex].text;
             const p = document.getElementById('input-prompt').value;
             const r = document.getElementById('input-resultaat').value;
-            const n = localStorage.getItem('ai_user');
+            if(!p || !r) return alert("Vul alles in!");
 
-            if(!p || !r) return alert("Vul beide velden in!");
-
-            push(ref(db, 'inzendingen'), { naam: n, categorie: cat, prompt: p, resultaat: r, timestamp: Date.now() });
-            
-            // Markeer pagina als gedaan op basis van selectie
-            const pagId = sel.value.split('_')[0];
-            localStorage.setItem('done_' + pagId, 'true');
+            push(ref(db, 'inzendingen'), { 
+                naam: localStorage.getItem('ai_user'), 
+                categorie: sel.options[sel.selectedIndex].text, 
+                prompt: p, resultaat: r, timestamp: Date.now() 
+            });
+            localStorage.setItem('done_' + sel.value, 'true');
             checkProgress();
-
             document.getElementById('input-prompt').value = "";
             document.getElementById('input-resultaat').value = "";
         };
 
-        // De Feed Ordenen
         onValue(ref(db, 'inzendingen'), (snapshot) => {
             const container = document.getElementById('feed-container');
-            container.innerHTML = '<h3>LIVE GROEPSFEED (GEORDEND)</h3>';
+            container.innerHTML = '<h3>GROEPSFEED</h3>';
             const data = snapshot.val();
             if(!data) return;
-
-            // Ordenen per categorie
-            const categories = {};
+            const cats = {};
             Object.values(data).forEach(item => {
-                if(!categories[item.categorie]) categories[item.categorie] = [];
-                categories[item.categorie].push(item);
+                if(!cats[item.categorie]) cats[item.categorie] = [];
+                cats[item.categorie].push(item);
             });
-
-            for(const [catName, items] of Object.entries(categories)) {
-                let section = `<div class="feed-section"><div class="feed-category">${catName}</div>`;
-                items.reverse().forEach(entry => {
-                    section += `<div class="entry"><b>${entry.naam}:</b><br><small>Prompt: ${entry.prompt}</small><details><summary>Bekijk antwoord</summary><pre>${entry.resultaat}</pre></details></div>`;
+            for(const [name, items] of Object.entries(cats)) {
+                let html = `<div class="feed-section"><div class="feed-category">${name}</div>`;
+                items.reverse().forEach(e => {
+                    html += `<div class="entry"><b>${e.naam}:</b><br><small>${e.prompt}</small><details><summary>Bekijk</summary><pre>${e.resultaat}</pre></details></div>`;
                 });
-                section += `</div>`;
-                container.innerHTML += section;
+                container.innerHTML += html + `</div>`;
             }
         });
 
