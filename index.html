@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Gecorrigeerde Versie</title>
+    <title>AI Opdrachtenboek - Interactief</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-grey: #eef2f3; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
         
-        /* LOGIN */
         #login-screen {
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center;
             background: #2c3e50; position: fixed; top: 0; left: 0; z-index: 1000;
         }
         .login-card { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
-        /* DASHBOARD */
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
         .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
         .section-title { color: var(--success); border-bottom-color: var(--success); }
 
-        /* SCROLL VENSTERS */
         .scroll-window { 
-            max-height: 380px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
+            max-height: 400px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
             padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; }
         .contents-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 0.9em; }
         .clickable { cursor: pointer; color: var(--accent); font-weight: 600; }
-        .clickable:hover { text-decoration: underline; }
 
-        .centered-img { display: block; margin: 15px auto; max-width: 90%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        /* FLEX VOOR AFBEELDING NAAST TEKST */
+        .flex-row { display: flex; gap: 15px; align-items: flex-start; flex-wrap: wrap; }
+        .flex-content { flex: 1; min-width: 250px; }
+        .side-img { width: 180px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* INPUT GROEP */
         .input-group { background: var(--light-grey); padding: 20px; border-radius: 12px; border-left: 6px solid var(--accent); margin-top: 20px; }
         input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; font-family: inherit; }
         
         button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
         button:hover { background: #2980b9; }
 
-        /* FEED */
         .entry { border-left: 5px solid var(--success); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; font-size: 0.85em; border: 1px solid #eee; border-radius: 5px; }
+        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; font-size: 0.85em; border: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -54,72 +50,68 @@
         <div class="login-card">
             <h1>AI Opdrachtenboek</h1>
             <input type="text" id="username" placeholder="Typ hier je naam...">
-            <button onclick="startApp()">Start de Training</button>
+            <button onclick="startApp()">Start de Sessie</button>
         </div>
     </div>
 
     <div class="container" id="app-content">
         
         <div class="card">
-            <h3>LOGISCHE VOLGORDE</h3>
+            <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
                 <li class="clickable" onclick="scrollToId('p4')"><span>P4: Eenvoudig beginnen</span><span>4</span></li>
-                <li class="clickable" onclick="scrollToId('p6')"><span>P6: Politie & Duits</span><span>6</span></li>
                 <li class="clickable" onclick="scrollToId('p8')"><span>P8: Toetsen & Producten</span><span>8</span></li>
-                <li class="clickable" onclick="scrollToId('p9')"><span>P9: Grapjes & Meta-prompts</span><span>9</span></li>
+                <li class="clickable" onclick="scrollToId('p9')"><span>P9: Prompt Bouwen (Roze Konijnen)</span><span>9</span></li>
             </ul>
         </div>
 
-        <div class="card" id="p8">
-            <h3 class="section-title">PAGINA 8: TOETSEN & PRODUCTBESCHRIJVING</h3>
-            <div class="scroll-window">
-                <h4>UNIEKE TOETSEN</h4>
-                <p>Maak 5 sets van 5 meerkeuzevragen op basis van een artikel.</p>
-                <h4>PRODUCTBESCHRIJVING</h4>
-                <p>Schrijf een tekst voor een duurzame mok op basis van een goed voorbeeld.</p>
-                <img src="afbeelding8.jpg" alt="Toetsen" class="centered-img">
-            </div>
-        </div>
-
         <div class="card" id="p9">
-            <h3 class="section-title">PAGINA 9: CREATIVITEIT & STRATEGIE</h3>
+            <h3 class="section-title">PAGINA 9: OEFENING 3 - PROMPT BOUWEN</h3>
             <div class="scroll-window">
-                <h4>GRAPJES & PICTOGRAMMEN</h4>
-                <p>Vat Flodder of Lord of the Rings samen in emoticons/pictogrammen.</p>
-                <h4>META-PROMPTS</h4>
-                <p>Laat de AI eerst je prompt verbeteren (bijv. over gezonde voeding) voordat je het antwoord laat genereren.</p>
-                <h4>STIJLANALYSE</h4>
-                <p>Laat de AI jouw schrijfstijl analyseren en een nieuw artikel in diezelfde stijl schrijven.</p>
+                <h4>STAP 1: ROLLEN & STIJLEN</h4>
+                <div class="flex-row">
+                    <div class="flex-content">
+                        <p><strong>1A.</strong> Doe alsof je <strong>Mark Rutte</strong> bent: leg liberaal het belang van roze konijntjes uit.</p>
+                        <p><strong>1B.</strong> Doe alsof je <strong>Geert Wilders</strong> bent: leg nostalgisch/nationalistisch het probleem van roze konijntjes uit.</p>
+                        <p><strong>1C.</strong> Doe alsof je <strong>Caroline van der Plas</strong> bent: leg vanuit boerenperspectief de kansen in de landbouwketen uit.</p>
+                    </div>
+                    <img src="afbeelding9.jpg" alt="Stijl voorbeeld" class="side-img">
+                </div>
+
+                <hr>
+                <h4>STAP 2: DE MEGA-PROMPT</h4>
+                <p>Bouw een lange prompt met: <em>Rol/Tone-of-voice, Onderwerp, Doelgroep, Doel van de tekst, Stijl en Unieke punten.</em></p>
+                <p><strong>Test-opdracht:</strong> Schrijf een Wikipedia-artikel over roze konijnen (herkomst, ras, leeftijd, verzet tegen intensieve veehouderij).</p>
+
+                <hr>
+                <h4>STAP 4 & 5: VERFIJNEN</h4>
+                <p>Reageer op het resultaat: "Verduidelijk punt 3", "Maak het minder serieus" of "Vat het samen". In GPT-4 kun je ook vragen: <em>"Maak nu een afbeelding behorende bij dit verhaaltje."</em></p>
             </div>
         </div>
 
         <div class="card" id="input-sectie">
             <h3>VOER JE OPDRACHT UIT</h3>
-            <p>Selecteer de oefening en deel je resultaat met de groep:</p>
-            
             <select id="opdracht-selector" onchange="updateOpdracht()">
-                <option value="p8_toets">Pagina 8: Toetsen Maken</option>
-                <option value="p8_product">Pagina 8: Productbeschrijving</option>
-                <option value="p9_emoticons">Pagina 9: Film in Emoticons</option>
-                <option value="p9_meta">Pagina 9: Meta-prompt Verbetering</option>
-                <option value="p9_stijl">Pagina 9: Stijlanalyse</option>
+                <option value="p9_politiek">P9: Politieke Stijlen (Rutte/Wilders/Caroline)</option>
+                <option value="p9_wikipedia">P9: Wikipedia Roze Konijnen</option>
+                <option value="p9_verfijnen">P9: Verfijnen & Vervolgvragen</option>
             </select>
 
             <div class="input-group">
                 <div id="opdracht-instructie" style="margin-bottom: 10px; color: #666; font-style: italic;">Selecteer een taak...</div>
                 
                 <label><strong>De Prompt die ik gebruikte:</strong></label>
-                <textarea id="input-prompt" rows="2" placeholder="Wat heb je gevraagd?"></textarea>
+                <textarea id="input-prompt" rows="2" placeholder="Wat heb je ingevoerd?"></textarea>
                 
-                <label><strong>Het Resultaat (of mijn bevinding):</strong></label>
-                <textarea id="input-resultaat" rows="5" placeholder="Wat kwam eruit?"></textarea>
+                <label><strong>Het AI Resultaat:</strong></label>
+                <textarea id="input-resultaat" rows="5" placeholder="Plak hier het antwoord..."></textarea>
                 
-                <button id="btn-deel">Verstuur naar Groepsfeed</button>
+                <button id="btn-deel">Deel met de groep</button>
             </div>
         </div>
 
         <div class="card">
-            <h3>Groepsfeed</h3>
+            <h3>Live Groepsfeed</h3>
             <div id="feed-container"></div>
         </div>
 
@@ -143,16 +135,14 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "p8_toets": { t: "P8: Toetsen Maken", i: "Maak 5 sets van 5 vragen over een tekst." },
-            "p8_product": { t: "P8: Productbeschrijving", i: "Gebruik een voorbeeld-stijl voor een mok-tekst." },
-            "p9_emoticons": { t: "P9: Emoticons", i: "Vat een film/boek samen in emoticons." },
-            "p9_meta": { t: "P9: Meta-prompt", i: "Laat de AI je prompt verbeteren voor een tekst over voeding." },
-            "p9_stijl": { t: "P9: Stijlanalyse", i: "Laat de AI in jouw eigen schrijfstijl schrijven." }
+            "p9_politiek": { t: "P9: Politieke Rollen", i: "Test Rutte, Wilders of Caroline over de roze konijntjes." },
+            "p9_wikipedia": { t: "P9: Wikipedia Prompt", i: "Bouw de encyclopedische prompt over roze konijnen rassen." },
+            "p9_verfijnen": { t: "P9: Verfijnen", i: "Gebruik vervolgvragen om het resultaat bij te sturen." }
         };
 
         window.startApp = () => {
             const name = document.getElementById('username').value;
-            if(!name) return alert("Naam?");
+            if(!name) return alert("Voer je naam in!");
             localStorage.setItem('ai_user', name);
             showApp();
         };
@@ -177,7 +167,7 @@
             const r = document.getElementById('input-resultaat').value;
             const n = localStorage.getItem('ai_user');
             const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
-            if(!p || !r) return alert("Vul alles in!");
+            if(!p || !r) return alert("Vul beide velden in!");
             
             push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
             document.getElementById('input-prompt').value = "";
@@ -190,7 +180,7 @@
             const data = snapshot.val();
             if(data) {
                 Object.values(data).reverse().forEach(item => {
-                    feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening}):<br><small>${item.prompt}</small><details><summary>Resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
+                    feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening}):<br><small>${item.prompt}</small><details><summary>Bekijk Resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
                 });
             }
         });
