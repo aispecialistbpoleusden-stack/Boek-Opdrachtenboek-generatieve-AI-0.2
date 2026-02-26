@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Volledige Versie</title>
+    <title>AI Opdrachtenboek - Voortgangstracker</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-grey: #eef2f3; }
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-blue: #ebf5fb; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
         
         #login-screen {
@@ -18,28 +18,27 @@
         .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; scroll-margin-top: 20px; }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
-        .section-title { color: var(--success); border-bottom-color: var(--success); }
-
-        .scroll-window { 
-            max-height: 400px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
-            padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-        }
-
+        
+        /* INHOUDSOPGAVE STIJLEN */
         .contents-list { list-style: none; padding: 0; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 10px 15px; border-bottom: 1px dotted #ccc; cursor: pointer; border-radius: 5px; }
-        .contents-list li:hover { background: #eef2f3; color: var(--accent); }
-        .page-num { font-weight: bold; color: #7f8c8d; }
+        .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
+        
+        /* Kleuren voor status */
+        .status-info { background: #f9f9f9; color: #999; } /* Pagina zonder opdracht */
+        .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); } /* Moet nog */
+        .status-done { background: #e8f6ed; border-left: 5px solid var(--success); color: var(--success); font-weight: bold; } /* Klaar */
 
-        .input-group { background: var(--light-grey); padding: 20px; border-radius: 12px; border-left: 6px solid var(--accent); margin-top: 20px; }
+        .page-num { font-weight: bold; }
+
+        .input-group { background: #f0f4f8; padding: 20px; border-radius: 12px; border: 2px solid var(--accent); margin-top: 20px; }
         textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; resize: vertical; box-sizing: border-box; }
-        select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: white; }
+        select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: white; font-weight: bold; }
         
         button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; margin-top: 10px; }
         button:hover { background: #2980b9; }
 
         .entry { border-left: 5px solid var(--success); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .flex-row { display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start; }
-        .side-img { width: 180px; border-radius: 8px; }
+        .scroll-window { max-height: 300px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -55,112 +54,44 @@
     <div class="container" id="app-content">
         
         <div class="card" id="inhoud">
-            <h3>INHOUDSOPGAVE</h3>
-            <ul class="contents-list">
-                <li onclick="scrollToId('p2')"><span>Inleiding & Principes</span><span class="page-num">2-3</span></li>
-                <li onclick="scrollToId('p4')"><span>Oefening 1A: Pizza & Privacy</span><span class="page-num">4</span></li>
-                <li onclick="scrollToId('p6')"><span>Oefening 2: Politieacademie Prompt</span><span class="page-num">6</span></li>
-                <li onclick="scrollToId('p7')"><span>Oefening: Creativiteit & Emoticons</span><span class="page-num">7</span></li>
-                <li onclick="scrollToId('p8')"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
-                <li onclick="scrollToId('p9')"><span>Pagina 9: Prompt Bouwen (Konijnen)</span><span class="page-num">9</span></li>
-                <li onclick="scrollToId('p10')"><span>Pagina 10: AI als Assistent (Fitness)</span><span class="page-num">10</span></li>
-                <li onclick="scrollToId('p11')"><span>Pagina 11: Experimenteren & Collega-methode</span><span class="page-num">11</span></li>
+            <h3>VOORTGANG</h3>
+            <ul class="contents-list" id="main-menu">
+                <li onclick="scrollToId('p2')" class="status-info"><span>Pagina 2-3: Inleiding</span><span class="page-num">2</span></li>
+                <li onclick="scrollToId('p4')" id="menu-p4" class="status-todo"><span>Pagina 4: Pizza & Privacy</span><span class="page-num">4</span></li>
+                <li onclick="scrollToId('p6')" id="menu-p6" class="status-todo"><span>Pagina 6: Politieacademie</span><span class="page-num">6</span></li>
+                <li onclick="scrollToId('p7')" id="menu-p7" class="status-todo"><span>Pagina 7: Film in Emoticons</span><span class="page-num">7</span></li>
+                <li onclick="scrollToId('p8')" id="menu-p8" class="status-todo"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
+                <li onclick="scrollToId('p9')" id="menu-p9" class="status-todo"><span>Pagina 9: Roze Konijnen</span><span class="page-num">9</span></li>
+                <li onclick="scrollToId('p10')" id="menu-p10" class="status-todo"><span>Pagina 10: Fitness Coach</span><span class="page-num">10</span></li>
+                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Collega Methode</span><span class="page-num">11</span></li>
             </ul>
         </div>
 
-        <div class="card" id="p2">
-            <h3 class="section-title">PAGINA 2-3: INLEIDING</h3>
-            <div class="scroll-window">
-                <h4>Wat is Generatieve AI?</h4>
-                <p>Uitleg over Large Language Models (LLM) en hoe ze voorspellen wat het volgende woord is.</p>
-                <p><strong>De Gouden Regels:</strong><br>
-                1. Wees specifiek.<br>
-                2. Geef context.<br>
-                3. Controleer altijd op hallucinaties.</p>
-            </div>
-        </div>
-
-        <div class="card" id="p4">
-            <h3 class="section-title">PAGINA 4: EENVOUDIG BEGINNEN</h3>
-            <div class="scroll-window">
-                <p>De beroemde pizza-oefening om rollen te begrijpen.</p>
-            </div>
-        </div>
-
-        <div class="card" id="p6">
-            <h3 class="section-title">PAGINA 6: POLITIEACADEMIE</h3>
-            <div class="scroll-window">
-                <p>Maak een samenvatting in 8 punten voor studenten aan de Politieacademie.</p>
-            </div>
-        </div>
-
-        <div class="card" id="p7">
-            <h3 class="section-title">PAGINA 7: CREATIVITEIT</h3>
-            <div class="scroll-window">
-                <p>Vat een bekende film samen in alleen emoticons of pictogrammen.</p>
-            </div>
-        </div>
-
         <div class="card" id="p8">
-            <h3 class="section-title">PAGINA 8: TOETSEN & PRODUCTBESCHRIJVING</h3>
+            <h3 style="color:var(--accent)">Pagina 8: Unieke Toetsen</h3>
             <div class="scroll-window">
-                <h4>UNIEKE TOETSEN</h4>
-                <p>Maak 5 sets van 5 meerkeuzevragen op basis van een geüpload artikel.</p>
-                <img src="afbeelding8.jpg" alt="Toetsen" style="width:100%; border-radius:8px;">
-            </div>
-        </div>
-
-        <div class="card" id="p9">
-            <h3 class="section-title">PAGINA 9: PROMPT BOUWEN (KONIJNEN)</h3>
-            <div class="scroll-window">
-                <div class="flex-row">
-                    <div style="flex:1">
-                        <p>Stap 1: Rollen van Rutte, Wilders en Caroline van der Plas over de roze konijnen.</p>
-                        <p>Stap 2: De Wikipedia "Mega-prompt".</p>
-                    </div>
-                    <img src="afbeelding9.jpg" class="side-img">
-                </div>
-            </div>
-        </div>
-
-        <div class="card" id="p10">
-            <h3 class="section-title">PAGINA 10: AI ALS ASSISTENT</h3>
-            <div class="scroll-window">
-                <div class="flex-row">
-                    <div style="flex:1">
-                        <h4>FITNESS COACH</h4>
-                        <p>Start een dialoog. Laat de AI eerst vragen stellen voordat hij het schema maakt.</p>
-                    </div>
-                    <img src="afbeelding10.jpg" class="side-img">
-                </div>
-            </div>
-        </div>
-
-        <div class="card" id="p11">
-            <h3 class="section-title">PAGINA 11: TIPS & COLLEGA-METHODE</h3>
-            <div class="scroll-window">
-                <p><strong>Interactie:</strong> Behandel de AI als een menselijke collega. Geef directieve opdrachten en verfijn de output met vervolgvragen.</p>
+                <p>Maak 5 sets van 5 meerkeuzevragen over een artikel.</p>
+                <img src="afbeelding8.jpg" style="width:100%; border-radius:8px;">
             </div>
         </div>
 
         <div class="card" id="input-sectie">
-            <h3>JOUW OPDRACHT UITVOEREN</h3>
-            <p>Selecteer de pagina waar je mee bezig bent:</p>
+            <h3 style="color:var(--success)">OPDRACHT INDIENEN</h3>
             <select id="opdracht-selector" onchange="updateOpdracht()">
                 <option value="p4">P4: Pizza & Privacy</option>
                 <option value="p6">P6: Politieacademie</option>
                 <option value="p7">P7: Film in Emoticons</option>
                 <option value="p8">P8: Unieke Toetsen</option>
-                <option value="p9">P9: Roze Konijnen (Stijlen)</option>
+                <option value="p9">P9: Roze Konijnen</option>
                 <option value="p10">P10: Fitness Coach</option>
-                <option value="p11">P11: Collega Methode (Nieuw Nederland)</option>
+                <option value="p11">P11: Collega Methode</option>
             </select>
 
             <div class="input-group">
-                <div id="opdracht-instructie" style="margin-bottom:10px; font-style:italic; color:#666;">Kies een opdracht...</div>
-                <textarea id="input-prompt" rows="3" placeholder="Welke prompt heb je gebruikt?"></textarea>
-                <textarea id="input-resultaat" rows="5" placeholder="Wat was het resultaat of je belangrijkste inzicht?"></textarea>
-                <button id="btn-deel">Verstuur naar Groepsfeed</button>
+                <div id="opdracht-instructie" style="margin-bottom:10px; font-weight:bold;"></div>
+                <textarea id="input-prompt" rows="3" placeholder="Jouw prompt..."></textarea>
+                <textarea id="input-resultaat" rows="4" placeholder="Het resultaat..."></textarea>
+                <button id="btn-deel">Deel resultaat & Markeer als klaar</button>
             </div>
         </div>
 
@@ -188,44 +119,62 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "p4": { t: "P4: Pizza", i: "Leg privacy uit aan een pizzabakker." },
-            "p6": { t: "P6: Politie", i: "8 korte punten over de AVG." },
-            "p7": { t: "P7: Emoticons", i: "Vat een film samen in pictogrammen." },
-            "p8": { t: "P8: Toetsen", i: "Maak vragen over een artikel." },
-            "p9": { t: "P9: Konijnen", i: "Rutte, Wilders of Caroline prompt." },
-            "p10": { t: "P10: Fitness", i: "Laat de AI eerst vragen stellen." },
-            "p11": { t: "P11: Collega", i: "Uitgebreide prompt voor Nieuw Nederland." }
+            "p4": { t: "P4: Pizza", i: "Privacy voor pizzabakkers." },
+            "p6": { t: "P6: Politie", i: "8 punten over de AVG." },
+            "p7": { t: "P7: Emoticons", i: "Vat een film samen." },
+            "p8": { t: "P8: Toetsen", i: "Maak vragen over artikel." },
+            "p9": { t: "P9: Konijnen", i: "Rutte/Wilders/Caroline." },
+            "p10": { t: "P10: Fitness", i: "Assistent rol-methode." },
+            "p11": { t: "P11: Collega", i: "Nieuw Nederland prompt." }
         };
 
         window.startApp = () => {
             const n = document.getElementById('username').value;
-            if(!n) return alert("Naam invullen!");
+            if(!n) return alert("Naam?");
             localStorage.setItem('ai_user', n);
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
             updateOpdracht();
+            checkProgress();
         };
 
-        window.scrollToId = (id) => {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth' });
-        };
+        window.scrollToId = (id) => document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
 
         window.updateOpdracht = () => {
             const val = document.getElementById('opdracht-selector').value;
             document.getElementById('opdracht-instructie').innerText = opdrachtData[val].i;
         };
 
+        function checkProgress() {
+            Object.keys(opdrachtData).forEach(id => {
+                if(localStorage.getItem('done_' + id)) {
+                    const el = document.getElementById('menu-' + id);
+                    if(el) {
+                        el.className = 'status-done';
+                        el.querySelector('span').innerHTML += ' ✅';
+                    }
+                }
+            });
+        }
+
         document.getElementById('btn-deel').onclick = () => {
+            const id = document.getElementById('opdracht-selector').value;
             const p = document.getElementById('input-prompt').value;
             const r = document.getElementById('input-resultaat').value;
-            const n = localStorage.getItem('ai_user');
-            const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
             if(!p || !r) return alert("Vul alles in!");
-            push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
+
+            push(ref(db, 'inzendingen'), { 
+                naam: localStorage.getItem('ai_user'), 
+                oefening: opdrachtData[id].t, 
+                prompt: p, 
+                resultaat: r 
+            });
+
+            localStorage.setItem('done_' + id, 'true');
+            checkProgress();
+            alert("Top! Je voortgang is bijgewerkt.");
             document.getElementById('input-prompt').value = "";
             document.getElementById('input-resultaat').value = "";
-            alert("Gedeeld met de groep!");
         };
 
         onValue(ref(db, 'inzendingen'), (s) => {
@@ -233,7 +182,7 @@
             feed.innerHTML = '';
             const data = s.val();
             if(data) Object.values(data).reverse().forEach(item => {
-                feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening})<br><small>${item.prompt}</small><details><summary>Bekijk resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
+                feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening})<br><small>${item.prompt}</small><details><summary>Resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
             });
         });
 
