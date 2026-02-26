@@ -3,48 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - VOLLEDIG</title>
+    <title>Generatieve AI Doeboek - Volledige Tekst</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --warning: #e67e22; --light-blue: #ebf5fb; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; scroll-behavior: smooth; }
-        #login-screen { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--primary); position: fixed; top: 0; left: 0; z-index: 1000; }
-        .login-card { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .container { max-width: 1000px; margin: 20px auto; padding: 20px; display: none; }
-        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 30px; scroll-margin-top: 40px; }
-        h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin: 0 0 15px 0; color: var(--primary); text-transform: uppercase; }
-        h4 { color: var(--accent); margin-top: 20px; text-transform: uppercase; font-size: 0.9em; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .scroll-box { max-height: 450px; overflow-y: auto; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px; }
-        .contents-list { list-style: none; padding: 0; margin-top: 20px; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: 0.3s; font-weight: 500; }
-        .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); }
-        .status-done { background: #e8f6ed !important; border-left: 5px solid var(--success) !important; color: var(--success) !important; font-weight: bold; }
-        .flex-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .flex-text { flex: 2; min-width: 300px; }
-        .side-img { flex: 1; min-width: 200px; max-width: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin: 10px 0; }
-        .prompt-box { background: #eee; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); font-style: italic; margin: 10px 0; }
-        .input-group { background: #f0f4f8; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); margin-bottom: 30px; }
-        textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
-        .entry { background: white; border-left: 5px solid var(--success); padding: 15px; margin-bottom: 12px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 5px; font-size: 0.9em; }
-        #scrollToTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: var(--accent); color: white; border: none; cursor: pointer; width: 50px; height: 50px; border-radius: 50%; font-size: 24px; }
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --white: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        
+        nav { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .nav-buttons button { background: var(--accent); border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        .book-container { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 20px; overflow: hidden; }
+        .page { background: var(--white); width: 100%; max-width: 900px; height: 85vh; display: none; flex-direction: column; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .active { display: flex; }
+        
+        .content { padding: 40px; overflow-y: auto; flex: 1; line-height: 1.6; color: #333; }
+        
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; font-size: 1.8em; }
+        h2 { color: var(--accent); margin-top: 25px; font-size: 1.4em; }
+        h3 { color: #7f8c8d; font-size: 1em; margin-bottom: 5px; }
+        
+        .warning-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; margin: 20px 0; }
+        .principle-box { background: #e1f5fe; border-left: 5px solid var(--accent); padding: 15px; margin: 15px 0; }
+        .exercise-box { background: #f8f9fa; border: 1px solid #dee2e6; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        
+        img { max-width: 100%; height: auto; border-radius: 5px; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: 'Courier New', monospace; white-space: pre-wrap; border: 1px solid #eee; }
+        ul { padding-left: 20px; }
+        footer { font-size: 0.8em; color: #888; margin-top: 40px; text-align: center; border-top: 1px solid #eee; padding-top: 10px; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-<button onclick="topFunction()" id="scrollToTopBtn">↑</button>
-
-<div id="login-screen">
-    <div class="login-card">
-        <h1>AI Opdrachtenboek</h1>
-        <input type="text" id="username" placeholder="Je volledige naam...">
-        <button onclick="startApp()">Start Training</button>
+<nav>
+    <div><strong>Generatieve AI Doeboek</strong></div>
+    <div class="nav-buttons">
+        <button onclick="changePage(-1)">⬅ Vorige</button>
+        <span id="pageIndicator" style="margin: 0 15px; font-family: monospace;">Pagina 1</span>
+        <button onclick="changePage(1)">Volgende ➡</button>
     </div>
+</nav>
+
+<div class="book-container">
+
+    <div class="page active" id="pg1">
+        <div class="content">
+            <img src="afbeelding1.jpg" alt="Cover">
+            <div style="margin-top: 30px;">
+                <label><strong>Naam deelnemer:</strong></label><br>
+                <input type="text" placeholder="Typ hier je naam..." style="width: 100%; padding: 12px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="pg2">
+        <div class="content">
+            <h1>INHOUDSOPGAVE</h1>
+            <pre>Inhoudsopgave ........................................................................................................................................ 1
+Inleiding: .................................................................................................................................................. 2
+Waarschuwing ..................................................................................................................................... 2
+Principes bij gebruik Generatieve AI .................................................................................................... 2
+Tips: ...................................................................................................................................................... 3
+Oefening 1A: eenvoudig beginnen .......................................................................................................... 4
+Oefening 1B: Werken met verschillende GPT’s....................................................................................... 5
+Oefening 2: test onderstaande prompts met verschillende GPT’s ......................................................... 6
+Oefening 3: Prompt bouwen ................................................................................................................... 9
+Oefening 4: Gebruik ChatGPT als assistent ........................................................................................... 10
+Oefening 5: experimenteren met de tips .............................................................................................. 11
+Oefening 6: de zeven gouden w-vragen methode ................................................................................ 13
+Oefening 7: Werken met tabellen ......................................................................................................... 15
+Oefening 8: Laat het taalmodel de prompts voor je schrijven .............................................................. 16
+Oefening 9: Taaltoets laten maken ....................................................................................................... 17
+Oefening 10: Prompt engineering. ........................................................................................................ 18
+Oefening 11 Afbeeldingen genereren ................................................................................................... 20
+Oefening 12: There is an AI for that! ..................................................................................................... 25
+Overzicht gebruikte sites ....................................................................................................................... 27</pre>
+            <footer>Generatieve AI opdrachtenboek - 2e editie. © Lilian Haak 2024</footer>
+        </div>
+    </div>
+
+    <div class="page" id="pg3">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 2</h3>
+            <h1>INLEIDING:</h1>
+            <p>Welkom bij het "Grote Generatieve AI Doe-Boek"! Dit opdrachtenboek hoort bij het generatieve AI theorieboek en geeft je veel ideen om aan de gang te gaan met generatieve AI. We geloven sterk in het principe: 'leren door te doen'. Generatieve AI wordt pas echt begrepen als je ermee aan de slag gaat. Daarom hebben we dit boek praktisch en interactief gemaakt. Je vindt hier oefeningen en voorbeelden die je direct kunt toepassen in je werk of studie.</p>
+            
+            <div class="warning-box">
+                <strong>WAARSCHUWING</strong><br>
+                Voor vele generatieve AI geldt:<br>
+                • We weten niet: o Waar de systemen staan, o Wie erbij kan, o Wie alles leest…<br>
+                • Je vragen en verstrekte worden gebruikt om het systeem te verbeteren<br>
+                • Output van je vragen kan bij andere gebruikers terecht komen<br>
+                • Gebruik nooit politie-account, hergebruik niet je wachtwoord!<br>
+                • Geen persoonsgevoelige informatie, geen politie-informatie, geen AVG/WPG<br>
+                • Algemeen: “Wie is verantwoordelijk voor deze data?”<br>
+                <strong>Dus: Weet wat je deelt, met wie je deelt en met de juiste middelen.</strong>
+            </div>
+
+            <h1>PRINCIPES BIJ GEBRUIK GENERATIEVE AI</h1>
+            <div class="principle-box">
+                <strong>PRINCIPE 1: ZORGVULDIGE OMGANG MET GEVOELIGE INFORMATIE</strong>
+                <ul>
+                    <li>Gebruik uw zakelijk e-mailadres uitsluitend voor professionele doeleinden. Voor persoonlijke of informele communicatie, gebruik een privé e-mailadres en zorg ervoor dat u verschillende wachtwoorden gebruikt voor elk account.</li>
+                    <li>Voeg nooit persoonlijke gegevens toe, zoals die van uzelf, collega's of burgers. Dit is niet alleen een kwestie van privacy, maar ook een vereiste volgens de Algemene Verordening Gegevensbescherming (AVG).</li>
+                    <li>Deel en upload enkel teksten die openbaar gemaakt mogen worden. Gebruik geen vertrouwelijke of gevoelige documenten of informatie.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="pg4">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 3</h3>
+            <div class="principle-box">
+                <strong>PRINCIPE 2: WEES ZELF DE EXPERT</strong>
+                <ul>
+                    <li>Onthoud dat een taalmodel geen vervanging is voor uw professionele kennis. U bent de expert in uw vakgebied en organisatie.</li>
+                    <li>Beschouw het taalmodel als een hulpmiddel voor het schrijven dat nuttig kan zijn met de juiste instructies. U bent echter altijd zelf verantwoordelijk voor het eindresultaat.</li>
+                    <li>Voer uw eigen instructies en feiten in en gebruik het taalmodel als een digitale sparringpartner, maar vertrouw niet blindelings op zijn antwoorden.</li>
+                </ul>
+            </div>
+            <div class="principle-box">
+                <strong>PRINCIPE 3: DUBBELCHECK DE ANTWOORDEN</strong>
+                <ul>
+                    <li>De nauwkeurigheid en betrouwbaarheid van een antwoord zijn belangrijker dan de snelheid of hoeveelheid van de respons.</li>
+                    <li>Wees u ervan bewust dat elk taalmodel fouten kan maken, waaronder feitelijke onjuistheden, vooroordelen of onbedoelde exclusie.</li>
+                    <li>Gebruik en vermeld betrouwbare bronnen waar mogelijk.</li>
+                </ul>
+            </div>
+            <div class="principle-box">
+                <strong>PRINCIPE 4: HANTEEER DE BEROEPSCODE</strong>
+                <p>In overeenstemming met onze integriteit en betrouwbaarheid, gebruiken we AI-tools niet voor geautomatiseerde besluitvorming die personen persoonlijk kan benadelen...</p>
+            </div>
+            <h1>TIPS:</h1>
+            <ul>
+                <li>TIP 1: INTERACTIE MET CHATGPT ALSOF HET EEN MENSELIJKE COLLEGA IS</li>
+                <li>TIP 2: GEEF INFO EN CONTEXT MEE IN JE PROMPTS</li>
+                <li>TIP 3: GEBRUIK 'REGENERATE' EN VERFIJN MET VERVOLGPROMPTS</li>
+                <li>TIP 4: DAAG HET SYSTEEM UIT EN MAAK JE PROMPTS CREATIEF EN UNIEK</li>
+                <li>TIP 5: LAAT CHATGPT EEN SPECIFIEKE ROL AANNEMEN</li>
+                <li>TIP 6: GEBRUIK VOORBEELDEN OM CHATGPT DE VERDUIDELIJKEN</li>
+                <li>TIP 7: GEAVANCEERDE TIP: LAAT CHATGPT JE PROMPTS SCHRIJVEN</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page" id="pg5">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 4</h3>
+            <h1>OEFENING 1A: EENVOUDIG BEGINNEN</h1>
+            <div class="exercise-box">
+                <p><strong>Start:</strong> Ga naar: TalkAI - Praat met ChatGPT in het Nederlands</p>
+                <p><strong>Stap 1:</strong> Stel de vraag: Maak de volgende zin af: “De Italiaanse man had een hekel aan pizza met Ham, kaas en ..”</p>
+                <p><strong>Stap 2:</strong> Stel de vraag: vertel in het Nederlands wat privacy is</p>
+                <p><strong>Stap 3:</strong> Herhaal de vraag maar zeg nu: Neem de rol aan van leraar van een basisschool en geen in eenvoudige bewoordingen voor leerlingen van groep 7-8 aan wat belangrijk is rondom privacy en social media zoals facebook en Instagram</p>
+                <p><strong>Stap 4:</strong> Verbeter de vraagstelling. Maak een korte encyclopedische omschrijving van 4 regels over privacy ten behoeve van een Wikipedia artikel.</p>
+            </div>
+            <p><strong>Stap 5: gebruik het format [SCHRIJVER/ROL] [DOELGROEP] [ONDERWERP] [SCHRIJFTIJL]</strong></p>
+            <p>Een effectieve manier om dit te doen is door je prompt op te bouwen rond vier sleutelaspecten...</p>
+        </div>
+    </div>
+
+    <div class="page" id="pg6">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 5</h3>
+            <p>Neem de rol aan van schrijver van kinderboeken, en schrijf voor jongvolwassenen van 11-12 jaar een kort verhaal over verliefdheid...</p>
+            <h1>OEFENING 1B: WERKEN MET VERSCHILLENDE GPT’S</h1>
+            <div class="exercise-box">
+                <p><strong>Stap 1:</strong> Login op Office365, Google (Gmail) Gemini en chatGPT.</p>
+                <ul>
+                    <li>Ga naar Bing.com en kies chatten (Bing Chat met GPT-4)</li>
+                    <li>Ga naar https://gemini.google.com/</li>
+                    <li>Ga naar Chat.OpenAi.com</li>
+                </ul>
+                <p><strong>Stap 2:</strong> Reageer op het verhaal en laat het bijstellen: "Kun je het verhaal ook wijzigen zodat het gaat om de verliefdheid van Elsje en Gea (meisjes)?"</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="pg7">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 6</h3>
+            <h1>OEFENING 2: TEST ONDERSTAANDE PROMPTS MET VERSCHILLENDE GPT’S</h1>
+            <div class="exercise-box">
+                <p><strong>LESONTWIKKELING:</strong> Doe alsof je een docent van de Politieacademie bent, gespecialiseerd in privacy wetgeving en leg aan jongvolwassen studenten uit wat de essentie van privacy. Doe dit in de vorm van 8 korte punten die op een half A4-tje passen.</p>
+                <hr>
+                <p><strong>LERAAR DUITS:</strong> De Duitse taal is lastig. Ken je het verschil tussen: <em>Ich warte auf den Zug</em> en <em>Ich warte auf dem Zug</em>? Kun je mij dit uitleggen met voorbeelden?</p>
+                <hr>
+                <p><strong>ANALYSEER EN VAT SAMEN:</strong> Ik upload een webpagina in het Engels, analyseer deze en vat deze samen in 10 regels.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="pg8">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 7</h3>
+            <h2>GRAPJES UITHALEN:</h2>
+            <ul>
+                <li>Vat de film flodder samen in 20 emoticons.</li>
+                <li>Beschrijf het boek: “Oorlog en Vrede (tolstoi)” in de vorm van 40 pictogrammen (leg uit)</li>
+                <li>Beschrijf de drie boeken van “Lord of the Rings” in de vorm van 3x 25 pictogrammen (met toelichting)</li>
+            </ul>
+            <h2>STUDIEHULP:</h2>
+            <p>Voorbeeld: Ik upload een document. Dit moet ik morgen leren, kun je mij helpen en mij overhoren in de vorm van 10 meerkeuze vragen?</p>
+            <h2>META-PROMPT CREATIE:</h2>
+            <p>Vraag ChatGPT om een eenvoudige prompt te verbeteren, zoals "Schrijf een korte tekst over gezonde voeding."</p>
+        </div>
+    </div>
+
+    <div class="page" id="pg9">
+        <div class="content">
+            <h3>Generative AI doeboek pagina 8</h3>
+            <h1>UNIEKE TOETSEN</h1>
+            <p>Bestudeer bijgaande artikel over privacy en maak aan de hand hiervan 5 sets van 5 verschillende meerkeuze vragen zodat iedere student een eigen examenopgave krijgt.</p>
+            <h1>OEFENING 3: PROMPT BOUWEN (Begin)</h1>
+            <p>1A. Doe alsof je Mark Rutte bent, en leg uit vanuit een liberaal standpunt wat het belang is van roze konijntjes...</p>
+            <footer>Oefening 3 loopt door op de volgende pagina.</footer>
+        </div>
+    </div>
+
 </div>
 
-<div class="container" id="app-content">
-    
-    <div class="card" id="p2">
-        <h3>PAGINA 2: DASHBOARD & VOORKENNIS</h3>
-        <div class="scroll-box">
-            <h4>
+<script>
+    let currentPage = 1;
+    const maxPages = 9; // Aantal momenteel gevulde pagina's
+
+    function updateDisplay() {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('pg' + currentPage).classList.add('active');
+        document.getElementById('pageIndicator').innerText = 'Pagina ' + currentPage;
+    }
+
+    function changePage(step) {
+        let next = currentPage + step;
+        if (next >= 1 && next <= maxPages) {
+            currentPage = next;
+            updateDisplay();
+        }
+    }
+</script>
+
+</body>
+</html>
