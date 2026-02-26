@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Volledig & Scrollbaar</title>
+    <title>AI Opdrachtenboek - Volledige Teksten</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-blue: #ebf5fb; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; scroll-behavior: smooth; }
@@ -20,19 +20,16 @@
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; color: var(--primary); }
         h4 { color: var(--accent); margin-top: 20px; text-transform: uppercase; font-size: 0.9em; border-bottom: 1px solid #eee; padding-bottom: 5px; }
 
-        /* PAGINA 2: INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; }
         .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 8px; transition: 0.3s; font-weight: 500; }
         .status-info { background: #f9f9f9; color: #7f8c8d; border-left: 5px solid #ccc; }
         .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); }
         .status-done { background: #e8f6ed !important; border-left: 5px solid var(--success) !important; color: var(--success) !important; font-weight: bold; }
 
-        /* LAYOUT */
         .flex-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 20px; }
         .flex-text { flex: 2; min-width: 300px; }
         .side-img { flex: 1; min-width: 150px; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         
-        /* INPUT & FEED */
         .input-group { background: #f0f4f8; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); margin-bottom: 30px; }
         textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
         select { width: 100%; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-weight: bold; border: 1px solid var(--accent); }
@@ -43,18 +40,12 @@
         .entry { background: white; border-left: 5px solid var(--success); padding: 15px; margin-bottom: 12px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         pre { white-space: pre-wrap; background: #f8f9fa; padding: 12px; border: 1px solid #eee; border-radius: 6px; font-size: 0.9em; }
         
-        /* SCROLL TO TOP KNOP */
-        #scrollToTopBtn {
-            display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1001;
-            background-color: var(--accent); color: white; border: none; outline: none;
-            cursor: pointer; padding: 15px; border-radius: 50%; width: 50px; height: 50px; font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+        #scrollToTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: var(--accent); color: white; border: none; cursor: pointer; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
 
-    <button onclick="topFunction()" id="scrollToTopBtn" title="Naar boven">↑</button>
+    <button onclick="topFunction()" id="scrollToTopBtn">↑</button>
 
     <div id="login-screen">
         <div class="login-card">
@@ -67,62 +58,66 @@
     <div class="container" id="app-content">
         
         <div class="card" id="p2">
-            <h3>PAGINA 2: INHOUDSOPGAVE & VOORTGANG</h3>
-            <ul class="contents-list" id="main-menu">
+            <h3>PAGINA 2: INHOUDSOPGAVE</h3>
+            <ul class="contents-list">
                 <li onclick="scrollToId('p3')" class="status-info"><span>Pagina 3: Hoe werkt Generatieve AI?</span><span class="page-num">3</span></li>
-                <li onclick="scrollToId('p4')" id="menu-p4" class="status-todo"><span>Pagina 4: Oefening 1A - Pizza & Privacy</span><span class="page-num">4</span></li>
-                <li onclick="scrollToId('p6')" id="menu-p6" class="status-todo"><span>Pagina 6: Oefening 2 - Politieacademie</span><span class="page-num">6</span></li>
-                <li onclick="scrollToId('p7')" id="menu-p7" class="status-todo"><span>Pagina 7: Creativiteit & Emoticons</span><span class="page-num">7</span></li>
+                <li onclick="scrollToId('p4')" id="menu-p4" class="status-todo"><span>Pagina 4: Pizza & Privacy (Opdracht 1A)</span><span class="page-num">4</span></li>
+                <li onclick="scrollToId('p6')" id="menu-p6" class="status-todo"><span>Pagina 6: Politieacademie (Opdracht 2)</span><span class="page-num">6</span></li>
+                <li onclick="scrollToId('p7')" id="menu-p7" class="status-todo"><span>Pagina 7: Film in Emoticons</span><span class="page-num">7</span></li>
                 <li onclick="scrollToId('p8')" id="menu-p8" class="status-todo"><span>Pagina 8: Toetsen & Producten</span><span class="page-num">8</span></li>
-                <li onclick="scrollToId('p9')" id="menu-p9" class="status-todo"><span>Pagina 9: Prompt Bouwen (Konijnen)</span><span class="page-num">9</span></li>
-                <li onclick="scrollToId('p10')" id="menu-p10" class="status-todo"><span>Pagina 10: AI als Assistent (Fitness)</span><span class="page-num">10</span></li>
-                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Experimenteren & Tips</span><span class="page-num">11</span></li>
+                <li onclick="scrollToId('p9')" id="menu-p9" class="status-todo"><span>Pagina 9: Roze Konijnen (Stijlen)</span><span class="page-num">9</span></li>
+                <li onclick="scrollToId('p10')" id="menu-p10" class="status-todo"><span>Pagina 10: Fitness Coach (De Rol)</span><span class="page-num">10</span></li>
+                <li onclick="scrollToId('p11')" id="menu-p11" class="status-todo"><span>Pagina 11: Collega Methode (Politiek)</span><span class="page-num">11</span></li>
             </ul>
         </div>
 
         <div class="card" id="p3">
-            <h3>PAGINA 3: HOE WERKT GENERATIEVE AI?</h3>
+            <h3>PAGINA 3: DE BASIS</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Generatieve AI voorspelt woorden op basis van patronen in miljarden teksten. Het begrijpt de wereld niet zoals wij, maar is een ster in taalstatistiek.</p>
+                    <p>Generatieve AI (zoals ChatGPT) werkt op basis van een <strong>Large Language Model (LLM)</strong>. Het voorspelt het meest waarschijnlijke volgende woord in een reeks, gebaseerd op miljarden teksten.</p>
                     <h4>DE DRIE GOUDEN REGELS:</h4>
-                    <ul>
-                        <li><strong>Wees specifiek:</strong> Geef details over lengte en vorm.</li>
-                        <li><strong>Geef context:</strong> Wie ben jij en wie is de lezer?</li>
-                        <li><strong>Check de feiten:</strong> AI kan hallucineren.</li>
-                    </ul>
+                    <ol>
+                        <li><strong>Wees specifiek:</strong> Geef details over de lengte, toon en vorm.</li>
+                        <li><strong>Geef context:</strong> Vertel wie je bent, voor wie de tekst is en wat het uiteindelijke doel is.</li>
+                        <li><strong>Check de feiten:</strong> AI kan hallucineren (feiten verzinnen). Controleer altijd de uitkomst op waarheid.</li>
+                    </ol>
                 </div>
-                <img src="afbeelding1.jpg" alt="Basis AI" class="side-img">
+                <img src="afbeelding1.jpg" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p4">
-            <h3>PAGINA 4: OEFENING 1A - PIZZA & PRIVACY</h3>
+            <h3>PAGINA 4: OPDRACHT 1A - PIZZA & PRIVACY</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Leg in maximaal 50 woorden aan een Italiaanse pizzabakker uit wat het belang is van privacy binnen een organisatie. Gebruik beeldspraak die past bij zijn beroep.</p>
+                    <p>Oefen met metaforen en doelgroepen. Voer de volgende prompt in:</p>
+                    <p style="background:#eee; padding:15px; border-radius:8px;"><em>"Leg in maximaal 50 woorden aan een Italiaanse pizzabakker uit wat het belang is van privacy binnen een organisatie. Gebruik beeldspraak die past bij zijn beroep."</em></p>
+                    <p>Kijk hoe de AI termen als 'geheime ingrediënten' of 'recepten' gebruikt om complexe AVG-regels simpel te maken.</p>
                 </div>
-                <img src="afbeelding4.jpg" alt="Pizza" class="side-img">
+                <img src="afbeelding4.jpg" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p6">
-            <h3>PAGINA 6: OEFENING 2 - DE POLITIEACADEMIE</h3>
+            <h3>PAGINA 6: OPDRACHT 2 - DE POLITIEACADEMIE</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Schrijf een samenvatting in precies 8 korte, krachtige bulletpoints over de basisprincipes van de AVG voor studenten van de Politieacademie.</p>
+                    <p>Schrijf een samenvatting van de belangrijkste privacyregels voor een specifieke doelgroep.</p>
+                    <p style="background:#eee; padding:15px; border-radius:8px;"><em>"Schrijf een samenvatting in precies 8 korte, krachtige bulletpoints over de basisprincipes van de AVG. Richt je op eerstejaars studenten van de Politieacademie. Gebruik een formele maar motiverende toon."</em></p>
                 </div>
-                <img src="afbeelding6.jpg" alt="Politie" class="side-img">
+                <img src="afbeelding6.jpg" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p7">
-            <h3>PAGINA 7: CREATIVITEIT - FILM IN EMOTICONS</h3>
+            <h3>PAGINA 7: CREATIVITEIT - EMOTICONS</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Vat de plot van de film 'Titanic' samen door uitsluitend gebruik te maken van emoticons en pictogrammen. Gebruik geen woorden.</p>
+                    <p>AI kan ook abstract denken. Vat een bekende film samen zonder woorden.</p>
+                    <p style="background:#eee; padding:15px; border-radius:8px;"><em>"Vat de plot van de film 'Titanic' of 'The Matrix' samen door uitsluitend gebruik te maken van emoticons en pictogrammen. Gebruik geen woorden."</em></p>
                 </div>
-                <img src="afbeelding7.jpg" alt="Film" class="side-img">
+                <img src="afbeelding7.jpg" class="side-img">
             </div>
         </div>
 
@@ -130,52 +125,65 @@
             <h3>PAGINA 8: TOETSEN & PRODUCTEN</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Maak op basis van dit artikel 5 sets van 5 meerkeuzevragen. Zorg voor variatie in moeilijkheid.</p>
+                    <h4>TOETSVRAGEN GENEREREN</h4>
+                    <p>Plak een tekst uit een krantenartikel en gebruik de prompt:</p>
+                    <p><em>"Maak op basis van bijgevoegd artikel 5 sets van 5 meerkeuzevragen voor leerlingen van niveau [X]. Zorg voor variatie in moeilijkheidsgraad."</em></p>
+                    <h4>PRODUCTBESCHRIJVING (FEW-SHOT)</h4>
+                    <p>Geef eerst een voorbeeld van een goede tekst over een duurzame mok en vraag AI om in EXACT dezelfde stijl een tekst te schrijven voor een nieuw product.</p>
                 </div>
-                <img src="afbeelding8.jpg" alt="Toetsen" class="side-img">
+                <img src="afbeelding8.jpg" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p9">
-            <h3>PAGINA 9: OEFENING 3 - PROMPT BOUWEN</h3>
+            <h3>PAGINA 9: OPDRACHT 3 - ROZE KONIJNEN</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Test verschillende stijlen uit (Rutte, Wilders, Caroline v.d. Plas) voor roze konijnen en maak de Wikipedia "Mega-prompt".</p>
+                    <h4>STAP 1: STIJLEN EN ROLLEN</h4>
+                    <p><strong>1A. Mark Rutte:</strong> Leg vanuit een liberaal standpunt het belang uit van roze konijnen.<br>
+                    <strong>1B. Geert Wilders:</strong> Leg vanuit een nostalgisch nationalistisch perspectief het probleem uit met roze konijnen.<br>
+                    <strong>1C. Caroline v.d. Plas:</strong> Leg vanuit een boeren perspectief de kansen uit van roze konijnen in de landbouw.</p>
+                    <h4>STAP 2: DE MEGA-PROMPT</h4>
+                    <p>Maak een Wikipedia-artikel. Verwerk: Tone of voice, Onderwerp, Doelgroep, Doel, Stijl en Unieke punten.</p>
                 </div>
-                <img src="afbeelding9.jpg" alt="Konijnen" class="side-img">
+                <img src="afbeelding9.jpg" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p10">
-            <h3>PAGINA 10: OEFENING 4 - DE FITNESS ASSISTENT</h3>
+            <h3>PAGINA 10: OPDRACHT 4 - FITNESS COACH</h3>
             <div class="flex-row">
                 <div class="flex-text">
-                    <p>Gebruik de 'rol-methode'. Laat de AI eerst vragen stellen voor een fitnessplan voor een man van 42 met diabetes verschijnselen.</p>
+                    <p><strong>Stap 1:</strong> Vraag simpel: "Wat is een goed fitness programma als je weer wilt beginnen?"</p>
+                    <p><strong>Stap 2 (De Rol):</strong> Gebruik een nieuwe chat: <em>"Ik ben een fitness trainer en voedingscoach. Help mij bij een holistische aanpak voor een man van 42 van 100 kilo die al drie jaar niet heeft bewogen en diabetes verschijnselen heeft. Stel mij eerst aanvullende vragen wat je moet weten."</em></p>
                 </div>
-                <img src="afbeelding10.jpg" alt="Fitness" class="side-img">
+                <img src="afbeelding10.jpg" class="side-img">
             </div>
         </div>
 
         <div class="card" id="p11">
-            <h3>PAGINA 11: COLLEGA-METHODE & TIPS</h3>
-            <p>Gebruik de AI als een collega. Verfijn resultaten voor 'Nieuw Nederland' of pas de dating-prompt aan naar fakenieuws voor groep 7.</p>
+            <h3>PAGINA 11: OPDRACHT 5 - COLLEGA METHODE</h3>
+            <p><strong>De 'Nieuw Nederland' Casus:</strong><br>
+            Schrijf voor de doelgroep van aspirant raadsleden een artikel voor de website van politieke partij 'Nieuw Nederland' (Slogan: Iedereen erbij). Richt je op jongvolwassenen van 25-45 jaar met B2 taalniveau.</p>
+            <p><strong>De Fakenieuws Casus:</strong><br>
+            Maak een lesopzet over fakenieuws herkennen voor groep 7. Gebruik de "Regenerate" knop om variaties te zien.</p>
         </div>
 
-        <div class="card" id="input-sectie">
-            <h3>JOUW INVOER & RESULTATEN</h3>
+        <div class="card">
+            <h3>JOUW INVOER & GROEPSFEED</h3>
             <select id="opdracht-selector">
-                <option value="p4">Pagina 4: Pizza & Privacy</option>
-                <option value="p6">Pagina 6: Politieacademie</option>
-                <option value="p7">Pagina 7: Film in Emoticons</option>
-                <option value="p8">Pagina 8: Toetsen & Producten</option>
-                <option value="p9">Pagina 9: Roze Konijnen / Wiki</option>
-                <option value="p10">Pagina 10: Fitness Coach</option>
-                <option value="p11">Pagina 11: Collega Methode</option>
+                <option value="p4">P4: Pizza & Privacy</option>
+                <option value="p6">P6: Politieacademie</option>
+                <option value="p7">P7: Film in Emoticons</option>
+                <option value="p8">P8: Toetsen & Producten</option>
+                <option value="p9">P9: Roze Konijnen (Stijlen)</option>
+                <option value="p10">P10: Fitness Coach</option>
+                <option value="p11">P11: Collega Methode</option>
             </select>
             <div class="input-group">
-                <textarea id="input-prompt" rows="3" placeholder="Wat was je prompt?"></textarea>
-                <textarea id="input-resultaat" rows="6" placeholder="Wat was de output?"></textarea>
-                <button onclick="verstuurInzending()">Deel met de Groep</button>
+                <textarea id="input-prompt" rows="3" placeholder="Jouw prompt..."></textarea>
+                <textarea id="input-resultaat" rows="6" placeholder="Resultaat AI..."></textarea>
+                <button onclick="verstuurInzending()">Versturen</button>
             </div>
             <div id="feed-container"></div>
         </div>
@@ -198,20 +206,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // SCROLL BUTTON LOGICA
-        let mybutton = document.getElementById("scrollToTopBtn");
-        window.onscroll = function() { scrollFunction() };
-        function scrollFunction() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-        window.topFunction = () => {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        };
-
         window.startApp = () => {
             const n = document.getElementById('username').value;
             if(!n) return alert("Naam?");
@@ -222,6 +216,7 @@
         };
 
         window.scrollToId = (id) => document.getElementById(id).scrollIntoView();
+        window.topFunction = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
         function checkProgress() {
             ['p4', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11'].forEach(id => {
