@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Opdrachtenboek - Interactief</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --warning: #e74c3c; }
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --warning: #e74c3c; --success: #27ae60; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
         
         /* LOGIN SCHERM */
@@ -24,26 +24,34 @@
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
         .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
-        h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; }
-        .warning-title { color: var(--warning); border-bottom-color: var(--warning); }
+        h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
+        .section-title { color: var(--success); border-bottom-color: var(--success); }
+
+        /* SCROLLBARE VENSTERS */
+        .scroll-window { 
+            max-height: 300px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
+            padding: 15px; border-radius: 8px; margin-bottom: 20px; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .scroll-window::-webkit-scrollbar { width: 8px; }
+        .scroll-window::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 
         /* INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; margin: 0; }
         .contents-list li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dotted #ccc; font-size: 0.85em; }
         .clickable { cursor: pointer; color: var(--accent); font-weight: 500; }
-        .clickable:hover { background: #f0f7ff; }
+        .clickable:hover { color: #2980b9; text-decoration: underline; }
 
-        /* INLEIDING & WAARSCHUWING */
-        .info-text { font-size: 0.95em; }
-        .warning-box { background: #fdf2f2; border-left: 5px solid var(--warning); padding: 15px; margin: 15px 0; }
-        .centered-img { display: block; margin: 20px auto; max-width: 80%; border-radius: 8px; }
+        /* STYLING LIJSTEN */
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        strong { color: var(--primary); }
 
         input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.3s; }
-        button:hover { background: #2980b9; }
+        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
         
-        .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; border-radius: 0 8px 8px 0; }
-        .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; }
+        .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; }
         pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.85em; }
     </style>
 </head>
@@ -64,56 +72,84 @@
             <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
                 <li class="clickable" onclick="scrollToId('inleiding')"><span>Inleiding & Principes</span><span>2</span></li>
+                <li class="clickable" onclick="scrollToId('principes-vervolg')"><span>Principes 2 t/m 5 & Tips</span><span>3</span></li>
                 <li class="clickable" onclick="selectOpdracht('1a')"><span>Oefening 1A: eenvoudig beginnen</span><span>4</span></li>
-                <li class="clickable" onclick="selectOpdracht('1b')"><span>Oefening 1B: Werken met verschillende GPT’s</span><span>5</span></li>
-                <li class="clickable" onclick="selectOpdracht('2')"><span>Oefening 2: test onderstaande prompts</span><span>6</span></li>
-                </ul>
+                <li class="clickable" onclick="selectOpdracht('1b')"><span>Oefening 1B: Verschillende GPT’s</span><span>5</span></li>
+            </ul>
         </div>
 
         <div class="card" id="inleiding">
-            <h3>INLEIDING</h3>
-            <div class="info-text">
-                <p>Welkom bij het <strong>"Grote Generatieve AI Doe-Boek"</strong>! Dit opdrachtenboek hoort bij het generatieve AI theorieboek en geeft je veel ideeën om aan de gang te gaan. We geloven sterk in het principe: <em>'leren door te doen'</em>.</p>
-                
-                <h3 class="warning-title">WAARSCHUWING</h3>
-                <div class="warning-box">
-                    <ul>
-                        <li>We weten niet waar systemen staan of wie alles leest.</li>
-                        <li>Jouw vragen worden gebruikt om het systeem te verbeteren.</li>
-                        <li>Gebruik <strong>nooit</strong> je politie-account of hetzelfde wachtwoord!</li>
-                        <li>Geen persoonsgevoelige info, geen politie-info, geen AVG/WPG.</li>
-                    </ul>
-                    <p>Dus: Weet wat je deelt, met wie je deelt en met de juiste middelen.</p>
-                    <img src="afbeelding2.jpg" alt="Middelen overzicht" class="centered-img">
-                </div>
+            <h3>INLEIDING & WAARSCHUWING</h3>
+            <div class="scroll-window">
+                <p>Welkom bij het <strong>"Grote Generatieve AI Doe-Boek"</strong>! We geloven in: <em>'leren door te doen'</em>.</p>
+                <p style="color:var(--warning)"><strong>LET OP:</strong> Deel geen persoonsgevoelige info, geen politie-info en gebruik nooit je werk-wachtwoord voor AI-tools.</p>
+                <img src="afbeelding2.jpg" alt="Middelen" style="width:100%; border-radius:5px; margin-top:10px;">
+            </div>
+        </div>
 
-                <h3>PRINCIPES</h3>
-                <p><strong>1. Zorgvuldige omgang:</strong> Gebruik zakelijke e-mail alleen voor werk. Gebruik privé-accounts voor informeel gebruik met unieke wachtwoorden.</p>
-                <p><strong>2. Geen persoonsgegevens:</strong> Voeg nooit data van jezelf, collega's of burgers toe (AVG vereiste).</p>
-                <p><strong>3. Openbare teksten:</strong> Deel alleen teksten die openbaar mogen zijn. Geen vertrouwelijke documenten.</p>
+        <div class="card" id="principes-vervolg">
+            <h3 class="section-title">PRINCIPES & TIPS</h3>
+            <div class="scroll-window">
+                <h4>PRINCIPE 2: WEES ZELF DE EXPERT</h4>
+                <ul>
+                    <li>Een taalmodel is geen vervanging voor professionele kennis.</li>
+                    <li>U bent altijd zelf verantwoordelijk voor het eindresultaat.</li>
+                    <li>Gebruik het als sparringpartner, vertrouw niet blindelings.</li>
+                </ul>
+
+                <h4>PRINCIPE 3: DUBBELCHECK DE ANTWOORDEN</h4>
+                <ul>
+                    <li>Nauwkeurigheid is belangrijker dan snelheid.</li>
+                    <li>Modellen kunnen 'hallucineren' (fouten maken/verzinnen).</li>
+                    <li>Gebruik en vermeld betrouwbare bronnen.</li>
+                </ul>
+
+                <h4>PRINCIPE 4: HANTEEER DE BEROEPSCODE</h4>
+                <ul>
+                    <li>Geen geautomatiseerde besluitvorming die personen benadeelt.</li>
+                    <li>Geen AI-hulp bij toetsen/examens (fraude).</li>
+                    <li>AI als bron vermelden bij professionele documenten.</li>
+                </ul>
+
+                <h4>PRINCIPE 5: ETHIEK & MILIEU</h4>
+                <ul>
+                    <li>AI verbruikt veel energie en water. Gebruik het zinvol.</li>
+                    <li>Let op vooroordelen (bias) uit het trainingsmateriaal.</li>
+                </ul>
+
+                <hr>
+
+                <h4 style="color:var(--accent)">TIPS VOOR PROMPTS:</h4>
+                <ul>
+                    <li><strong>TIP 1:</strong> Communiceer alsof het een collega is.</li>
+                    <li><strong>TIP 2:</strong> Geef veel info en context mee.</li>
+                    <li><strong>TIP 3:</strong> Gebruik 'Regenerate' en verfijn je vraag.</li>
+                    <li><strong>TIP 4:</strong> Wees creatief en uniek in je prompts.</li>
+                    <li><strong>TIP 5:</strong> Laat ChatGPT een specifieke rol aannemen.</li>
+                    <li><strong>TIP 6:</strong> Gebruik voorbeelden (Few-shot prompting).</li>
+                    <li><strong>TIP 7:</strong> Laat ChatGPT zelf je prompt schrijven.</li>
+                </ul>
             </div>
         </div>
 
         <div class="card" id="opdrachten-sectie">
-            <h2>Hoi <span id="user-display"></span>, aan de slag:</h2>
+            <h3>AAN DE SLAG</h3>
             <select id="opdracht-selector" onchange="updateOpdracht()">
                 <option value="1a">Oefening 1A: eenvoudig beginnen</option>
                 <option value="1b">Oefening 1B: Werken met verschillende GPT’s</option>
-                <option value="2">Oefening 2: test onderstaande prompts</option>
-                <option value="3">Oefening 3: Prompt bouwen</option>
-                </select>
+            </select>
 
             <div class="instructie-box">
                 <div id="opdracht-tekst">Laden...</div>
             </div>
 
-            <textarea id="input-prompt" rows="2" placeholder="Wat heb je gevraagd aan de AI?"></textarea>
-            <textarea id="input-resultaat" rows="5" placeholder="Plak hier het antwoord..."></textarea>
-            <button id="btn-deel">Deel resultaat met de groep</button>
+            <textarea id="input-prompt" rows="2" placeholder="Jouw prompt..."></textarea>
+            <textarea id="input-resultaat" rows="5" placeholder="AI resultaat..."></textarea>
+            <button id="btn-deel">Deel resultaat</button>
         </div>
 
         <div class="card">
-            <h3>Groepsfeed</h3>
+            <h3>Live Groepsfeed</h3>
             <div id="feed-container"></div>
         </div>
     </div>
@@ -136,9 +172,8 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "1a": { t: "Eenvoudig beginnen", i: "Maak de zin af: 'De Italiaanse man had een hekel aan pizza met Ham, kaas en ..'. Leg daarna privacy uit voor groep 7." },
-            "1b": { t: "Verschillende GPT's", i: "Herhaal 1A in Gemini, ChatGPT en Copilot. Zie je verschillen?" },
-            "2": { t: "Test prompts", i: "Herschrijf een tekst naar B1-niveau of laat een docent Politieacademie privacy uitleggen." }
+            "1a": { t: "Oefening 1A: eenvoudig beginnen", i: "Stel de vraag: 'Maak de volgende zin af: De Italiaanse man had een hekel aan pizza met Ham, kaas en ..'. Vraag daarna om privacy-uitleg voor groep 7." },
+            "1b": { t: "Oefening 1B: Werken met verschillende GPT’s", i: "Herhaal 1A in Gemini, ChatGPT en Copilot. Vergelijk de antwoorden en de toon." }
         };
 
         window.startApp = () => {
@@ -175,11 +210,9 @@
             const n = localStorage.getItem('ai_user');
             const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
             if(!p || !r) return alert("Vul alles in!");
-
             push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
             document.getElementById('input-prompt').value = '';
             document.getElementById('input-resultaat').value = '';
-            alert("Gedeeld!");
         };
 
         onValue(ref(db, 'inzendingen'), (snapshot) => {
