@@ -5,50 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Opdrachtenboek - Interactief</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --warning: #e74c3c; --success: #27ae60; }
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
         
-        /* LOGIN SCHERM */
         #login-screen {
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center;
             background: url('afbeelding1.jpg') no-repeat center center; background-size: cover;
             position: fixed; top: 0; left: 0; z-index: 1000;
         }
-        .login-card {
-            background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4); text-align: center; max-width: 400px; width: 85%;
-            backdrop-filter: blur(8px);
-        }
+        .login-card { background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 85%; backdrop-filter: blur(8px); }
 
-        /* DASHBOARD */
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
         .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
         .section-title { color: var(--success); border-bottom-color: var(--success); }
 
-        /* SCROLLBARE VENSTERS */
         .scroll-window { 
-            max-height: 350px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
+            max-height: 400px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
             padding: 15px; border-radius: 8px; margin-bottom: 10px; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* INHOUDSOPGAVE */
-        .contents-list { list-style: none; padding: 0; margin: 0; }
+        .contents-list { list-style: none; padding: 0; }
         .contents-list li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dotted #ccc; font-size: 0.85em; }
         .clickable { cursor: pointer; color: var(--accent); font-weight: 500; }
-        .clickable:hover { color: #2980b9; text-decoration: underline; }
 
-        .centered-img { display: block; margin: 15px auto; max-width: 90%; border-radius: 8px; }
+        .flex-container { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+        .flex-text { flex: 1; min-width: 250px; }
+        .side-img { width: 200px; border-radius: 8px; }
 
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.2s; }
-        button:hover { background: #2980b9; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
         
         .instructie-box { background: #eef2f3; padding: 20px; border-left: 5px solid var(--accent); margin: 20px 0; }
-        .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; border: 1px solid #eee; font-size: 0.85em; }
+        .entry { border-left: 5px solid var(--accent); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; }
+        pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -56,7 +47,6 @@
     <div id="login-screen">
         <div class="login-card">
             <h1>AI Opdrachtenboek</h1>
-            <p>Welkom! Voer je naam in om te starten.</p>
             <input type="text" id="username" placeholder="Typ hier je naam...">
             <button onclick="startApp()">Inloggen</button>
         </div>
@@ -67,47 +57,60 @@
         <div class="card">
             <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
-                <li class="clickable" onclick="scrollToId('inleiding')"><span>Inleiding & Waarschuwing (P2)</span><span>2</span></li>
-                <li class="clickable" onclick="scrollToId('principes')"><span>Principes & Tips (P3)</span><span>3</span></li>
-                <li class="clickable" onclick="scrollToId('oefening1a')"><span>Oefening 1A: Eenvoudig beginnen (P4)</span><span>4</span></li>
-                <li class="clickable" onclick="scrollToId('oefening1b')"><span>Oefening 1B: Verschillende GPT's (P5)</span><span>5</span></li>
+                <li class="clickable" onclick="scrollToId('inleiding')"><span>Inleiding & Waarschuwing</span><span>2</span></li>
+                <li class="clickable" onclick="scrollToId('oefening1a')"><span>Oefening 1A: Eenvoudig beginnen</span><span>4</span></li>
+                <li class="clickable" onclick="scrollToId('oefening2')"><span>Oefening 2: Test Prompts</span><span>6</span></li>
             </ul>
         </div>
 
-        <div class="card" id="oefening1b">
-            <h3 class="section-title">PAGINA 5: OEFENING 1B</h3>
+        <div class="card" id="oefening2">
+            <h3 class="section-title">PAGINA 6: OEFENING 2 - TEST PROMPTS</h3>
             <div class="scroll-window">
-                <h4>OEFENING 1B: WERKEN MET VERSCHILLENDE GPT’S</h4>
-                <p><strong>De Opdracht:</strong> Neem de rol aan van een schrijver van kinderboeken en schrijf voor jongvolwassenen van 11-12 jaar een kort verhaal over verliefdheid.</p>
+                <h4>LESONTWIKKELING</h4>
+                <p><em>"Doe alsof je een docent van de Politieacademie bent... leg privacy uit in 8 korte punten."</em></p>
                 
-                <p><strong>Stap 1: Test verschillende systemen</strong></p>
-                <ul>
-                    <li>Ga naar <strong>Bing.com</strong> (kies chatten) en herhaal de opdracht.</li>
-                    <img src="afbeelding4.jpg" alt="Bing Chat" class="centered-img">
-                    <li>Ga naar <a href="https://gemini.google.com/" target="_blank">Gemini.google.com</a> en herhaal de opdracht.</li>
-                    <img src="afbeelding5.jpg" alt="Google Gemini" class="centered-img">
-                    <li>Ga naar <a href="https://chat.openai.com/" target="_blank">Chat.OpenAi.com</a> en herhaal de opdracht.</li>
-                </ul>
+                <h4>HERSCHRIJVEN (NT2)</h4>
+                <p><em>"Herschrijf bijgaande document in eenvoudig Nederlands (B1 taalniveau)."</em></p>
 
-                <p><strong>Stap 2: Bijstellen en Verfijnen</strong></p>
-                <p>Laat het verhaal bijstellen. Vraag bijvoorbeeld: <em>"Kun je het verhaal ook wijzigen zodat het gaat om de verliefdheid van Elsje en Gea (meisjes)?"</em></p>
+                <div class="flex-container">
+                    <div class="flex-text">
+                        <h4>LERAAR DUITS</h4>
+                        <p><em>"De Duitse taal is lastig... Ken je het verschil tussen 'auf den Zug' en 'auf dem Zug'?"</em></p>
+                    </div>
+                    <img src="afbeelding6.jpg" alt="Duits voorbeeld" class="side-img">
+                </div>
+
+                <h4>DUITS GESPREK</h4>
+                <p><em>"Ik wil gesprekken met je hebben in het Duits... Antwoord met Ja oder Nein."</em></p>
+
+                <h4>ANALYSEER EN VAT SAMEN</h4>
+                <p><em>"Analyseer een Engelse webpagina en vat deze samen in 10 regels."</em></p>
+
+                <h4>GEBRUIK VAN 'REGENERATE' & VERVOLGPROMPTS</h4>
+                <p>Onderzoek de geschiedenis van de ruimtevaart in Luxemburg of laat AI een artikel schrijven over thuiswerken en verfijn dit stap voor stap.</p>
             </div>
         </div>
 
         <div class="card" id="opdrachten-sectie">
-            <h2>Hoi <span id="user-display"></span>, deel je bevindingen:</h2>
+            <h2>Hoi <span id="user-display"></span>, welke test je nu?</h2>
             <select id="opdracht-selector" onchange="updateOpdracht()">
                 <option value="1a">Oefening 1A: Eenvoudig beginnen</option>
-                <option value="1b">Oefening 1B: Werken met verschillende GPT's</option>
+                <option value="1b">Oefening 1B: Verschillende GPT's</option>
+                <option value="2_politie">Oefening 2: Politieacademie Prompt</option>
+                <option value="2_herschrijven">Oefening 2: Herschrijven (B1)</option>
+                <option value="2_duits">Oefening 2: Leraar Duits (Grammatica)</option>
+                <option value="2_gesprek">Oefening 2: Deutscher Sprachunterricht</option>
+                <option value="2_analyse">Oefening 2: Analyseer & Vat samen</option>
+                <option value="2_regen">Oefening 2: Regenerate & Vervolg</option>
             </select>
 
             <div class="instructie-box">
                 <div id="opdracht-tekst">Laden...</div>
             </div>
 
-            <textarea id="input-prompt" rows="2" placeholder="Welke prompt heb je gebruikt?"></textarea>
-            <textarea id="input-resultaat" rows="5" placeholder="Wat was het meest opvallende resultaat of verschil?"></textarea>
-            <button id="btn-deel">Deel resultaat met de groep</button>
+            <textarea id="input-prompt" rows="2" placeholder="Welke prompt heb je ingevoerd?"></textarea>
+            <textarea id="input-resultaat" rows="5" placeholder="Plak hier het resultaat of je observatie..."></textarea>
+            <button id="btn-deel">Deel met de groep</button>
         </div>
 
         <div class="card">
@@ -134,8 +137,14 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "1a": { t: "Oefening 1A", i: "Stappen 1-5 van pagina 4. Test de pizza-zin en privacy-rollen in TalkAI." },
-            "1b": { t: "Oefening 1B", i: "Vergelijk Bing, Gemini en ChatGPT met het verhaal over verliefdheid (P5). Wat zijn de grootste verschillen?" }
+            "1a": { t: "Oefening 1A", i: "Test de pizza-zin en rollen in TalkAI." },
+            "1b": { t: "Oefening 1B", i: "Vergelijk Bing, Gemini en ChatGPT met het verhaal over verliefdheid." },
+            "2_politie": { t: "Oefening 2: Politieacademie", i: "Test de prompt over privacy-uitleg in 8 punten." },
+            "2_herschrijven": { t: "Oefening 2: Herschrijven", i: "Probeer een complexe tekst te laten herschrijven naar B1-niveau." },
+            "2_duits": { t: "Oefening 2: Duits Grammatica", i: "Vraag naar het verschil tussen 'auf den' en 'auf dem' Zug." },
+            "2_gesprek": { t: "Oefening 2: Duits Gesprek", i: "Start een gesprek in het Duits en laat je corrigeren." },
+            "2_analyse": { t: "Oefening 2: Analyse", i: "Laat een webpagina of tekst samenvatten in 10 regels." },
+            "2_regen": { t: "Oefening 2: Regenerate", i: "Gebruik de 'Regenerate' knop en vervolgprompts om resultaten te verbeteren." }
         };
 
         window.startApp = () => {
@@ -170,11 +179,9 @@
             const n = localStorage.getItem('ai_user');
             const o = opdrachtData[document.getElementById('opdracht-selector').value].t;
             if(!p || !r) return alert("Vul beide velden in!");
-
             push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
             document.getElementById('input-prompt').value = '';
             document.getElementById('input-resultaat').value = '';
-            alert("Bedankt voor het delen!");
         };
 
         onValue(ref(db, 'inzendingen'), (snapshot) => {
