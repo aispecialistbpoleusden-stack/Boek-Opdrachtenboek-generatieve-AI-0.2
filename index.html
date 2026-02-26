@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Opdrachtenboek - Voortgangstracker</title>
+    <title>AI Opdrachtenboek - Interactief</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --success: #27ae60; --light-blue: #ebf5fb; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); line-height: 1.6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); scroll-behavior: smooth; }
         
         #login-screen {
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center;
@@ -15,18 +15,35 @@
         .login-card { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
         .container { max-width: 900px; margin: 20px auto; padding: 20px; display: none; }
-        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; scroll-margin-top: 20px; }
+        
+        /* De belangrijke fix voor het klikken: scroll-margin zorgt dat de titel niet achter de rand verdwijnt */
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 25px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            margin-bottom: 20px; 
+            scroll-margin-top: 30px; 
+        }
         
         h3 { border-bottom: 2px solid var(--accent); display: inline-block; margin-top: 0; margin-bottom: 15px; }
-        
-        /* INHOUDSOPGAVE STIJLEN */
+
+        /* INHOUDSOPGAVE */
         .contents-list { list-style: none; padding: 0; }
-        .contents-list li { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #ddd; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
+        .contents-list li { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 12px 15px; 
+            border-bottom: 1px solid #ddd; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            margin-bottom: 5px; 
+            transition: background 0.2s;
+        }
         
-        /* Kleuren voor status */
-        .status-info { background: #f9f9f9; color: #999; } /* Pagina zonder opdracht */
-        .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); } /* Moet nog */
-        .status-done { background: #e8f6ed; border-left: 5px solid var(--success); color: var(--success); font-weight: bold; } /* Klaar */
+        .status-info { background: #f9f9f9; color: #7f8c8d; }
+        .status-todo { background: var(--light-blue); border-left: 5px solid var(--accent); color: var(--accent); }
+        .status-done { background: #e8f6ed; border-left: 5px solid var(--success); color: var(--success); font-weight: bold; }
 
         .page-num { font-weight: bold; }
 
@@ -54,7 +71,7 @@
     <div class="container" id="app-content">
         
         <div class="card" id="inhoud">
-            <h3>VOORTGANG</h3>
+            <h3>VOORTGANG & NAVIGATIE</h3>
             <ul class="contents-list" id="main-menu">
                 <li onclick="scrollToId('p2')" class="status-info"><span>Pagina 2-3: Inleiding</span><span class="page-num">2</span></li>
                 <li onclick="scrollToId('p4')" id="menu-p4" class="status-todo"><span>Pagina 4: Pizza & Privacy</span><span class="page-num">4</span></li>
@@ -67,13 +84,21 @@
             </ul>
         </div>
 
-        <div class="card" id="p8">
-            <h3 style="color:var(--accent)">Pagina 8: Unieke Toetsen</h3>
+        <div class="card" id="p2">
+            <h3>Pagina 2-3: Inleiding & Principes</h3>
             <div class="scroll-window">
-                <p>Maak 5 sets van 5 meerkeuzevragen over een artikel.</p>
-                <img src="afbeelding8.jpg" style="width:100%; border-radius:8px;">
+                <p>Generatieve AI is als een zeer belezen stagiair. Je moet specifiek zijn...</p>
+                <ul>
+                    <li>Wees helder over de rol.</li>
+                    <li>Geef context.</li>
+                    <li>Stel kaders (lengte, toon, doelgroep).</li>
+                </ul>
             </div>
         </div>
+
+        <div class="card" id="p4"><h3>Pagina 4: Pizza & Privacy</h3><p>Oefening met rollen.</p></div>
+        <div class="card" id="p6"><h3>Pagina 6: Politieacademie</h3><p>Samenvatten voor studenten.</p></div>
+        <div class="card" id="p8"><h3>Pagina 8: Toetsen maken</h3><p>Genereer vragen.</p></div>
 
         <div class="card" id="input-sectie">
             <h3 style="color:var(--success)">OPDRACHT INDIENEN</h3>
@@ -88,7 +113,7 @@
             </select>
 
             <div class="input-group">
-                <div id="opdracht-instructie" style="margin-bottom:10px; font-weight:bold;"></div>
+                <div id="opdracht-instructie" style="margin-bottom:10px; font-weight:bold;">Selecteer een opdracht...</div>
                 <textarea id="input-prompt" rows="3" placeholder="Jouw prompt..."></textarea>
                 <textarea id="input-resultaat" rows="4" placeholder="Het resultaat..."></textarea>
                 <button id="btn-deel">Deel resultaat & Markeer als klaar</button>
@@ -105,6 +130,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+        // Firebase Config (Zorg dat deze klopt met jouw project)
         const firebaseConfig = {
             apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
             authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
@@ -118,75 +144,28 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const opdrachtData = {
-            "p4": { t: "P4: Pizza", i: "Privacy voor pizzabakkers." },
-            "p6": { t: "P6: Politie", i: "8 punten over de AVG." },
-            "p7": { t: "P7: Emoticons", i: "Vat een film samen." },
-            "p8": { t: "P8: Toetsen", i: "Maak vragen over artikel." },
-            "p9": { t: "P9: Konijnen", i: "Rutte/Wilders/Caroline." },
-            "p10": { t: "P10: Fitness", i: "Assistent rol-methode." },
-            "p11": { t: "P11: Collega", i: "Nieuw Nederland prompt." }
+        // Functie voor navigeren (deze MOET op de window staan voor onclick)
+        window.scrollToId = function(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.error("Element met id " + id + " niet gevonden.");
+            }
         };
 
         window.startApp = () => {
             const n = document.getElementById('username').value;
-            if(!n) return alert("Naam?");
+            if(!n) return alert("Naam invullen!");
             localStorage.setItem('ai_user', n);
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            updateOpdracht();
             checkProgress();
         };
 
-        window.scrollToId = (id) => document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        // ... rest van je Firebase logica ...
+        // (Zorg dat je de checkProgress() en btn-deel functionaliteit behoudt zoals in de vorige stap)
 
-        window.updateOpdracht = () => {
-            const val = document.getElementById('opdracht-selector').value;
-            document.getElementById('opdracht-instructie').innerText = opdrachtData[val].i;
-        };
-
-        function checkProgress() {
-            Object.keys(opdrachtData).forEach(id => {
-                if(localStorage.getItem('done_' + id)) {
-                    const el = document.getElementById('menu-' + id);
-                    if(el) {
-                        el.className = 'status-done';
-                        el.querySelector('span').innerHTML += ' ✅';
-                    }
-                }
-            });
-        }
-
-        document.getElementById('btn-deel').onclick = () => {
-            const id = document.getElementById('opdracht-selector').value;
-            const p = document.getElementById('input-prompt').value;
-            const r = document.getElementById('input-resultaat').value;
-            if(!p || !r) return alert("Vul alles in!");
-
-            push(ref(db, 'inzendingen'), { 
-                naam: localStorage.getItem('ai_user'), 
-                oefening: opdrachtData[id].t, 
-                prompt: p, 
-                resultaat: r 
-            });
-
-            localStorage.setItem('done_' + id, 'true');
-            checkProgress();
-            alert("Top! Je voortgang is bijgewerkt.");
-            document.getElementById('input-prompt').value = "";
-            document.getElementById('input-resultaat').value = "";
-        };
-
-        onValue(ref(db, 'inzendingen'), (s) => {
-            const feed = document.getElementById('feed-container');
-            feed.innerHTML = '';
-            const data = s.val();
-            if(data) Object.values(data).reverse().forEach(item => {
-                feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening})<br><small>${item.prompt}</small><details><summary>Resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
-            });
-        });
-
-        if(localStorage.getItem('ai_user')) startApp();
     </script>
 </body>
 </html>
