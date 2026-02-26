@@ -21,7 +21,7 @@
         .section-title { color: var(--success); border-bottom-color: var(--success); }
 
         .scroll-window { 
-            max-height: 400px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
+            max-height: 450px; overflow-y: auto; background: #fff; border: 1px solid #eee; 
             padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
@@ -29,19 +29,16 @@
         .contents-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 0.9em; }
         .clickable { cursor: pointer; color: var(--accent); font-weight: 600; }
 
-        /* FLEX VOOR AFBEELDING NAAST TEKST */
-        .flex-row { display: flex; gap: 15px; align-items: flex-start; flex-wrap: wrap; }
-        .flex-content { flex: 1; min-width: 250px; }
-        .side-img { width: 180px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
         .input-group { background: var(--light-grey); padding: 20px; border-radius: 12px; border-left: 6px solid var(--accent); margin-top: 20px; }
         input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; font-family: inherit; }
         
-        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
+        button { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.3s; }
         button:hover { background: #2980b9; }
 
         .entry { border-left: 5px solid var(--success); padding: 15px; margin-bottom: 15px; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         pre { white-space: pre-wrap; background: #f9f9f9; padding: 10px; font-size: 0.85em; border: 1px solid #eee; }
+        
+        .alert-box { background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; border-radius: 5px; margin: 10px 0; font-size: 0.9em; color: #856404; }
     </style>
 </head>
 <body>
@@ -50,7 +47,7 @@
         <div class="login-card">
             <h1>AI Opdrachtenboek</h1>
             <input type="text" id="username" placeholder="Typ hier je naam...">
-            <button onclick="startApp()">Start de Sessie</button>
+            <button onclick="startApp()">Inloggen</button>
         </div>
     </div>
 
@@ -59,59 +56,60 @@
         <div class="card">
             <h3>INHOUDSOPGAVE</h3>
             <ul class="contents-list">
-                <li class="clickable" onclick="scrollToId('p4')"><span>P4: Eenvoudig beginnen</span><span>4</span></li>
                 <li class="clickable" onclick="scrollToId('p8')"><span>P8: Toetsen & Producten</span><span>8</span></li>
-                <li class="clickable" onclick="scrollToId('p9')"><span>P9: Prompt Bouwen (Roze Konijnen)</span><span>9</span></li>
+                <li class="clickable" onclick="scrollToId('p9')"><span>P9: Prompt Bouwen (Konijnen)</span><span>9</span></li>
+                <li class="clickable" onclick="scrollToId('p10')"><span>P10: Fitness Assistent</span><span>10</span></li>
+                <li class="clickable" onclick="scrollToId('p11')"><span>P11: Experimenteren met Tips</span><span>11</span></li>
             </ul>
         </div>
 
-        <div class="card" id="p9">
-            <h3 class="section-title">PAGINA 9: OEFENING 3 - PROMPT BOUWEN</h3>
+        <div class="card" id="p11">
+            <h3 class="section-title">PAGINA 11: OEFENING 5 - EXPERIMENTEREN</h3>
             <div class="scroll-window">
-                <h4>STAP 1: ROLLEN & STIJLEN</h4>
-                <div class="flex-row">
-                    <div class="flex-content">
-                        <p><strong>1A.</strong> Doe alsof je <strong>Mark Rutte</strong> bent: leg liberaal het belang van roze konijntjes uit.</p>
-                        <p><strong>1B.</strong> Doe alsof je <strong>Geert Wilders</strong> bent: leg nostalgisch/nationalistisch het probleem van roze konijntjes uit.</p>
-                        <p><strong>1C.</strong> Doe alsof je <strong>Caroline van der Plas</strong> bent: leg vanuit boerenperspectief de kansen in de landbouwketen uit.</p>
-                    </div>
-                    <img src="afbeelding9.jpg" alt="Stijl voorbeeld" class="side-img">
-                </div>
-
+                <h4>DE 'COLLEGA' METHODE</h4>
+                <p><strong>Stap 1 (Fout):</strong> <em>"Schrijf een Facebook artikel wat onze partij nieuwe raadsleden oplevert."</em></p>
+                <p><strong>Stap 2 (Beter):</strong> Geef context: doelgroep (25-45 jaar), B2 niveau, partijnaam "Nieuw Nederland", slogan "Iedereen erbij".</p>
+                
                 <hr>
-                <h4>STAP 2: DE MEGA-PROMPT</h4>
-                <p>Bouw een lange prompt met: <em>Rol/Tone-of-voice, Onderwerp, Doelgroep, Doel van de tekst, Stijl en Unieke punten.</em></p>
-                <p><strong>Test-opdracht:</strong> Schrijf een Wikipedia-artikel over roze konijnen (herkomst, ras, leeftijd, verzet tegen intensieve veehouderij).</p>
-
+                <h4>CONTEXT & INFO</h4>
+                <p>Wijzig deze prompt: <em>"Denk als een leraar en geef tips over online dating risico's."</em> naar een prompt over <strong>desinformatie en fakenieuws</strong>.</p>
+                
                 <hr>
-                <h4>STAP 4 & 5: VERFIJNEN</h4>
-                <p>Reageer op het resultaat: "Verduidelijk punt 3", "Maak het minder serieus" of "Vat het samen". In GPT-4 kun je ook vragen: <em>"Maak nu een afbeelding behorende bij dit verhaaltje."</em></p>
+                <h4>REGENERATE & DISCUSSIE</h4>
+                <p>Ga in discussie over een artikel over liberalisme. Gebruik vervolgprompts:</p>
+                <ul>
+                    <li>"Kun je punt 3 nader toelichten?"</li>
+                    <li>"Maak het compacter / eenvoudiger."</li>
+                </ul>
+                <div class="alert-box">💡 Tip: Gebruik de "Regenerate" knop als de eerste uitkomst niet fijn is!</div>
             </div>
         </div>
 
         <div class="card" id="input-sectie">
-            <h3>VOER JE OPDRACHT UIT</h3>
+            <h3>JOUW INVOERVELDEN</h3>
+            <p>Deel je ervaringen met de verschillende tips:</p>
             <select id="opdracht-selector" onchange="updateOpdracht()">
-                <option value="p9_politiek">P9: Politieke Stijlen (Rutte/Wilders/Caroline)</option>
-                <option value="p9_wikipedia">P9: Wikipedia Roze Konijnen</option>
-                <option value="p9_verfijnen">P9: Verfijnen & Vervolgvragen</option>
+                <option value="p11_collega">P11: Collega Methode (Raadsleden)</option>
+                <option value="p11_fake">P11: Fakenieuws Prompt</option>
+                <li><option value="p11_discussie">P11: Discussie & Verfijnen</option></li>
+                <option value="p10_fitness">P10: Fitness Assistent</option>
             </select>
 
             <div class="input-group">
-                <div id="opdracht-instructie" style="margin-bottom: 10px; color: #666; font-style: italic;">Selecteer een taak...</div>
+                <div id="opdracht-instructie" style="margin-bottom: 10px; color: #666; font-style: italic;">Selecteer een opdracht...</div>
                 
-                <label><strong>De Prompt die ik gebruikte:</strong></label>
-                <textarea id="input-prompt" rows="2" placeholder="Wat heb je ingevoerd?"></textarea>
+                <label><strong>De Prompt die ik gebruikte (Stap 2 of 3):</strong></label>
+                <textarea id="input-prompt" rows="3" placeholder="Plak hier je uitgebreide prompt..."></textarea>
                 
-                <label><strong>Het AI Resultaat:</strong></label>
-                <textarea id="input-resultaat" rows="5" placeholder="Plak hier het antwoord..."></textarea>
+                <label><strong>Wat viel je op aan het resultaat?</strong></label>
+                <textarea id="input-resultaat" rows="4" placeholder="Was het resultaat veel beter? Wat deed de AI?"></textarea>
                 
-                <button id="btn-deel">Deel met de groep</button>
+                <button id="btn-deel">Versturen naar Groepsfeed</button>
             </div>
         </div>
 
         <div class="card">
-            <h3>Live Groepsfeed</h3>
+            <h3>Live Groepsfeed (Iedereen)</h3>
             <div id="feed-container"></div>
         </div>
 
@@ -135,14 +133,15 @@
         const db = getDatabase(app);
 
         const opdrachtData = {
-            "p9_politiek": { t: "P9: Politieke Rollen", i: "Test Rutte, Wilders of Caroline over de roze konijntjes." },
-            "p9_wikipedia": { t: "P9: Wikipedia Prompt", i: "Bouw de encyclopedische prompt over roze konijnen rassen." },
-            "p9_verfijnen": { t: "P9: Verfijnen", i: "Gebruik vervolgvragen om het resultaat bij te sturen." }
+            "p11_collega": { t: "P11: Collega Methode", i: "Vergelijk de korte 'foute' prompt met de uitgebreide versie voor Nieuw Nederland." },
+            "p11_fake": { t: "P11: Fakenieuws", i: "Schrijf de leraar-prompt om naar een les over het herkennen van desinformatie." },
+            "p11_discussie": { t: "P11: Discussie/Verfijnen", i: "Laat zien hoe je de AI hebt bijgestuurd (bijv. compacter maken of uitleg vragen)." },
+            "p10_fitness": { t: "P10: Fitness Assistent", i: "Test de 'Rol-methode' met de fitnesstrainer." }
         };
 
         window.startApp = () => {
             const name = document.getElementById('username').value;
-            if(!name) return alert("Voer je naam in!");
+            if(!name) return alert("Naam verplicht!");
             localStorage.setItem('ai_user', name);
             showApp();
         };
@@ -170,8 +169,7 @@
             if(!p || !r) return alert("Vul beide velden in!");
             
             push(ref(db, 'inzendingen'), { naam: n, oefening: o, prompt: p, resultaat: r, tijd: Date.now() });
-            document.getElementById('input-prompt').value = "";
-            document.getElementById('input-resultaat').value = "";
+            alert("Resultaat gedeeld!");
         };
 
         onValue(ref(db, 'inzendingen'), (snapshot) => {
@@ -180,7 +178,7 @@
             const data = snapshot.val();
             if(data) {
                 Object.values(data).reverse().forEach(item => {
-                    feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening}):<br><small>${item.prompt}</small><details><summary>Bekijk Resultaat</summary><pre>${item.resultaat}</pre></details></div>`;
+                    feed.innerHTML += `<div class="entry"><b>${item.naam}</b> (${item.oefening}):<br><small>Prompt: ${item.prompt}</small><details><summary>Bekijk Resultaat/Bevinding</summary><pre>${item.resultaat}</pre></details></div>`;
                 });
             }
         });
