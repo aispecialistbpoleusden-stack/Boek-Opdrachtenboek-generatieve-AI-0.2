@@ -3,160 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Doeboek Politieacademie 2026</title>
+    <title>AI in Onderwijs - Interactief Werkboek</title>
     <style>
-        :root { --polblauw: #003082; --goud: #ffcc00; --bg: #d1d8e0; --wit: #ffffff; --accent: #27ae60; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        
-        /* Navigatie */
-        nav { background: var(--polblauw); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 4px solid var(--goud); z-index: 1000; }
-        .nav-buttons button { background: var(--goud); border: none; color: var(--polblauw); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-
-        .book-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .page { background: var(--wit); width: 100%; max-width: 1100px; height: 85vh; display: none; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); flex-direction: column; }
-        .active { display: flex; }
-        
-        /* Voorblad */
-        #pg0 { background: url('afbeelding1.jpg') no-repeat center center; background-size: cover; justify-content: center; align-items: center; }
-        .cover-overlay { background: rgba(0, 48, 130, 0.95); padding: 40px; border-radius: 15px; text-align: center; color: white; border: 3px solid var(--goud); width: 80%; max-width: 500px; }
-
-        /* Content & Scrollvensters */
-        .content { padding: 40px; overflow-y: auto; flex: 1; }
-        .info-scroll-container { 
-            background: #f0f4f8; border-left: 6px solid var(--polblauw); 
-            padding: 20px; margin: 15px 0; max-height: 250px; 
-            overflow-y: auto; border-radius: 4px; font-size: 0.95em;
-        }
-
-        .opdracht-blok { background: #e8f5e9; border: 2px solid var(--accent); padding: 20px; border-radius: 10px; }
-        textarea { width: 100%; height: 100px; margin-top: 10px; font-family: monospace; padding: 10px; box-sizing: border-box; }
-        .preview-box { border: 2px solid #ddd; background: #fff; min-height: 80px; padding: 15px; margin-top: 10px; border-radius: 6px; }
-        .share-btn { width: 100%; background: var(--polblauw); color: white; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        
-        /* Geordende Toontafel */
-        .toontafel-sectie { margin-bottom: 30px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; }
-        .toontafel-header { background: var(--polblauw); color: white; padding: 10px 15px; font-weight: bold; }
-        .toontafel-item { background: white; padding: 10px 15px; border-bottom: 1px solid #eee; font-size: 0.9em; }
+        /* [De CSS-stijlen blijven exact hetzelfde als in jouw voorbeeld voor de consistentie] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Arial', sans-serif; background: #0a1a2b; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1600px; margin: 0 auto; background: #f5f5f5; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); overflow: hidden; border: 1px solid #c9a959; }
+        header { background: linear-gradient(135deg, #0a1a2b 0%, #1a2c3e 100%); color: white; padding: 40px; text-align: center; border-bottom: 3px solid #c9a959; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; color: #c9a959; font-weight: 500; letter-spacing: 1px; }
+        header p { font-size: 1.2em; opacity: 0.9; color: #ffffff; font-weight: 300; }
+        .user-section { background: #ffffff; padding: 20px 40px; border-bottom: 2px solid #c9a959; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .user-input { flex: 1; min-width: 250px; }
+        .user-input label { display: block; margin-bottom: 5px; color: #0a1a2b; font-weight: 600; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.5px; }
+        .user-input input { width: 100%; padding: 12px; border: 2px solid #c9a959; border-radius: 8px; font-size: 1em; }
+        .user-button { background: #0a1a2b; color: #c9a959; border: 2px solid #c9a959; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; text-transform: uppercase; }
+        .level-selector { display: flex; flex-wrap: wrap; gap: 5px; padding: 20px 40px; background: #e5e5e5; border-bottom: 2px solid #c9a959; }
+        .level-btn { flex: 1; min-width: 60px; padding: 15px 10px; border: 1px solid #c9a959; background: white; color: #0a1a2b; font-weight: 600; cursor: pointer; border-radius: 8px; text-transform: uppercase; }
+        .level-btn.active { background: #0a1a2b; color: #c9a959; }
+        .content { display: flex; flex-wrap: wrap; }
+        .theory-section { flex: 1.2; min-width: 400px; padding: 40px; background: #ffffff; border-right: 2px solid #c9a959; }
+        .questions-section { flex: 1.8; min-width: 450px; padding: 40px; background: #f5f5f5; }
+        .design-section { flex: 1.2; min-width: 400px; padding: 40px; background: #ffffff; border-left: 2px solid #c9a959; }
+        .theory-dynamic { background: #ffffff; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border-left: 5px solid #c9a959; overflow: hidden; }
+        .theory-header { background: #0a1a2b; color: #c9a959; padding: 15px 25px; font-weight: 600; text-transform: uppercase; }
+        .theory-content { padding: 25px; }
+        .dynamic-text { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #c9a959; line-height: 1.6; }
+        .question-item { background: white; border: 2px solid #c9a959; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .answer-input { width: 100%; padding: 15px; border: 2px solid #c9a959; border-radius: 8px; margin: 10px 0; background: #f8f9fa; }
+        .save-btn { background: #0a1a2b; color: #c9a959; border: 2px solid #c9a959; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: 600; text-transform: uppercase; }
+        .results-section { padding: 40px; background: #e5e5e5; border-top: 3px solid #c9a959; }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+        .result-card { background: white; border-radius: 12px; padding: 20px; border-left: 4px solid #c9a959; }
+        .materials-list { list-style: none; padding: 0; margin-top: 10px;}
+        .materials-list li { margin-bottom: 8px; padding-left: 20px; position: relative; }
+        .materials-list li:before { content: "→"; position: absolute; left: 0; color: #c9a959; }
     </style>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>AI IN HET ONDERWIJS</h1>
+            <p>Interactief werkboek - Van beginner tot expert (Niveau 0 → 5)</p>
+        </header>
 
-<nav>
-    <div><strong>POLITIEACADEMIE | AI ONDERWIJS</strong></div>
-    <div class="nav-buttons">
-        <button onclick="changePage(-1)">⬅ VORIGE</button>
-        <span id="pageIndicator" style="margin: 0 15px; font-weight: bold;">VOORBLAD</span>
-        <button onclick="changePage(1)">VOLGENDE ➡</button>
-    </div>
-</nav>
-
-<div class="book-container" id="bookContainer">
-    <div class="page active" id="pg0">
-        <div class="cover-overlay">
-            <h1>DOEBOEK AI</h1>
-            <p>Strategisch Gebruik & Ethiek</p>
-            <input type="text" id="userName" placeholder="Vul uw voornaam in..." style="width:100%; padding:12px; text-align:center; margin-top:10px;" oninput="window.uName = this.value">
+        <div class="user-section">
+            <div class="user-input">
+                <label for="userName">Jouw naam</label>
+                <input type="text" id="userName" placeholder="Voer je naam in..." value="Docent">
+            </div>
+            <button class="user-button" onclick="updateUser()">Bevestig naam</button>
         </div>
-    </div>
 
-    <div class="page" id="pg30">
+        <div class="level-selector" id="levelSelector"></div>
+
         <div class="content">
-            <h1>De Finale Toontafel</h1>
-            <p>Resultaten geordend per module en deelnemer:</p>
-            <div id="sharedFeed">Laden van alle inzendingen...</div>
+            <div class="theory-section" id="theorySection"></div>
+            <div class="questions-section" id="questionsSection"></div>
+            <div class="design-section" id="designSection"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2 class="results-title">Resultatenoverzicht</h2>
+            <div id="resultsGrid" class="results-grid"></div>
         </div>
     </div>
-</div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+    <script>
+        // Firebase configuratie
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
+            authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
+            databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "opdrachtenboek-generatieve-ai",
+            storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
+            messagingSenderId: "183622966071",
+            appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
+        };
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyC_qP9Yyr5BGLvHVuUC4Tham4M0AwPEEJE",
-        authDomain: "opdrachtenboek-generatieve-ai.firebaseapp.com",
-        databaseURL: "https://opdrachtenboek-generatieve-ai-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "opdrachtenboek-generatieve-ai",
-        storageBucket: "opdrachtenboek-generatieve-ai.firebasestorage.app",
-        messagingSenderId: "183622966071",
-        appId: "1:183622966071:web:aa58e8acb48cf9cec318b2"
-    };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    window.uName = "Collega";
+        let currentUser = localStorage.getItem('currentUser') || 'Docent';
+        let currentLevel = 0;
 
-    const paginasData = {
-        1: { t: "AI-Copilot", info: "Wie: De docent. Wat: Tekstuele ondersteuning. Waar: Voorbereiding. Wanneer: Ontwerpfase. Waarom: Efficiëntie. Hoe: Prompts. Wijze: Veilig.", opdr: "Stel een prompt op voor een lesonderdeel." },
-        16: { t: "Toetsvragen", info: "Wie: Vakdocent. Wat: MCQ-Vragen. Waar: Toetsing. Wanneer: Afname. Waarom: Validiteit. Hoe: Afleiders. Wijze: Objectief.", opdr: "Plak hier een gegenereerde HTML-vraag." },
-        26: { t: "Web-Briefing", info: "Wie: Docent-bouwer. Wat: HTML/CSS. Waar: Leeromgeving. Wanneer: Zelfstudie. Waarom: Interactie. Hoe: Code. Wijze: Modern.", opdr: "Plak hier een briefing-code." }
-    };
+        const levels = [
+            {
+                level: 0,
+                name: "Basis",
+                description: "Wat is Generatieve AI?",
+                theory: "Generatieve AI (zoals ChatGPT) voorspelt het volgende woord in een zin op basis van enorme hoeveelheden data. Het 'begrijpt' niets echt, maar herkent patronen.",
+                questions: [
+                    "Wat is jouw grootste zorg bij het gebruik van AI in de klas?",
+                    "Noem één ding waarvan je denkt dat AI het nooit van een docent kan overnemen."
+                ],
+                design: {
+                    title: "De AI Vergelijking",
+                    task: "Vergelijk AI met een hulpmiddel dat we al kennen (bijv. een rekenmachine of een stagiair). Wat zijn de overeenkomsten en verschillen?"
+                },
+                materials: ["Lees pagina 1-2 van de PDF: De basis van algoritmes."]
+            },
+            {
+                level: 1,
+                name: "Prompting",
+                description: "Effectief communiceren",
+                theory: "Een goede prompt bevat Context, Taak, Instructies en een Format. Hoe specifieker je bent, hoe beter het resultaat.",
+                questions: [
+                    "Schrijf een eenvoudige prompt voor het maken van een lesplan over vulkanen.",
+                    "Hoe zou je deze prompt verbeteren met de 'Rol' techniek?"
+                ],
+                design: {
+                    title: "De Super-Prompt",
+                    task: "Ontwerp een prompt die een complexe tekst vertaalt naar het niveau van een 8-jarige."
+                },
+                materials: ["Bekijk pagina 3: Het Prompt-Framework."]
+            },
+            {
+                level: 2,
+                name: "Evaluatie",
+                description: "Kritisch naar output kijken",
+                theory: "AI kan hallucineren (feiten verzinnen). Het is cruciaal om de output te controleren op bronnen, vooroordelen en actualiteit.",
+                questions: [
+                    "Wat is een 'hallucinatie' in de context van AI?",
+                    "Hoe controleer je of de informatie van een chatbot klopt?"
+                ],
+                design: {
+                    title: "De Fact-Check",
+                    task: "Laat AI een tekst schrijven over een historisch figuur en markeer drie punten die gecontroleerd moeten worden."
+                },
+                materials: ["Lees pagina 4: Omgaan met hallucinaties."]
+            },
+            {
+                level: 3,
+                name: "Curriculum",
+                description: "AI integreren in je lessen",
+                theory: "AI kan helpen bij differentiatie. Je kunt opdrachten op verschillende niveaus genereren voor dezelfde klas in een fractie van de tijd.",
+                questions: [
+                    "Voor welk specifiek onderwerp in jouw vakgebied zou AI de meeste tijd besparen?",
+                    "Hoe reageren leerlingen als je AI-gegenereerd materiaal gebruikt?"
+                ],
+                design: {
+                    title: "Gedifferentieerd Lesmateriaal",
+                    task: "Ontwerp een opdracht voor een snelle leerling én een leerling die extra ondersteuning nodig heeft met behulp van AI."
+                },
+                materials: ["Pagina 5-6: AI voor lesvoorbereiding."]
+            },
+            {
+                level: 4,
+                name: "Ethiek",
+                description: "Privacy en Fraude",
+                theory: "Wie is de eigenaar van AI-output? Hoe gaan we om met leerlingen die AI gebruiken voor hun huiswerk? We moeten toe naar 'AI-geletterdheid' in plaats van een verbod.",
+                questions: [
+                    "Is het gebruik van AI door een leerling altijd fraude? Waarom wel/niet?",
+                    "Hoe ziet een 'AI-veilig' toetsmoment er volgens jou uit?"
+                ],
+                design: {
+                    title: "Klassikale Afspraken",
+                    task: "Stel drie gouden regels op voor jouw klas over het gebruik van AI."
+                },
+                materials: ["Pagina 7-8: De ethische kaders."]
+            },
+            {
+                level: 5,
+                name: "Expert",
+                description: "De toekomst van onderwijs",
+                theory: "In niveau 5 kijken we naar Custom GPT's en automatisering. Hoe kun je AI inzetten als je persoonlijke assistent die jouw specifieke feedbackstijl kent?",
+                questions: [
+                    "Als je één taak volledig aan AI kon delegeren, wat zou dat zijn?",
+                    "Hoe verandert de rol van de docent de komende 5 jaar?"
+                ],
+                design: {
+                    title: "Jouw Persoonlijke AI-Assistent",
+                    task: "Beschrijf de eigenschappen van een 'Custom GPT' die speciaal voor jouw vak is getraind."
+                },
+                materials: ["Pagina 9: De weg naar AI-experts."]
+            }
+        ];
 
-    const container = document.getElementById('bookContainer');
-    for (let i = 1; i <= 29; i++) {
-        if (document.getElementById('pg' + i)) continue;
-        const d = paginasData[i] || { t: `Module ${i}`, info: "Wie, Wat, Waar, Wanneer, Waarom, Hoe en Op Welke Wijze worden hier tactisch beschreven voor dit onderwerp...", opdr: "Voer de AI-opdracht uit." };
-        
-        const div = document.createElement('div');
-        div.id = 'pg' + i; div.className = 'page';
-        div.innerHTML = `
-            <div class="content">
-                <h1>${i}. ${d.t}</h1>
-                <div class="info-scroll-container">${d.info}</div>
-                <div class="opdracht-blok">
-                    <strong>Opdracht:</strong> ${d.opdr}
-                    <textarea id="in${i}" placeholder="Input..."></textarea>
-                    <div class="preview-box" id="pre${i}"><em>Preview...</em></div>
-                    <button class="share-btn" id="btn${i}">DEEL RESULTAAT 🚀</button>
+        function init() {
+            renderLevelSelector();
+            loadLevel(0);
+            loadResults();
+        }
+
+        function renderLevelSelector() {
+            const selector = document.getElementById('levelSelector');
+            selector.innerHTML = levels.map(l => `
+                <button class="level-btn ${l.level === currentLevel ? 'active' : ''}" 
+                        onclick="loadLevel(${l.level})">
+                    Niv ${l.level}
+                </button>
+            `).join('');
+        }
+
+        function loadLevel(num) {
+            currentLevel = num;
+            renderLevelSelector();
+            const data = levels[num];
+
+            // Theorie
+            document.getElementById('theorySection').innerHTML = `
+                <h2 class="level-title">${data.name} <span class="level-badge">Niveau ${num}</span></h2>
+                <div class="theory-dynamic">
+                    <div class="theory-header">Theorie</div>
+                    <div class="theory-content">
+                        <div class="dynamic-text">${data.theory}</div>
+                    </div>
                 </div>
-            </div>`;
-        container.insertBefore(div, document.getElementById('pg30'));
+                <div class="materials-section">
+                    <div class="materials-title">Studiemateriaal</div>
+                    <ul class="materials-list">
+                        ${data.materials.map(m => `<li>${m}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
 
-        setTimeout(() => {
-            const area = document.getElementById(`in${i}`), pre = document.getElementById(`pre${i}`), btn = document.getElementById(`btn${i}`);
-            if(area) area.addEventListener('input', () => { pre.innerHTML = area.value; });
-            if(btn) btn.addEventListener('click', () => { share(d.t, area.value); });
-        }, 0);
-    }
+            // Vragen
+            document.getElementById('questionsSection').innerHTML = `
+                <h3 class="level-title">Reflectie</h3>
+                ${data.questions.map((q, i) => `
+                    <div class="question-item">
+                        <div class="question-number">Vraag ${i + 1}</div>
+                        <div class="question-text">${q}</div>
+                        <textarea class="answer-input" id="q_${num}_${i}" placeholder="Typ hier je antwoord..."></textarea>
+                        <button class="save-btn" onclick="saveAnswer(${num}, ${i})">Opslaan</button>
+                    </div>
+                `).join('')}
+            `;
 
-    window.current = 0;
-    window.changePage = (n) => {
-        let t = window.current + n;
-        if (t >= 0 && t <= 30) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            window.current = t;
-            document.getElementById('pg' + t).classList.add('active');
-            document.getElementById('pageIndicator').innerText = t === 0 ? "VOORBLAD" : (t === 30 ? "TOONTAFEL" : `PAGINA ${t} / 30`);
+            // Ontwerp
+            document.getElementById('designSection').innerHTML = `
+                <h3 class="level-title">Ontwerp</h3>
+                <div class="design-box">
+                    <div class="design-title">${data.design.title}</div>
+                    <p class="design-description">${data.design.task}</p>
+                    <textarea class="answer-input" id="d_${num}" style="min-height: 200px;" placeholder="Werk hier je ontwerp uit..."></textarea>
+                    <button class="save-btn" onclick="saveDesign(${num})">Ontwerp Opslaan</button>
+                </div>
+            `;
         }
-    };
 
-    function share(type, inhoud) {
-        push(ref(db, 'opdrachten'), { naam: window.uName, type: type, inhoud: inhoud, tijd: new Date().toLocaleTimeString() });
-        alert("Gedeeld!");
-    }
-
-    onValue(ref(db, 'opdrachten'), (s) => {
-        const feed = document.getElementById('sharedFeed');
-        feed.innerHTML = "";
-        const data = s.val();
-        if(!data) return;
-
-        // Groeperen op Type (Vraag/Module)
-        const geordend = {};
-        Object.values(data).forEach(item => {
-            if(!geordend[item.type]) geordend[item.type] = [];
-            geordend[item.type].push(item);
-        });
-
-        for(const [type, items] of Object.entries(geordend)) {
-            let sectie = `<div class="toontafel-sectie"><div class="toontafel-header">${type}</div>`;
-            items.forEach(i => {
-                sectie += `<div class="toontafel-item"><strong>${i.naam}:</strong> ${i.inhoud.substring(0,100)}${i.inhoud.length > 100 ? '...' : ''} <span style="float:right; color:#888;">${i.tijd}</span></div>`;
+        function saveAnswer(lvl, qIdx) {
+            const text = document.getElementById(`q_${lvl}_${qIdx}`).value;
+            if(!text) return alert("Voer eerst een antwoord in.");
+            
+            database.ref(`results/${currentUser}/lvl_${lvl}/q_${qIdx}`).set({
+                question: levels[lvl].questions[qIdx],
+                answer: text,
+                timestamp: Date.now()
+            }).then(() => {
+                alert("Antwoord succesvol opgeslagen!");
+                loadResults();
             });
-            sectie += `</div>`;
-            feed.innerHTML += sectie;
         }
-    });
-</script>
+
+        function saveDesign(lvl) {
+            const text = document.getElementById(`d_${lvl}`).value;
+            if(!text) return alert("Voer eerst je ontwerp in.");
+
+            database.ref(`results/${currentUser}/lvl_${lvl}/design`).set({
+                title: levels[lvl].design.title,
+                task: levels[lvl].design.task,
+                content: text,
+                timestamp: Date.now()
+            }).then(() => {
+                alert("Ontwerp succesvol opgeslagen!");
+                loadResults();
+            });
+        }
+
+        function loadResults() {
+            database.ref('results').on('value', (snapshot) => {
+                const grid = document.getElementById('resultsGrid');
+                grid.innerHTML = '';
+                const data = snapshot.val();
+                if(!data) return;
+
+                for (let user in data) {
+                    for (let lvl in data[user]) {
+                        const levelData = data[user][lvl];
+                        const card = document.createElement('div');
+                        card.className = 'result-card';
+                        let content = `<div class="result-header">
+                            <span class="result-name">${user}</span>
+                            <span class="result-level">${lvl.replace('_', ' ')}</span>
+                        </div>`;
+                        
+                        // Toon vragen en ontwerpen in de kaart
+                        for (let key in levelData) {
+                            if(key.startsWith('q_')) {
+                                content += `<div class="result-question"><strong>V:</strong> ${levelData[key].answer}</div>`;
+                            } else if(key === 'design') {
+                                content += `<div class="result-answer" style="border-top: 1px solid #c9a959; margin-top:10px;">
+                                    <strong>Ontwerp:</strong><br>${levelData[key].content}
+                                </div>`;
+                            }
+                        }
+                        card.innerHTML = content;
+                        grid.appendChild(card);
+                    }
+                }
+            });
+        }
+
+        function updateUser() {
+            currentUser = document.getElementById('userName').value || 'Anoniem';
+            localStorage.setItem('currentUser', currentUser);
+            alert(`Welkom, ${currentUser}! Je voortgang wordt nu onder jouw naam opgeslagen.`);
+            loadResults();
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
