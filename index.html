@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Leerlijn met Media</title>
+    <title>AI-Leerlijn Meesterschap</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -11,6 +11,7 @@
             --bg: #f1f5f9;
             --white: #ffffff;
             --text: #1e293b;
+            --border: #e2e8f0;
         }
 
         body {
@@ -28,54 +29,58 @@
             background: var(--white);
             padding: 15px 20px;
             display: flex;
-            gap: 10px;
-            border-bottom: 2px solid #e2e8f0;
+            gap: 12px;
+            border-bottom: 2px solid var(--border);
             overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .nav-btn {
-            padding: 10px 18px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
-            background: #e2e8f0;
+            background: var(--border);
             cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .nav-btn.active {
             background: var(--primary);
             color: white;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
         }
 
-        /* Main Layout */
+        /* Layout */
         main {
             display: grid;
-            grid-template-columns: 450px 1fr;
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: 480px 1fr;
+            gap: 24px;
+            padding: 24px;
             flex: 1;
             overflow: hidden;
         }
 
-        /* Theorie Paneel met Afbeeldingen */
         .panel {
             background: var(--white);
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .panel-header {
-            padding: 15px 20px;
+            padding: 18px 24px;
             background: var(--primary);
             color: white;
         }
 
+        /* Scrollbare Theorie */
         .scroll-content {
-            padding: 20px;
+            padding: 24px;
             overflow-y: auto;
             flex: 1;
             line-height: 1.6;
@@ -83,20 +88,46 @@
 
         .theory-img {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
+            border-radius: 12px;
             margin: 15px 0;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
         }
 
-        /* Mindmap (Niveau 0) */
+        .theory-img:hover { transform: scale(1.02); }
+
+        /* RELEVANTE INFORMATIE LINKJES */
+        .info-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--bg);
+        }
+
+        .info-link {
+            display: block;
+            padding: 10px 15px;
+            background: #f8fafc;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        .info-link:hover { background: #eff6ff; }
+
+        /* Mindmap Area */
         .mindmap-area {
             position: relative;
             flex: 1;
-            background: #fafafa;
+            background: #fcfcfc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 12px;
             border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            margin-top: 15px;
+            overflow: hidden;
         }
 
         .central-node {
@@ -105,43 +136,49 @@
             transform: translate(-50%, -50%);
             background: var(--primary);
             color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            z-index: 5;
+            padding: 18px 32px;
+            border-radius: 40px;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            z-index: 10;
         }
 
         .node {
             position: absolute;
             background: white;
             border: 2px solid var(--primary);
-            padding: 5px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            animation: popIn 0.3s ease-out;
         }
 
-        .node input { border: none; outline: none; width: 90px; }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
         textarea {
-            width: 100%;
-            height: 100%;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 15px;
+            width: 100%; height: 100%;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 16px;
             resize: none;
-            box-sizing: border-box;
         }
 
         .btn-action {
-            padding: 10px 20px;
+            padding: 14px 28px;
             background: var(--accent);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
+            font-weight: 800;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -151,13 +188,17 @@
 
 <main>
     <section class="panel">
-        <div class="panel-header"><h2 id="theoryTitle" style="margin:0;">Informatie</h2></div>
-        <div class="scroll-content" id="theoryText"></div>
+        <div class="panel-header"><h2 id="theoryTitle" style="margin:0;">Theorie</h2></div>
+        <div class="scroll-content">
+            <div id="theoryText"></div>
+            <div class="info-links" id="relevantLinks">
+                </div>
+        </div>
     </section>
 
-    <section class="panel" style="padding:20px;">
-        <h2 id="workTitle" style="margin:0;">Aan de slag</h2>
-        <p id="workTask" style="color: #64748b; margin: 10px 0;"></p>
+    <section class="panel" style="padding:24px;">
+        <h2 id="workTitle" style="margin:0;">Ontwerpruimte</h2>
+        <p id="workTask" style="color: #64748b; margin: 12px 0;"></p>
         <div id="workspace" style="flex: 1; display: flex; flex-direction: column;"></div>
         <div id="controls"></div>
     </section>
@@ -169,56 +210,78 @@
             name: "0. De Basis",
             title: "Wat is Generatieve AI?",
             theory: `
-                <p>Generatieve AI creëert nieuwe content op basis van patronen.</p>
-                <img src="afbeelding1.jpg" class="theory-img" alt="AI Concept">
-                <p>Zoals te zien in bovenstaand schema, werken LLM's door het voorspellen van het volgende woord.</p>
-                <img src="afbeelding2.jpg" class="theory-img" alt="LLM Werking">
+                <p>Generatieve AI is de grootste revolutie in het onderwijs sinds de rekenmachine. Het is een systeem dat patronen herkent en nieuwe data genereert.</p>
+                <img src="afbeelding1.jpg" class="theory-img">
+                <p><strong>De kernpunten:</strong></p>
+                <ul>
+                    <li>LLM's voorspellen tokens (tekststukjes).</li>
+                    <li>Output is gebaseerd op waarschijnlijkheid.</li>
+                </ul>
+                <img src="afbeelding2.jpg" class="theory-img">
             `,
-            task: "Breng de AI-tools in kaart met deze mindmap.",
+            links: [
+                { label: "🔗 Hoe werkt GPT? (Uitleg voor docenten)", url: "#" },
+                { label: "📄 PDF: AI in het Primair Onderwijs", url: "#" }
+            ],
+            task: "Breng de AI-tools die je in je repository hebt staan in kaart.",
             type: "mindmap"
         },
         {
             name: "1. Prompting",
-            title: "De ROL-methode",
+            title: "Prompt Engineering",
             theory: `
-                <p>Een sterke prompt is de sleutel tot succes.</p>
-                <img src="afbeelding3.jpg" class="theory-img" alt="Prompting">
-                <p>Gebruik de structuur: Rol, Opdracht, Context en Output.</p>
+                <p>Prompting is het nieuwe programmeren. Met de juiste instructies dwing je kwaliteit af.</p>
+                <img src="afbeelding3.jpg" class="theory-img">
+                <blockquote>"De output is zo goed als de input."</blockquote>
             `,
-            task: "Schrijf je prompt hieronder:",
+            links: [
+                { label: "📘 Cheat Sheet: 50 Prompts voor de klas", url: "#" },
+                { label: "🎥 Video: De ROL-methode uitgelegd", url: "#" }
+            ],
+            task: "Ontwerp hier je meester-prompt voor een toetsopdracht:",
             type: "text"
         },
         {
             name: "2. Ethiek",
-            title: "Privacy & Veiligheid",
+            title: "Veiligheid & Bias",
             theory: `
-                <p>Hoe gaan we om met data in de klas?</p>
-                <img src="afbeelding4.jpg" class="theory-img" alt="Privacy">
-                <img src="afbeelding5.jpg" class="theory-img" alt="Ethiek">
+                <p>Privacy is de eerste prioriteit bij het gebruik van AI-tools.</p>
+                <img src="afbeelding4.jpg" class="theory-img">
+                <img src="afbeelding5.jpg" class="theory-img">
             `,
-            task: "Wat is je belangrijkste ethische afweging?",
+            links: [
+                { label: "⚖️ AVG Richtlijnen voor Scholen", url: "#" },
+                { label: "🔍 Tool: Bias checker voor teksten", url: "#" }
+            ],
+            task: "Hoe ga jij om met leerlinggegevens en AI?",
             type: "text"
         },
         {
             name: "3. Lesontwerp",
-            title: "Efficiëntie in de les",
+            title: "Differentiëren",
             theory: `
-                <p>AI kan helpen bij het maken van rubrics en lesplannen.</p>
-                <img src="afbeelding6.jpg" class="theory-img" alt="Lesontwerp">
-                <img src="afbeelding7.jpg" class="theory-img" alt="Differentiëren">
+                <p>Maak in seconden materiaal voor verschillende niveaus.</p>
+                <img src="afbeelding6.jpg" class="theory-img">
+                <img src="afbeelding7.jpg" class="theory-img">
             `,
-            task: "Ontwerp een korte activiteit:",
+            links: [
+                { label: "🛠️ Templates voor Differentiëren", url: "#" }
+            ],
+            task: "Beschrijf een gedifferentieerde lesvorm met AI:",
             type: "text"
         },
         {
-            name: "4. Kritisch Denken",
-            title: "Mediawijsheid",
+            name: "4. Toekomst",
+            title: "AI Geletterdheid",
             theory: `
-                <p>Leer leerlingen de output van AI te verifiëren.</p>
-                <img src="afbeelding8.jpg" class="theory-img" alt="Factchecking">
-                <img src="afbeelding9.jpg" class="theory-img" alt="Toekomst">
+                <p>Kritisch kijken naar AI-output is de belangrijkste vaardigheid voor 2024.</p>
+                <img src="afbeelding8.jpg" class="theory-img">
+                <img src="afbeelding9.jpg" class="theory-img">
             `,
-            task: "Hoe ga jij de 'Human-in-the-loop' borgen?",
+            links: [
+                { label: "🎓 Curriculum: AI Literacy voor Leerlingen", url: "#" }
+            ],
+            task: "Wat is de eerste stap voor jouw team?",
             type: "text"
         }
     ];
@@ -240,14 +303,27 @@
     function loadLevel(idx) {
         currentIdx = idx;
         const lvl = levels[idx];
+        
+        // UI
         document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
         document.getElementById('theoryTitle').innerText = lvl.title;
         document.getElementById('theoryText').innerHTML = lvl.theory;
         document.getElementById('workTask').innerText = lvl.task;
 
+        // Links renderen
+        const linkBox = document.getElementById('relevantLinks');
+        linkBox.innerHTML = '<h4>Relevante Informatie:</h4>';
+        lvl.links.forEach(link => {
+            const a = document.createElement('a');
+            a.className = 'info-link';
+            a.href = link.url;
+            a.innerText = link.label;
+            linkBox.appendChild(a);
+        });
+
+        // Werkveld
         const workspace = document.getElementById('workspace');
         const controls = document.getElementById('controls');
-        
         if (lvl.type === "mindmap") {
             workspace.innerHTML = `<div class="mindmap-area" id="mm-canvas"><div class="central-node">AI TOOLS</div></div>`;
             controls.innerHTML = `<button class="btn-action" onclick="addNode()">+ Voeg Tool Toe</button>`;
@@ -262,11 +338,11 @@
         const node = document.createElement('div');
         node.className = 'node';
         const angle = Math.random() * Math.PI * 2;
-        const x = (canvas.offsetWidth/2) + 120 * Math.cos(angle) - 50;
-        const y = (canvas.offsetHeight/2) + 120 * Math.sin(angle) - 20;
+        const x = (canvas.offsetWidth/2) + 140 * Math.cos(angle) - 60;
+        const y = (canvas.offsetHeight/2) + 140 * Math.sin(angle) - 20;
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
-        node.innerHTML = `<input type="text" placeholder="..."> <span onclick="this.parentElement.remove()" style="cursor:pointer; color:red">×</span>`;
+        node.innerHTML = `<input type="text" placeholder="Naam tool..."> <span onclick="this.parentElement.remove()" style="cursor:pointer; font-weight:bold; color:red">×</span>`;
         canvas.appendChild(node);
     }
 
