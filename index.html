@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Leerlijn Docenten - Interactief</title>
+    <title>AI-Leerlijn met Media</title>
     <style>
         :root {
             --primary: #2563eb;
-            --secondary: #64748b;
             --accent: #10b981;
             --bg: #f1f5f9;
             --white: #ffffff;
+            --text: #1e293b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: var(--bg);
             margin: 0;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            color: var(--text);
         }
 
         /* Navigatie */
@@ -33,14 +34,13 @@
         }
 
         .nav-btn {
-            padding: 10px 20px;
+            padding: 10px 18px;
             border: none;
             border-radius: 8px;
             background: #e2e8f0;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.2s;
-            white-space: nowrap;
+            transition: 0.3s;
         }
 
         .nav-btn.active {
@@ -48,252 +48,226 @@
             color: white;
         }
 
-        /* Layout */
+        /* Main Layout */
         main {
             display: grid;
-            grid-template-columns: 400px 1fr;
+            grid-template-columns: 450px 1fr;
             gap: 20px;
             padding: 20px;
             flex: 1;
             overflow: hidden;
         }
 
-        /* Linkerkolom: Theorie (Scrollbaar) */
-        .theory-panel {
+        /* Theorie Paneel met Afbeeldingen */
+        .panel {
             background: var(--white);
             border-radius: 12px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
 
-        .theory-header {
+        .panel-header {
             padding: 15px 20px;
             background: var(--primary);
             color: white;
-            border-radius: 12px 12px 0 0;
         }
 
-        .theory-scroll {
+        .scroll-content {
             padding: 20px;
             overflow-y: auto;
             flex: 1;
             line-height: 1.6;
         }
 
-        /* Rechterkolom: Werkveld */
-        .work-panel {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            position: relative;
-            display: flex;
-            flex-direction: column;
+        .theory-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #e2e8f0;
         }
 
-        /* Mindmap Specifiek */
-        .mindmap-container {
-            flex: 1;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
+        /* Mindmap (Niveau 0) */
+        .mindmap-area {
             position: relative;
+            flex: 1;
             background: #fafafa;
-            overflow: hidden;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
             margin-top: 15px;
         }
 
         .central-node {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background: var(--primary);
             color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
+            padding: 12px 20px;
+            border-radius: 25px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
             z-index: 5;
         }
 
         .node {
             position: absolute;
-            display: flex;
-            align-items: center;
             background: white;
             border: 2px solid var(--primary);
-            padding: 8px 12px;
-            border-radius: 8px;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 5px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .node input {
-            border: none;
-            outline: none;
-            width: 120px;
-            font-size: 14px;
-        }
-
-        /* Knoppen */
-        .btn-action {
-            padding: 12px 24px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            align-self: flex-start;
-        }
+        .node input { border: none; outline: none; width: 90px; }
 
         textarea {
             width: 100%;
-            height: 300px;
+            height: 100%;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             padding: 15px;
-            font-size: 16px;
             resize: none;
+            box-sizing: border-box;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-<nav id="navBar"></nav>
+<nav id="levelNav"></nav>
 
 <main>
-    <section class="theory-panel">
-        <div class="theory-header">
-            <h2 id="theoryTitle" style="margin:0; font-size: 1.2rem;">Informatie</h2>
-        </div>
-        <div class="theory-scroll" id="theoryContent">
-            </div>
+    <section class="panel">
+        <div class="panel-header"><h2 id="theoryTitle" style="margin:0;">Informatie</h2></div>
+        <div class="scroll-content" id="theoryText"></div>
     </section>
 
-    <section class="work-panel">
-        <h2 id="workTitle" style="margin:0 0 10px 0;">Aan de slag</h2>
-        <p id="workTask" style="color: var(--secondary); margin-bottom: 20px;"></p>
-        
-        <div id="canvasArea" style="flex: 1; display: flex; flex-direction: column;">
-            </div>
-
-        <button class="btn-action" id="mainActionBtn" onclick="executeAction()">Voeg Tool Toe</button>
+    <section class="panel" style="padding:20px;">
+        <h2 id="workTitle" style="margin:0;">Aan de slag</h2>
+        <p id="workTask" style="color: #64748b; margin: 10px 0;"></p>
+        <div id="workspace" style="flex: 1; display: flex; flex-direction: column;"></div>
+        <div id="controls"></div>
     </section>
 </main>
 
 <script>
-    const contentData = [
+    const levels = [
         {
-            level: 0,
-            name: "Niveau 0: Basis",
+            name: "0. De Basis",
             title: "Wat is Generatieve AI?",
             theory: `
-                <p>Generatieve AI (zoals ChatGPT) verschilt van 'normale' algoritmes omdat het nieuwe content <strong>creëert</strong> in plaats van alleen data te filteren.</p>
-                <h3>Kernbegrippen uit de PDF:</h3>
-                <ul>
-                    <li><strong>LLM (Large Language Models):</strong> Getraind op miljarden teksten om menselijke taal te simuleren.</li>
-                    <li><strong>Hallucinaties:</strong> AI kan heel overtuigend onzin verkopen. Controleer altijd de bronnen!</li>
-                    <li><strong>Multimodaal:</strong> Moderne AI kan tekst, beeld, audio en code tegelijk verwerken.</li>
-                </ul>
-                <p><strong>Toepassing in onderwijs:</strong> Het kan fungeren als een sparringpartner voor lesontwerp, maar vervangt nooit de pedagogische expertise van de docent.</p>
+                <p>Generatieve AI creëert nieuwe content op basis van patronen.</p>
+                <img src="afbeelding1.jpg" class="theory-img" alt="AI Concept">
+                <p>Zoals te zien in bovenstaand schema, werken LLM's door het voorspellen van het volgende woord.</p>
+                <img src="afbeelding2.jpg" class="theory-img" alt="LLM Werking">
             `,
-            task: "Breng de AI-tools die je kent of in de PDF hebt gezien in kaart.",
+            task: "Breng de AI-tools in kaart met deze mindmap.",
             type: "mindmap"
         },
         {
-            level: 1,
-            name: "Niveau 1: Prompts",
-            title: "De Kunst van de Prompt",
+            name: "1. Prompting",
+            title: "De ROL-methode",
             theory: `
-                <p>Een prompt is de instructie die je aan de AI geeft. Hoe specifieker de prompt, hoe beter het resultaat.</p>
-                <h3>De ROL-methode:</h3>
-                <ul>
-                    <li><strong>Rol:</strong> Geef de AI een rol (bijv. "Je bent een ervaren wiskunde docent").</li>
-                    <li><strong>Opdracht:</strong> Wat moet er gebeuren? (bijv. "Maak een toets").</li>
-                    <li><strong>Limitatie:</strong> Waar moet het aan voldoen? (bijv. "Max 5 vragen, niveau VMBO-T").</li>
-                </ul>
+                <p>Een sterke prompt is de sleutel tot succes.</p>
+                <img src="afbeelding3.jpg" class="theory-img" alt="Prompting">
+                <p>Gebruik de structuur: Rol, Opdracht, Context en Output.</p>
             `,
-            task: "Schrijf hier een prompt voor een lesvoorbereiding met de ROL-methode.",
+            task: "Schrijf je prompt hieronder:",
+            type: "text"
+        },
+        {
+            name: "2. Ethiek",
+            title: "Privacy & Veiligheid",
+            theory: `
+                <p>Hoe gaan we om met data in de klas?</p>
+                <img src="afbeelding4.jpg" class="theory-img" alt="Privacy">
+                <img src="afbeelding5.jpg" class="theory-img" alt="Ethiek">
+            `,
+            task: "Wat is je belangrijkste ethische afweging?",
+            type: "text"
+        },
+        {
+            name: "3. Lesontwerp",
+            title: "Efficiëntie in de les",
+            theory: `
+                <p>AI kan helpen bij het maken van rubrics en lesplannen.</p>
+                <img src="afbeelding6.jpg" class="theory-img" alt="Lesontwerp">
+                <img src="afbeelding7.jpg" class="theory-img" alt="Differentiëren">
+            `,
+            task: "Ontwerp een korte activiteit:",
+            type: "text"
+        },
+        {
+            name: "4. Kritisch Denken",
+            title: "Mediawijsheid",
+            theory: `
+                <p>Leer leerlingen de output van AI te verifiëren.</p>
+                <img src="afbeelding8.jpg" class="theory-img" alt="Factchecking">
+                <img src="afbeelding9.jpg" class="theory-img" alt="Toekomst">
+            `,
+            task: "Hoe ga jij de 'Human-in-the-loop' borgen?",
             type: "text"
         }
-        // Voeg hier Niveau 2 t/m 5 toe op dezelfde manier
     ];
 
-    let currentLvl = 0;
+    let currentIdx = 0;
 
     function init() {
-        const nav = document.getElementById('navBar');
-        contentData.forEach((data, index) => {
+        const nav = document.getElementById('levelNav');
+        levels.forEach((lvl, i) => {
             const btn = document.createElement('button');
-            btn.className = `nav-btn ${index === 0 ? 'active' : ''}`;
-            btn.innerText = data.name;
-            btn.onclick = () => loadLevel(index);
+            btn.className = `nav-btn ${i === 0 ? 'active' : ''}`;
+            btn.innerText = lvl.name;
+            btn.onclick = () => loadLevel(i);
             nav.appendChild(btn);
         });
         loadLevel(0);
     }
 
-    function loadLevel(index) {
-        currentLvl = index;
-        const data = contentData[index];
+    function loadLevel(idx) {
+        currentIdx = idx;
+        const lvl = levels[idx];
+        document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+        document.getElementById('theoryTitle').innerText = lvl.title;
+        document.getElementById('theoryText').innerHTML = lvl.theory;
+        document.getElementById('workTask').innerText = lvl.task;
+
+        const workspace = document.getElementById('workspace');
+        const controls = document.getElementById('controls');
         
-        // Update Nav
-        document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-            btn.classList.toggle('active', i === index);
-        });
-
-        // Update Theorie
-        document.getElementById('theoryTitle').innerText = data.title;
-        document.getElementById('theoryContent').innerHTML = data.theory;
-        document.getElementById('workTask').innerText = data.task;
-
-        // Update Werkveld
-        const canvas = document.getElementById('canvasArea');
-        const actionBtn = document.getElementById('mainActionBtn');
-
-        if (data.type === "mindmap") {
-            canvas.innerHTML = `
-                <div class="mindmap-container" id="mindmap">
-                    <div class="central-node">AI TOOLS</div>
-                </div>
-            `;
-            actionBtn.style.display = "block";
-            actionBtn.innerText = "+ Tool Toevoegen";
+        if (lvl.type === "mindmap") {
+            workspace.innerHTML = `<div class="mindmap-area" id="mm-canvas"><div class="central-node">AI TOOLS</div></div>`;
+            controls.innerHTML = `<button class="btn-action" onclick="addNode()">+ Voeg Tool Toe</button>`;
         } else {
-            canvas.innerHTML = `<textarea placeholder="Typ hier je uitwerking..."></textarea>`;
-            actionBtn.style.display = "none";
-        }
-    }
-
-    function executeAction() {
-        if (contentData[currentLvl].type === "mindmap") {
-            addNode();
+            workspace.innerHTML = `<textarea placeholder="Typ hier je uitwerking..."></textarea>`;
+            controls.innerHTML = ``;
         }
     }
 
     function addNode() {
-        const container = document.getElementById('mindmap');
+        const canvas = document.getElementById('mm-canvas');
         const node = document.createElement('div');
         node.className = 'node';
-        
-        // Willekeurige positie rondom het midden
         const angle = Math.random() * Math.PI * 2;
-        const dist = 130 + Math.random() * 50;
-        const x = Math.cos(angle) * dist + (container.offsetWidth / 2) - 75;
-        const y = Math.sin(angle) * dist + (container.offsetHeight / 2) - 20;
-
+        const x = (canvas.offsetWidth/2) + 120 * Math.cos(angle) - 50;
+        const y = (canvas.offsetHeight/2) + 120 * Math.sin(angle) - 20;
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
-        
-        node.innerHTML = `
-            <input type="text" placeholder="Bijv. ChatGPT...">
-            <span style="cursor:pointer; color:red" onclick="this.parentElement.remove()">×</span>
-        `;
-        
-        container.appendChild(node);
+        node.innerHTML = `<input type="text" placeholder="..."> <span onclick="this.parentElement.remove()" style="cursor:pointer; color:red">×</span>`;
+        canvas.appendChild(node);
     }
 
     window.onload = init;
